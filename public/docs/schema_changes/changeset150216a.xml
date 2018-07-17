@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	<changeSet author="unknown" id="update act type names2" runOnChange="true">
+    	<delete 
+            tableName="activitytype">
+        	<where>true</where>
+    	</delete>    		
+    	<insert tableName="activitytype">
+        	<column name="id" value="1"/>
+        	<column name="name" value="Seismic Survey"/>
+    	</insert>	
+    	<insert tableName="activitytype">
+        	<column name="id" value="2"/>
+        	<column name="name" value="Sub-bottom Profilers"/>
+    	</insert>	
+    	<insert tableName="activitytype">
+        	<column name="id" value="3"/>
+        	<column name="name" value="Piling"/>
+    	</insert>	
+    	<insert tableName="activitytype">
+        	<column name="id" value="4"/>
+        	<column name="name" value="Explosives"/>
+    	</insert>	
+    	<insert tableName="activitytype">
+        	<column name="id" value="5"/>
+        	<column name="name" value="Acoustic Deterrent Device"/>
+    	</insert>	
+    	<insert tableName="activitytype">
+        	<column name="id" value="6"/>
+        	<column name="name" value="Multibeam Echosounders"/>
+    	</insert>	
+    	<insert tableName="activitytype">
+        	<column name="id" value="7"/>
+        	<column name="name" value="Ministry of Defence"/>
+    	</insert>
+    </changeSet>
+</databaseChangeLog>

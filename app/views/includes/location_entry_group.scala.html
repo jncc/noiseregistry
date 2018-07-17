@@ -1,0 +1,101 @@
+@(field: Field, className: String = "activitylocations", parentId: String="", creationType: String = "Proposed", closeOut: Boolean = false, appStatus: String = "")
+@import helper._
+@import govuk._
+@**
+ * The location_entry_group is used to output a block of fields for the location entry.
+ * For close out, this block includes the additional fields needed for capturing the date/ no activty information.
+ **@
+<div class="@className">
+		<div style="display: none">
+			<input type="hidden" name="@field("aa.id").name" id="@field("aa.id").id" value="@field("aa.id").value.getOrElse(parentId)" />
+			<input type="hidden" name="@field("entrytype").name" id="@field("entrytype").id" value="@field("entrytype").value" />
+			<input type="hidden" name="@field("creation_type").name" id="@field("creation_type").id" value="@creationType" />
+			<input type="hidden" name="@field("id").name" id="@field("id").id" value="@field("id").value" />
+			<input type="hidden" name="@field("description").name" id="@field("description").id" value="@field("description").value" />
+			<input type="hidden" name="@field("lat").name" id="@field("lat").id" value="@field("lat").value" />
+			<input type="hidden" name="@field("lng").name" id="@field("lng").id" value="@field("lng").value" />
+			<input type="hidden" name="@field("polygon_latlngs").name" id="@field("polygon_latlngs").id" value="@field("polygon_latlngs").value" />
+			<input type="hidden" name="@field("entered_ogb_code").name" id="@field("entered_ogb_code").id" value="@field("entered_ogb_code").value" />
+		</div>
+		<table title="Entered Location">
+			<tbody>
+				<tr>
+					<td>
+						<div class="form-label rowdescriptor">
+							@field("description").value
+						</div>
+						@for(error <- field("lat").errors) {
+				    		<div class="validation-message">@Messages(error.message, error.args: _*) (@Messages("activityform.field_heading.lat"))</div>
+						}
+						@for(error <- field("lng").errors) {
+				    		<div class="validation-message">@Messages(error.message, error.args: _*) (@Messages("activityform.field_heading.lng"))</div>
+						}
+						@for(error <- field("entered_ogb_code").errors) {
+				    		<div class="validation-message">@Messages(error.message, error.args: _*)</div>
+						}
+						@for(error <- field("polygon_latlngs").errors) {
+				    		<div class="validation-message">@Messages(error.message, error.args: _*)</div>
+						}
+						@for(error <- field("description").errors) {
+				    		<div class="validation-message">@Messages(error.message, error.args: _*)</div>
+						}
+						
+						
+						@** For close out, if the location has been saved then we allow the user to say it's not needed, otherwise date(s) are required **@
+						@if(closeOut) {
+							@** 
+							 * Recording of close out against polygon entries is not supported.
+							 *@
+							@if(field("polygon_latlngs").value.getOrElse("") != "") {
+								<input type="hidden" name="@field("no_activity").name" id="@field("no_activity").id" value="true" />
+							} else {
+								@if(field("creation_type").value.getOrElse("Additional") == "Proposed" || field("id").value.getOrElse("") != "") {
+									<fieldset class="inline">
+						      			<legend class="form-label">@Messages("activityformcloseout.activitytorecord")</legend>
+						            	@for(error <- field("no_activity").errors) {
+								    		<div class="validation-message">@Messages(error.message, error.args: _*)</div>
+										}
+										@govuk.govukRadioGroup(
+							            	field("no_activity"),
+							            	options = Seq(
+							            			"false"->Seq("label"->Messages("activityformcloseout.activitytorecord.yes"), "data-target"->field("date-entry").id), 
+							            			"true"->Seq("label"->Messages("activityformcloseout.activitytorecord.no"))),
+							            	'_label -> ""
+							            	)(govuk.govukGroupFieldConstructor)
+							            <div class="panel-indent js-hidden" id="@field("date-entry").id">
+							            	<label class="form-label" for="@field("activitydate").id">@Messages("activityformcloseout.field_heading.activitydate")</label>
+						            	 	@for(error <- field("activitydate").errors) {
+									    		<div class="validation-message">@Messages(error.message, error.args: _*)</div>
+											}
+							            	<div class="form-hint">@Messages("activityformcloseout.field_hint.activitydate")</div>
+						            	 	<textarea onblur="cal.hide()" class="closeoutdate" style="width:400px;" gldp-id="@field("activitydate").id" id="@field("activitydate").id" name="@field("activitydate").name">@field("activitydate").value</textarea>
+										</div>
+										<div gldp-el="@field("activitydate").id" style="width:400px; height:300px; position:absolute; top:70px; left:100px;"></div>
+										
+									</fieldset>
+								} else {
+									<div id="@field("date-entry").id">
+										<input type="hidden" name="@field("no_activity").name" id="@field("no_activity").id" value="false" />
+										<label class="form-label" for="@field("activitydate").id">@Messages("activityformcloseout.field_heading.activitydate")</label>
+										@for(error <- field("activitydate").errors) {
+								    		<div class="validation-message">@Messages(error.message, error.args: _*)</div>
+										}
+										<div class="form-hint">@Messages("activityformcloseout.field_hint.activitydate")</div>
+										<textarea onblur="cal.hide()" class="closeoutdate" style="width:400px;" gldp-id="@field("activitydate").id" id="@field("activitydate").id" name="@field("activitydate").name">@field("activitydate").value</textarea>
+									</div>
+									<div gldp-el="@field("activitydate").id" style="width:400px; height:300px; position:absolute; top:70px; left:100px;"></div>			
+								}
+							}
+						}
+					</td>
+					
+					@if(field("id").value.getOrElse("") == "" || appStatus=="Draft") {
+					<th style="width:3em; text-align: center;">
+						<input name="btnRemove" type="button" class="BtnMinus" value="@Messages("activityform.removelocation.heading")" title="@Messages("activityform.removelocation.title")"/>
+					</th>
+					}
+				</tr>
+			</tbody>
+		</table>
+		
+</div>

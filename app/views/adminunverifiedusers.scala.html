@@ -1,0 +1,82 @@
+@(appUser: AppUser, users: List[AppUser])
+
+@import layouts._
+@import includes._
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+}  
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
+}
+<script type="text/javascript">
+function resend(s)
+{
+	$.get( "/registration/resendverifmail/"+s, function( data ) {
+		alert( data );
+	});
+}
+</script>
+	
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+	<main id="page-container" role="main">
+		@noiseregistry_phasebanner()
+  		@noiseregistry_breadcrumb("ADMINUNVERIF")
+		<a id="content"></a>
+    	<div class="grid-row">
+    		<div class="column-two-thirds">
+				<h1 class="heading-large">@play.twirl.api.Html(Messages("unverified_users.title"))</h1>
+				<p class="font-small">
+					@play.twirl.api.Html(Messages("unverified_users.intro"))
+				</p>
+				<table title="Unverified Users">
+   						<tbody>
+   							<tr>
+   								<th>@play.twirl.api.Html(Messages("unverified_users.fullname"))</th>
+   								<th>@play.twirl.api.Html(Messages("unverified_users.emailaddress"))</th>
+   								<th>@play.twirl.api.Html(Messages("unverified_users.lastsentverification"))</th>
+   								<th>@play.twirl.api.Html(Messages("unverified_users.resend_button"))</th>
+   								<th>@play.twirl.api.Html(Messages("unverified_users.authorise_button"))</th>
+   							</tr>
+   						@for(au <- users){
+							<tr>
+								<td>
+									@au.getFullname()
+								</td>
+								<td>
+									@au.getEmail_address()
+								</td>
+								<td>
+									@view_displaydate(au.getDate_last_sent_verification(),"dd-MM-yyyy HH:mm")										
+								</td>
+								<td>
+									@helper.form(action = routes.RegistrationController.resendverifmail(au.getId()), 'id -> "form") {
+										<input type="submit" class="BtnMinus" value="@play.twirl.api.Html(Messages("unverified_users.resend_button"))">
+									}																			
+								</td>
+								<td>
+									@helper.form(action = routes.RegistrationController.adminauthorise(au.getId()), 'id -> "form") {
+										<input type="submit" class="BtnMinus" value="@play.twirl.api.Html(Messages("unverified_users.authorise_button"))">
+									}																			
+								</td>
+							</tr>
+						}
+						<tbody>
+					</table>
+			</div>
+    		<div class="column-third">
+    		</div>
+  		</div>
+    	    	
+    </main><!-- / #page-container -->
+}

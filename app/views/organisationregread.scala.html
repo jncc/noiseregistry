@@ -1,0 +1,106 @@
+@(appUser: AppUser, reg: Regulator)
+
+@import java.math.BigInteger; var users:List[OrgUser]=null; var verus=false;var unverus=false;
+@import layouts._
+@import scala._
+@import includes._
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+}  
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
+}
+	
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+<main id="page-container" role="main">
+	@noiseregistry_phasebanner()
+	@noiseregistry_breadcrumb("ORGREAD")
+	<a id="content"></a>
+   	<div class="grid-row">
+   		<div class="column-two-thirds">
+  		
+  		<h1 class="heading-large">Regulator @play.twirl.api.Html(Messages("organisationform.title"))</h1>
+		<table title="Organisation details">
+			<tbody>
+	        	@form_displaytext(reg.getOrganisation().getOrganisation_name(), "organisationform.organisation_name")		
+	        	@form_displaytext(reg.getOrganisation().getContact_name(), "organisationform.contact_name")		
+	        	@form_displaytext(reg.getOrganisation().getContact_email(), "organisationform.contact_email")	
+        		@if(reg.getAccepts_email()) {
+        			@form_displaytext(Messages("organisationform.accepts_email.true"), "organisationform.accepts_email")	
+        		} else {
+        			@form_displaytext(Messages("organisationform.accepts_email.false"), "organisationform.accepts_email")
+        		}
+        		
+	        	@form_displaytext(reg.getOrganisation().getContact_phone(), "organisationform.contact_phone")
+	        	@if(appUser.getOrgRole()=="OVERALL_ADMIN") {
+	        		@form_displaytext(reg.getCloseoutdays().toString(),"organisationform.closeoutdays")	
+	        	}
+	        </tbody>
+	    </table>
+	    
+	    @{users=reg.getOrganisation().findUsers()}
+        @for(ou <- users) {
+        	@if(ou.getStatus()=="verified"){
+        		@{verus=true}
+			} else {
+				@if(ou.getStatus()=="unverified"){
+        			@{unverus=true}
+  				}
+			}
+		}
+
+        <h2 class="heading-medium">@Messages("organisationform.verified.users")</h2>
+		@if(!verus){
+			<p class="font-small">@Messages("organisationform.no.verified")</p>
+		} else {
+	       	<table title="Verified users">
+	       		<thead>
+	       			<tr>
+	       				<th>@Messages("organisationform.user.name")</th>
+		       			<th>@Messages("organisationform.contact_email")</th>
+	       				<th>@Messages("organisationform.user.administrators")</th>
+	       			</tr>
+	       		</thead>
+	       		<tbody>
+	       			@for(ou <- users) {
+	       				@if(ou.getStatus()=="verified"){
+		   					<tr>
+		   						<td><a href="@routes.OrganisationController.getuser(ou.getId().toString())">@ou.getAu().getFullname()</a></td>	       			
+	    						<td>@ou.getAu().getEmail_address()</td>	       			
+	       						<td>@ou.isAdministrator()</td>
+	    					</tr>
+	    				}
+					}
+				</tbody>        
+			</table>
+		}
+  
+      	</div>
+      	<div class="column-third">
+      		@if(true) {
+				<h2 class="heading-medium">@play.twirl.api.Html(Messages("actions.actions"))</h2>
+				<nav>
+					<ul  class="related-actions">
+						<li><a href="@routes.RegulatorController.edit(reg.getId().toString())">@play.twirl.api.Html(Messages("actions.edit_regulator"))</a></li>
+						@if(appUser.getOrgRole()=="OVERALL_ADMIN") {
+							<li><a href="@routes.OrganisationController.mergeUI(reg.getOrganisation().getId().toString())">@play.twirl.api.Html(Messages("actions.merge_organisations"))</a></li>
+							<li><a href="@routes.OrganisationController.addUserByAdminUI(reg.getOrganisation().getId())">@play.twirl.api.Html(Messages("actions.org_add_user"))</a></li>
+						}
+					</ul>
+				</nav>
+			}
+      	</div>
+	</div>
+</main>
+}

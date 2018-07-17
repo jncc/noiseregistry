@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	<changeSet author="unknown" id="decomposedcolumn">
+        <addColumn tableName="activitylocation">
+            <column name="decomposed" type="boolean" defaultValue="false"  />
+        </addColumn>
+    </changeSet>
+  	
+  	<changeSet author="unknown" id="setenteredpoint">
+  	<sql>
+  	update ActivityLocation set entered_point = ST_SetSRID(ST_POINT(lng, lat), 4326) where (lat is not null and lng is not null)
+  	</sql>
+  	</changeSet>
+  	
+  	<changeSet author="unknown" id="droplatlng">
+  	 	<dropColumn columnName="lat" tableName="activitylocation"/>
+  	 	<dropColumn columnName="lng" tableName="activitylocation"/>
+  	</changeSet>
+</databaseChangeLog>

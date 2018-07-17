@@ -1,0 +1,40 @@
+@(appForm:Form[_], activitytype_id:Long)
+
+@import includes._
+
+@if(activitytype_id!=ActivityTypes.MoD.toLong()) {
+	 
+	<legend class="form-label-bold">@Messages("activityform.field_heading.actual_data")</legend>
+	<span class="form-hint">@Messages("activityform.field_hint.actual_data")</span>
+ 	
+	@if(activitytype_id==ActivityTypes.Seismic_Survey.toLong()) {
+		@form_inputnumber(appForm, "activitySeismic.max_airgun_volume_actual", "activityform.field_heading.seismic_max_airgun_actual", "activityform.field_hint.seismic_max_airgun_actual", "units.max_airgun_volume")		
+    	@form_inputnumber(appForm, "activitySeismic.sound_pressure_level_actual", "activityform.field_heading.seismic_sound_pressure_actual", "activityform.field_hint.seismic_sound_pressure_actual", "units.sound_pressure_level")
+    	@form_inputnumber(appForm, "activitySeismic.sound_exposure_level_actual", "activityform.field_heading.seismic_sound_exposure_actual", "activityform.field_hint.seismic_sound_exposure_actual", "units.sound_exposure_level")
+	}
+	@if(activitytype_id==ActivityTypes.Sub_Bottom_Profilers.toLong()) {
+		@form_inputnumber(appForm, "activitySubBottomProfilers.frequency_actual", "activityform.field_heading.sbp_frequency_actual", "activityform.field_hint.sbp_frequency_actual", "units.frequency")
+    	@form_inputnumber(appForm, "activitySubBottomProfilers.sound_pressure_level_actual", "activityform.field_heading.sbp_sound_pressure_actual", "activityform.field_hint.sbp_sound_pressure_actual", "units.sound_pressure_level")
+    	@form_inputnumber(appForm, "activitySubBottomProfilers.sound_exposure_level_actual", "activityform.field_heading.sbp_sound_exposure_actual", "activityform.field_hint.sbp_sound_exposure_actual", "units.sound_exposure_level")
+	}
+	@if(activitytype_id==ActivityTypes.Piling.toLong()) {
+		@form_inputnumber(appForm, "activityPiling.max_hammer_energy_actual", "activityform.field_heading.piling_max_hammer_actual", "activityform.field_hint.piling_max_hammer_actual", "units.max_hammer_energy")
+    	@form_inputnumber(appForm, "activityPiling.sound_pressure_level_actual", "activityform.field_heading.piling_sound_pressure_actual", "activityform.field_hint.piling_sound_pressure_actual", "units.sound_pressure_level")
+    	@form_inputnumber(appForm, "activityPiling.sound_exposure_level_actual", "activityform.field_heading.piling_sound_exposure_actual", "activityform.field_hint.piling_sound_exposure_actual", "units.sound_exposure_level")
+	}
+	@if(activitytype_id==ActivityTypes.Explosives.toLong()) {
+		@form_inputnumber(appForm, "activityExplosives.tnt_equivalent_actual", "activityform.field_heading.explosive_tnt_actual", "activityform.field_hint.explosive_tnt_actual", "units.tnt_equivalent")
+    	@form_inputnumber(appForm, "activityExplosives.sound_pressure_level_actual", "activityform.field_heading.explosive_sound_pressure_actual", "activityform.field_hint.explosive_sound_pressure_actual", "units.sound_pressure_level")
+    	@form_inputnumber(appForm, "activityExplosives.sound_exposure_level_actual", "activityform.field_heading.explosive_sound_exposure_actual", "activityform.field_hint.explosive_sound_exposure_actual", "units.sound_exposure_level") 	
+	}
+	@if(activitytype_id==ActivityTypes.Acoustic_Deterrent_Device.toLong()) {
+		@form_inputnumber(appForm, "activityAcousticDD.frequency_actual", "activityform.field_heading.acoustic_frequency_actual", "activityform.field_hint.acoustic_frequency_actual", "units.frequency.acousticDD")
+    	@form_inputnumber(appForm, "activityAcousticDD.sound_pressure_level_actual", "activityform.field_heading.acoustic_sound_pressure_actual", "activityform.field_hint.acoustic_sound_pressure_actual", "units.sound_pressure_level")
+    	@form_inputnumber(appForm, "activityAcousticDD.sound_exposure_level_actual", "activityform.field_heading.acoustic_sound_exposure_actual", "activityform.field_hint.acoustic_sound_exposure_actual", "units.sound_exposure_level")
+	}
+	@if(activitytype_id==ActivityTypes.Multibeam_Echosounders.toLong()) {
+		@form_inputnumber(appForm, "activityMultibeamES.frequency_actual", "activityform.field_heading.mb_frequency_actual", "activityform.field_hint.mb_frequency_actual", "units.frequency")
+    	@form_inputnumber(appForm, "activityMultibeamES.sound_pressure_level_actual", "activityform.field_heading.mb_sound_pressure_actual", "activityform.field_hint.mb_sound_pressure_actual", "units.sound_pressure_level")
+    	@form_inputnumber(appForm, "activityMultibeamES.sound_exposure_level_actual", "activityform.field_heading.mb_sound_exposure_actual", "activityform.field_hint.mb_sound_exposure_actual", "units.sound_exposure_level")
+	}
+}

@@ -1,0 +1,33 @@
+@(appForm:Form[_], aaPar: ActivityApplication)
+@* 
+ * This partial is used on the close out activity application form to allow the user to 
+ * add additional activity locations and to record dates of actual activity
+ *@	
+<fieldset id="activitylocations">
+ 	<legend class="form-label-bold">@Messages("activityform.field_heading.activity_location_date_entry")</legend>
+ 	<span class="form-hint">@play.twirl.api.Html(Messages("activityform.field_hint.activity_location_date_entry"))</span>
+ 	
+	<input name="csvupload" class="button" type="submit" value="@Messages("activityform.field_hint.csvuploadlabel")">	
+ 	
+	@helper.repeat(appForm("activitylocations"), min=0) { activitylocations =>
+		@location_entry_group(activitylocations, parentId=appForm("id").value, closeOut = true, appStatus = appForm("status").value)
+	}
+    <div id="nolocations" @if((appForm("activitylocations").indexes.size) > 0){class="js-hidden"}>@Messages("activityform.nolocations")</div>
+           
+	@**
+	 * Keep an hidden block that will be used as template for Javascript copy code
+	 **@
+	@location_entry_group(appForm("activitylocations[x]"), 
+		className = "activitylocations_template js-hidden", 
+		parentId=appForm("id").value, 
+		creationType = "Additional", 
+		closeOut = true,
+		appStatus = appForm("status").value
+		)
+          
+</fieldset>
+<br />	
+	@location_manual_fields(appForm, Messages("activityformcloseout.heading.location_entry"),
+	Messages("activityformcloseout.field_hint.location_entry_type"),
+	Messages("activityformcloseout.text.location_entry"), 
+	false, aaPar, true, true, "Proposed")

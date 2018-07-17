@@ -1,0 +1,17 @@
+@(orgType:String, userRole:String, context:String="")
+<div class="noiseregistry-noprint">
+<h2 class="heading-medium">@play.twirl.api.Html(Messages("actions.actions"))</h2>
+
+	<nav>
+		<ul  class="related-actions">
+			<li><a href="@routes.RegistrationController.edit()">@play.twirl.api.Html(Messages("actions.edit_mydetails"))</a></li>
+			@if(orgType!="REGULATOR") {
+				<li><a href="@routes.OrganisationController.list()">@play.twirl.api.Html(Messages("actions.join_organisation"))</a></li>
+			}
+			<li><a href="@routes.ChangePasswordController.index()">@play.twirl.api.Html(Messages("actions.change_password"))</a></li>			
+		</ul>
+	</nav>
+	 
+</div>
+		
+

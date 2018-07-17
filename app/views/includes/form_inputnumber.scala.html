@@ -1,0 +1,4 @@
+@(implicit myForm: Form[_], field_id: String, field_label_message:String, field_hint_message:String="", field_suffix:String="", label_class:String="form-label")
+@import helper._
+@implicitField = @{ FieldConstructor(form_element_number.f) }
+@inputText(myForm(field_id), '_label->Messages(field_label_message), 'class->"form-control", '_help->Messages(field_hint_message), 'field_suffix->field_suffix, 'label_class->label_class)

@@ -1,0 +1,74 @@
+@(orgThis:Organisation, orgCmp:Organisation, host:String, overrideEmail:String, addresses:List[javax.mail.internet.InternetAddress], bHTML: Boolean)
+@import includes._
+@if(bHTML) {
+<html>
+<head>
+</head>
+<body style="font-size:medium; font-family:Calibri,sans-serif">
+@if(!overrideEmail.equals("")) {
+	<div>
+	(Noise Producer mail override has been configured to prevent mail going out)
+	Email originally intended for address:<br />
+	@for(address <- addresses) {
+		@address.getAddress()<br />
+	} 
+	</div>
+	<br />
+}
+<div>
+@play.twirl.api.Html(Messages("orgchanges.mail.preamble"))
+</div>
+@if(!orgThis.getOrganisation_name().equals(orgCmp.getOrganisation_name())) {
+<div>
+@play.twirl.api.Html(Messages("orgchanges.mail.neworgname"))
+@orgCmp.getOrganisation_name()
+</div>
+}
+@if(!orgThis.getContact_name().equals(orgCmp.getContact_name())) {
+<div>
+@play.twirl.api.Html(Messages("orgchanges.mail.newcontactname"))
+@orgCmp.getContact_name()
+</div>
+}
+@if(!orgThis.getContact_email().equals(orgCmp.getContact_email())) {
+<div>
+@play.twirl.api.Html(Messages("orgchanges.mail.newcontactemail"))
+@orgCmp.getContact_email()
+</div>
+}
+@if(!orgThis.getContact_phone().equals(orgCmp.getContact_phone())) {
+<div>
+@play.twirl.api.Html(Messages("orgchanges.mail.newcontactphone"))
+@orgCmp.getContact_phone()
+</div>
+}
+
+<div>
+@play.twirl.api.Html(Messages("orgchanges.mail.footer"))
+</div>
+@email_footer(host,bHTML)
+</body>
+</html>
+} else {
+@Messages("orgchanges.mail.preamble.plain")
+@if(!orgThis.getOrganisation_name().equals(orgCmp.getOrganisation_name())) {
+@Messages("orgchanges.mail.neworgname")
+@orgCmp.getOrganisation_name()
+}
+@if(!orgThis.getContact_name().equals(orgCmp.getContact_name())) {
+@Messages("orgchanges.mail.newcontactname")
+@orgCmp.getContact_name()
+}
+@if(!orgThis.getContact_email().equals(orgCmp.getContact_email())) {
+@Messages("orgchanges.mail.newcontactemail")
+@orgCmp.getContact_email()
+}
+@if(!orgThis.getContact_phone().equals(orgCmp.getContact_phone())) {
+@Messages("orgchanges.mail.newcontactphone")
+@orgCmp.getContact_phone()
+}
+
+@Messages("orgchanges.mail.footer")
+@email_footer(host,bHTML)
+}
+

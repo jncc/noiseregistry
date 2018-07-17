@@ -1,0 +1,24 @@
+@(implicit myForm: Form[_], field_id: String, field_label_message:String, field_hint_message:String, radvals:Seq[(String,String)])
+@import helper._
+@import java.math.BigInteger; var i=1; var c=""
+@implicitField = @{ FieldConstructor(form_element_check.f) }
+<div class="form-group">
+	<div class="@if(myForm(field_id).hasErrors) {error}">
+		<fieldset class="inline">
+			<legend class="form-label-bold">@Messages(field_label_message)</legend>
+			@for(error <- myForm(field_id).errors) {
+    			<div class="validation-message">@error.message</div>
+			}
+			<span class="form-hint">@Messages(field_hint_message)</span>
+			<div class="form-group form-group-compound">
+			
+			@for((value, label) <- radvals){
+				@{c=field_id.replace(".","_")+"-"+i}
+				@inputText(myForm(field_id), 'id->c, '_label->label, 'value->value, 'class->"block-label")
+				@{i=i+1}
+			}
+			</div>
+		</fieldset>
+	</div>
+</div>
+	

@@ -1,0 +1,74 @@
+@(activityapp:ActivityApplication, orgType:String, userRole:String, ctx:String)
+
+@if(orgType=="NOISEPRODUCER") {
+	@if(ctx=="confirmadd" && activityapp.getParent()==null) {
+		<div class="noiseregistry-noprint">
+			<h2 class="heading-medium">@play.twirl.api.Html(Messages("actions.actions"))</h2>
+			<nav>
+				<ul class="related-actions">
+					<li><a href="@routes.ActivityApplicationController.createLinked(activityapp.getId())">@play.twirl.api.Html(Messages("actions.create_linked_activity"))</a></li>
+				</ul>
+			</nav>
+		</div>			
+	} else {
+		@if((activityapp.getStatus()=="Proposed"  || activityapp.getStatus()=="Interim Close-out" || activityapp.getStatus()=="Draft") 
+ 			&& (ctx!="confirmadd")) {
+ 			<div class="noiseregistry-noprint">
+			<h2 class="heading-medium">@play.twirl.api.Html(Messages("actions.actions"))</h2>
+			<nav>
+				<ul class="related-actions">
+					@if(activityapp.getStatus()=="Draft") {
+						<li><a href="@routes.ActivityApplicationController.edit(activityapp.getId())">@play.twirl.api.Html(Messages("actions.edit_draft_activity"))</a></li>
+						<li><a href="@routes.ActivityApplicationController.delete(activityapp.getId())">@play.twirl.api.Html(Messages("actions.delete_draft_activity"))</a></li>
+						<li><a href="@routes.ActivityApplicationController.submit(activityapp.getId())">@play.twirl.api.Html(Messages("actions.submit_draft_activity"))</a></li>
+					} else {
+						@if(activityapp.getStatus()=="Proposed") {
+							<li><a href="@routes.ActivityApplicationController.cancel(Long.toString(activityapp.getId()))">@play.twirl.api.Html(Messages("actions.cancel_activity"))</a></li>
+						}
+						<li><a href="@routes.ActivityApplicationController.closeOut(activityapp.getId())">@play.twirl.api.Html(Messages("actions.submit_closeout_data"))</a></li>		
+					}
+					@if(activityapp.getStatus()=="Draft" || activityapp.getStatus()=="Proposed") {
+						@if(activityapp.getParent()==null) {
+							<li><a href="@routes.ActivityApplicationController.createLinked(activityapp.getId())">@play.twirl.api.Html(Messages("actions.create_linked_activity"))</a></li>
+						}
+					}
+					
+					@if(userRole=="ADMIN" && (activityapp.getStatus()=="Proposed")) {
+						@if(activityapp.getStatus()=="Proposed") {
+							<li><a href="@routes.ActivityApplicationController.revertActivityStatus(activityapp.getId(),System.currentTimeMillis)">@play.twirl.api.Html(Messages("actions.revert_activity_status",play.twirl.api.Html(Messages("Draft"))))</a></li>
+						}
+					}
+	 			</ul>
+		 	</nav>
+		 	</div>
+ 		}
+	}
+}
+	
+@if(userRole=="OVERALL_ADMIN" && (activityapp.getStatus()=="Proposed"  || activityapp.getStatus()=="Interim Close-out" || activityapp.getStatus()=="Closed" || activityapp.getStatus()=="Cancelled" || activityapp.getStatus()=="Deleted") ) {
+	<div class="noiseregistry-noprint">
+		<h2 class="heading-medium">@play.twirl.api.Html(Messages("actions.overall_admin_actions"))</h2>
+		<nav>
+			<ul class="related-actions">
+				@if(activityapp.getStatus()=="Deleted") {
+					<li><a href="@routes.ActivityApplicationController.restore(activityapp.getId())">@play.twirl.api.Html(Messages("actions.restore_draft_activity"))</a></li>
+				}
+				@if(activityapp.getStatus()=="Proposed" || activityapp.getStatus()=="Cancelled") {
+					<li><a href="@routes.ActivityApplicationController.revertActivityStatus(activityapp.getId(),System.currentTimeMillis)">@play.twirl.api.Html(Messages("actions.revert_activity_status",play.twirl.api.Html(Messages("Draft"))))</a></li>
+				}
+				@if(activityapp.getStatus()=="Interim Close-out") {
+					<li><a href="@routes.ActivityApplicationController.revertActivityStatus(activityapp.getId(),System.currentTimeMillis)">@play.twirl.api.Html(Messages("actions.revert_activity_status",play.twirl.api.Html(Messages("Proposed"))))</a></li>
+				}
+				@if(activityapp.getStatus()=="Closed") {
+					<li><a href="@routes.ActivityApplicationController.revertActivityStatus(activityapp.getId(),System.currentTimeMillis)">@play.twirl.api.Html(Messages("actions.revert_activity_status",play.twirl.api.Html(Messages("Interim Close-out"))))</a></li>
+				}
+				@if(activityapp.getStatus()=="Draft" || activityapp.getStatus()=="Proposed" || activityapp.getStatus()=="Cancelled" || activityapp.getStatus()=="Interim Close-out") {
+					<li><a href="@routes.ActivityApplicationController.preDelete(activityapp.getId())">@play.twirl.api.Html(Messages("actions.delete_activity"))</a></li>
+				}
+	 		</ul>
+	 	</nav>
+ 	</div>
+}
+
+		
+

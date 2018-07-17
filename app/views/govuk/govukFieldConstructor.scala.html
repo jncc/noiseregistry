@@ -1,0 +1,34 @@
+@**
+ * GovUK elements field constructor.
+ *
+ * It generates field as following:
+ * {{{
+ * <div class="form-group">
+ *   <label class="form-label" for="name">Your name:</label>
+ *	 <div class="form-hint">Enter your full name</div>
+ *   <input type="text" id="name" name="name" class="form-control"></dd>
+ *   <div class="validation-message">This field is required</div>
+ *   <div class="form-hint">Required</div>
+ * </div>
+ * }}}
+ * Additional class entries that may be needed for group:  @elements.args.get('_class) @if(elements.hasErrors) {error}
+ * @param elements The field information.
+ *@
+@(elements: helper.FieldElements)
+<div class="form-group" id="@elements.args.get('_id).getOrElse(elements.id + "_field")">
+	@if(elements.hasName) {
+    <div>@elements.name(elements.lang)</div>
+    } else {
+	<label class="form-label" for="@elements.id">@elements.label(elements.lang)</label>	
+	}
+	@if(elements.args.get('_fieldhint).getOrElse("")!="") {
+	<div class="form-hint">@elements.args.get('_fieldhint).getOrElse("")</div>
+	}
+    @elements.input
+    @elements.errors(elements.lang).map { error =>
+        <div class="validation-message">@error</div>
+    }
+    @elements.infos(elements.lang).map { info =>
+        <div class="form-hint">@info</div>
+    }
+</div>

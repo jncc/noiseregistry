@@ -1,0 +1,58 @@
+@(appUser: AppUser, userForm: Form[AppUserDetails], title: String, id:Long)
+@import layouts._
+@import scala._
+@import includes._
+@import helper._
+
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+}  
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
+}
+	
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+	<main id="page-container" role="main">
+	@noiseregistry_phasebanner()
+  	@noiseregistry_breadcrumb("USERDETAILSEDIT")
+  	<a id="content"></a>
+  	<h1 class="heading-large">@title</h1>
+	@helper.form(action = routes.RegistrationController.update(id)) {
+
+		@if(userForm.hasGlobalErrors) {
+		    <p class="validation-message">
+		        @userForm.globalError.message
+		    </p>
+		}
+		@inputText(userForm("email_address"), 
+			'_label->Messages("userform.field_heading.email_address"), 
+			'_fieldhint->Messages("userform.field_hint.email_address"), 
+			'_showConstraints -> false,
+			'class->"form-control")(govuk.govukFieldConstructor, implicitly[Lang])
+		@inputText(userForm("fullname"), 
+			'_label->Messages("userform.field_heading.fullname"), 
+			'_fieldhint->Messages("userform.field_hint.fullname"),
+			'_showConstraints -> false, 
+			'class->"form-control")(govuk.govukFieldConstructor, implicitly[Lang])
+		@inputText(userForm("phone"), 
+			'_label->Messages("userform.field_heading.phone"), 
+			'_fieldhint->Messages("userform.field_hint.phone"), 
+			'_showConstraints -> false,
+			'class->"form-control")(govuk.govukFieldConstructor, implicitly[Lang])
+		
+		<input class="button" type="submit" value="@Messages("form.submit")">
+		
+	}
+	</main>
+}

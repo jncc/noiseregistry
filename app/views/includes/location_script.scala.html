@@ -1,0 +1,256 @@
+@(dateStart: Option[Date] = None, dateEnd: Option[Date] = None)
+<script src="@routes.Assets.at("javascripts/glDatePicker.min.js")"></script>
+<script type="text/javascript">
+
+var cal = null;
+var dpOptions = {
+	    				selectableDateRange: [
+	      					{ from: new Date(@dateStart.getOrElse(new Date()).getTime()),
+	      	                  to: new Date(@dateEnd.getOrElse(new Date()).getTime()) },
+	      	            ],
+	      	            todayDate: new Date(@dateStart.getOrElse(new Date()).getTime()),
+	      	            onShow: function(calendar) {  cal = calendar; $(window).resize(); calendar.show(); },
+	      	            onHide: function(calendar) {
+	      	            },
+	      			    onClick: function(target, cell, date, data) {
+	      			    	s = target.val();
+	      			    	m = date.getMonth()+1;
+	      			    	if (s!="")
+	      			    		s+=", ";
+	      			        target.val(s + pad(date.getDate(), 2) + "/" + m + "/" + pad(date.getFullYear()), 2);
+	      			    }
+	      			};
+	      			
+function datepicker_init() {
+	$('.activitylocations .closeoutdate').glDatePicker(dpOptions);
+}
+
+$(".closeoutdate").on("blur", function(){ 
+  cal.hide();
+});
+
+function hideShowSaveAndSubmit(el)
+{
+	if ($("#saveandsubmit")==null)
+		return;
+		
+	if (el.id=="entry-parentloc")
+	{
+		$("#saveandsubmit").hide();
+		if ($("#saveasdraft")!=null)
+			$("#saveasdraft").hide();
+		return;
+	}
+	else if (el.id=="location-entry")
+	{
+		$("#saveandsubmit").show();
+		if ($("#saveasdraft")!=null)
+			$("#saveasdraft").show();
+	}
+	if ($("#locationcsv-entry")!=null)
+	{
+		if ($("#locationcsv-entry").is(':checked'))
+			$("#saveandsubmit").hide();
+		else
+		{
+			$("#saveandsubmit").show();
+			if ($("#saveasdraft")!=null)
+				$("#saveasdraft").show();
+		}
+	}
+}
+
+$("#locationcsv-entry").on('click', function () {
+	hideShowSaveAndSubmit(this);
+});
+$("#entry-parentloc").on('click', function () {
+	hideShowSaveAndSubmit(this);
+});
+$("#locationman-entry").on('click', function () {
+	hideShowSaveAndSubmit(this);
+});
+$("#location-entry").on('click', function () {
+	hideShowSaveAndSubmit(this);
+});
+$("#locationnone-entry").on('click', function () {
+	hideShowSaveAndSubmit(this);
+});
+
+function pad(num, size) {
+	var out = num + ""; // force string
+	while (out.length < size) out = "0" + out;
+	return out;
+}
+
+datepicker_init();
+
+$('.button.addActivityLocation').on('click', function(e) {
+	if ($( "input:radio[name=entrytype]:checked" ).length>0) {
+		var entryType=$( "input:radio[name=entrytype]:checked" ).val();
+		
+		if (entryType=="ogb" && ($( "#entered_ogb_code" ).val().length==0)) {
+			return;
+		}
+		if (entryType=="latlng" && ($( "#lat" ).val().length==0 || $( "#lng" ).val().length==0)) {
+			return;
+		}
+		
+	    var template = $('.activitylocations_template');
+	    template.before('<div class="activitylocations">' + template.html() + '</div>');
+	    var last = renumber();
+	    populateEntry(last);
+	    $(".activitylocations").on("click", ".BtnMinus", deleteRow);
+	    $("#nolocations").addClass("js-hidden");
+	    
+	    
+	    //As we may have added radio buttons, call the code to handle dynamic display.
+	    var $blockLabels = $(".block-label input[type='radio'], .block-label input[type='checkbox']");
+	  	new GOVUK.SelectionButtons($blockLabels);
+	    var toggleContent = new ShowHideContent();
+	    if (toggleContent) {
+	    	toggleContent.showHideRadioToggledContent();
+	    }
+    }
+});
+
+$('#addPolygonPoint').on('click', function(e) {
+ 	var template = $('.polygon_point_template');
+	template.before('<tr class="polygon_point">' + template.html() + '</tr>');
+	renumberPolygonPoints();
+});
+    
+$('#form').submit(function() {
+    $('.activitylocations_template').remove();
+    $('.polygon_point_template').remove();
+});
+    
+var renumber = function() {
+ 	var idxLast=0;
+    $('.activitylocations').each(function(i) {
+        $('input', this).each(function() {
+            $(this).attr('name', $(this).attr('name').replace(/activitylocations\[.+?\]/g, 'activitylocations[' + i + ']'));
+            if ($(this).attr('id')) {
+            	$(this).attr('id', $(this).attr('id').replace(/activitylocations_.+?_/g, 'activitylocations_' + i + '_'));
+        	}
+        });
+        
+        $('textarea', this).each(function() {
+            $(this).attr('name', $(this).attr('name').replace(/activitylocations\[.+?\]/g, 'activitylocations[' + i + ']'));
+            $(this).attr('id', $(this).attr('id').replace(/activitylocations_.+?_/g, 'activitylocations_' + i + '_'));
+        });
+        $('label', this).each(function() {
+            $(this).attr('for', $(this).attr('for').replace(/activitylocations_.+?_/g, 'activitylocations_' + i + '_'));
+        });
+        $('div', this).each(function() {
+        	if ($(this).attr('id')) {
+            	$(this).attr('id', $(this).attr('id').replace(/activitylocations_.+?_/g, 'activitylocations_' + i + '_'));
+        	}
+        	if ($(this).attr('gldp-el')) {
+            	$(this).attr('gldp-el', $(this).attr('gldp-el').replace(/activitylocations_.+?_/g, 'activitylocations_' + i + '_'));
+        	}
+        });
+        
+        $('.closeoutdate', this).each(function() {
+        	if ($(this).attr('gldp-id')) {
+            	$(this).attr('gldp-id', $(this).attr('gldp-id').replace(/activitylocations_.+?_/g, 'activitylocations_' + i + '_'));
+        	}
+        	$('#activitylocations_'+i+'_activitydate').glDatePicker(dpOptions);
+        });
+        idxLast = i;
+    });
+    
+    return idxLast;
+}
+var renumberPolygonPoints = function() {
+ 	var idxLast=0;
+    $('.polygon_point').each(function(i) {
+        $('input', this).each(function() {
+            $(this).attr('name', $(this).attr('name').replace(/polygon_point\[.+?\]/g, 'polygon_point[' + i + ']'));
+            if ($(this).attr('id')) {
+            	$(this).attr('id', $(this).attr('id').replace(/polygon_point_.+?_/g, 'polygon_point_' + i + '_'));
+        	}
+        });
+        
+        $('textarea', this).each(function() {
+            $(this).attr('name', $(this).attr('name').replace(/polygon_point\[.+?\]/g, 'polygon_point[' + i + ']'));
+            $(this).attr('id', $(this).attr('id').replace(/polygon_point_.+?_/g, 'polygon_point_' + i + '_'));
+        });
+        $('label', this).each(function() {
+            $(this).attr('for', $(this).attr('for').replace(/polygon_point_.+?_/g, 'polygon_point_' + i + '_'));
+        });
+        $('div', this).each(function() {
+        	if ($(this).attr('id')) {
+            	$(this).attr('id', $(this).attr('id').replace(/polygon_point_.+?_/g, 'polygon_point_' + i + '_'));
+        	}
+        });
+	});
+	return idxLast;
+}
+function deleteRow() {
+    var par = $(this).closest(".activitylocations");
+    par.remove();
+    renumber();
+    if ($(".activitylocations").length == 0) {
+    	$("#nolocations").removeClass("js-hidden");
+    }
+};
+$(".activitylocations").on("click", ".BtnMinus", deleteRow);
+
+var populateEntry= function(id) {
+	var entryType=$( "input:radio[name=entrytype]:checked" ).val();
+	$('input[name="activitylocations[' + id + '].entrytype"]').val(entryType);
+	
+	if (entryType=="ogb") {
+		$('input[name="activitylocations[' + id + '].entered_ogb_code"]').val($( "#entered_ogb_code" ).val());
+	}
+	if (entryType=="latlng") {
+		$('input[name="activitylocations[' + id + '].lat"]').val($( "#lat" ).val());
+		$('input[name="activitylocations[' + id + '].lng"]').val($( "#lng" ).val());
+	}
+	if (entryType=="polygon") {
+		//get hold of the set of lat/lng values
+		var res = "";
+		$('.polygon_point').each(function(i) {
+		
+			if (res!="") {
+				res += ", ";
+			}
+			res += $('input[name="polygon_point[' + i + '].lat"]').val() + " / " + $('input[name="polygon_point[' + i + '].lng"]').val();
+		});
+		$('input[name="activitylocations[' + id + '].polygon_latlngs"]').val(res);
+	}
+	if (entryType=="wktgeom") {
+		$('input[name="activitylocations[' + id + '].wktgeom"]').val($( "#wktgeom" ).val());
+	}
+	
+	//Set a description also:
+	var desc = "";
+	desc = $( "input:radio[name=entrytype]:checked" ).attr("data-display-name");
+	if (entryType=="ogb") {
+		desc += ": " + $( "#entered_ogb_code" ).val();
+	}
+	if (entryType=="latlng") {
+		desc += ": " + $( "#lat" ).val() + " / " + $( "#lng" ).val();
+	}
+	if (entryType=="polygon") {
+		desc += ": " + $('input[name="activitylocations[' + id + '].polygon_latlngs"]').val();
+	}
+	$('input[name="activitylocations[' + id + '].description"]').val(desc);
+	$('input[name="activitylocations[' + id + '].description"]').closest(".activitylocations").find(".rowdescriptor").html(desc);
+	locationEntryReset();
+}
+var locationEntryReset = function() {
+	$( "#lat" ).val("");
+	$( "#lng" ).val("");
+	$( "#entered_ogb_code" ).val("");
+	$( "#wktgeom" ).val("");
+	$('.polygon_point').each(function(i) {
+		if (i>2) {
+			$(this).remove();
+		} else {
+			$('input[name="polygon_point[' + i + '].lat"]').val("");
+			$('input[name="polygon_point[' + i + '].lng"]').val("")
+		}
+	});
+}
+</script>

@@ -1,0 +1,97 @@
+@(appForm:Form[_], heading:String, hint:String, helpText:String, bIncRead:Boolean, aaPar: ActivityApplication, hidePolygon:Boolean, closeOut: Boolean, creationType: String)
+	<span class="form-hint">@hint</span>
+   	<p>@helpText<p>
+   	
+	<label class="block-label radio-location" data-target="latlng-entry" for="entry-1">
+		<input id="entry-1" type="radio" name="entrytype" value="latlng" data-display-name="@Messages("location.type.latlng")" />
+   			@Messages("location.type.latlng")
+	</label>
+	<div class="panel-indent js-hidden" id="latlng-entry">
+		<span class="form-hint">@Messages("activityform.field_hint.latlng")</span>
+		@helper.inputText(appForm("lat"), 
+			'_label->Messages("activityform.field_heading.lat"),
+			'_fieldhint->Messages("activityform.field_hint.lat"),
+			'_showConstraints -> false, 
+			'class->"form-control")(govuk.govukFieldConstructor, implicitly[Lang])
+		@helper.inputText(appForm("lng"), 
+			'_label->Messages("activityform.field_heading.lng"),
+			'_fieldhint->Messages("activityform.field_hint.lng"),
+			'_showConstraints -> false, 
+			'class->"form-control")(govuk.govukFieldConstructor, implicitly[Lang])
+		<div class="manage">
+			<input class="button addActivityLocation" type="button" value="@Messages("activityform.add_location")">
+		</div>
+	</div>
+	
+	<label class="block-label radio-location" data-target="block-entry" for="entry-2">
+    	<input id="entry-2" type="radio" name="entrytype" value="ogb" data-display-name="@Messages("location.type.ogb")"/>
+    	@Messages("location.type.ogb")
+	</label>
+	<div class="panel-indent js-hidden" id="block-entry">
+		<span class="form-hint">@Messages("activityform.field_hint.block_code")</span>
+		@helper.inputText(appForm("entered_ogb_code"), '_label->Messages("activityform.field_heading.block_code"))(govuk.govukFieldConstructor, implicitly[Lang])
+		<div class="manage">
+			<input class="button addActivityLocation" type="button" value="@Messages("activityform.add_location")">
+		</div>
+	</div>
+
+@if(!hidePolygon) {
+	<label class="block-label radio-location" data-target="polygon-entry" for="entry-3">
+		<input id="entry-3" type="radio" name="entrytype" value="polygon" data-display-name="@Messages("location.type.polygon")"/>
+   		@Messages("location.type.polygon")
+	</label>
+	<div class="panel-indent js-hidden" id="polygon-entry">
+		<span class="form-hint">@Messages("activityform.field_hint.polygon")</span>
+		<table title="Polygon Points Entry">
+			<tr>
+				<td>
+					<div class="form-label">
+						@Messages("activityform.field_heading.lat")
+					</div>
+					<div class="form-hint">
+						@Messages("activityform.field_hint.lat")
+					</div>
+				</td>
+				<td>
+					<div class="form-label">
+						@Messages("activityform.field_heading.lng")
+					</div>
+					<div class="form-hint">
+						@Messages("activityform.field_hint.lng")
+					</div>
+				</td>
+			</tr>
+				
+			@helper.repeat(appForm("polygon_point"), min=3) { pt =>
+				@location_polygon_point(pt)
+			}
+			@location_polygon_point(appForm("polygon_point[x]"), className = "polygon_point_template js-hidden")
+		</table>
+		<br />
+		<div>
+			<input class="button" type="button" id="addPolygonPoint" value="@Messages("activityform.add_polygon_point")">
+		</div>
+		<div class="manage">
+			<input class="button addActivityLocation" type="button" value="@Messages("activityform.add_location")">
+		</div>
+	</div>
+}
+@if(!closeOut) {
+	<fieldset id="activitylocations">
+		<legend class="form-label-bold">@Messages("activityform.field_heading.activity_locations")</legend>
+		@helper.repeat(appForm("activitylocations"), min=0) { activitylocations =>
+			@location_entry_group(activitylocations, parentId=appForm("id").value, closeOut = closeOut, appStatus = appForm("status").value)
+		}
+   		<div id="nolocations" @if((appForm("activitylocations").indexes.size) > 0){class="js-hidden"}>@Messages("activityform.nolocations")</div>
+		@**
+			* Keep a hidden block that will be used as template for Javascript copy code to add locations in the list using the Add Location button
+		 **@
+		@location_entry_group(appForm("activitylocations[x]"), 
+			className = "activitylocations_template js-hidden", 
+			parentId=appForm("id").value, 
+			creationType = creationType, 
+			closeOut = closeOut,
+			appStatus = appForm("status").value
+		)          
+	</fieldset>
+}

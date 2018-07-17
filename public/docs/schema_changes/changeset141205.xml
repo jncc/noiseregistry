@@ -1,0 +1,70 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet author="unknown" id="notnulls">
+    	<dropNotNullConstraint 
+            columnDataType="int"
+            columnName="frequency"
+            tableName="activityacousticdd" />
+    	<dropNotNullConstraint 
+            columnDataType="int"
+            columnName="sound_exposure_level"
+            tableName="activityacousticdd" />
+    	<dropNotNullConstraint 
+            columnDataType="int"
+            columnName="sound_pressure_level"
+            tableName="activityacousticdd" />
+    	<dropNotNullConstraint 
+            columnDataType="int"
+            columnName="tnt_equivalent"
+            tableName="activityexplosives" />
+    	<dropNotNullConstraint 
+            columnDataType="int"
+            columnName="frequency"
+            tableName="activitygeophysical" />
+    	<dropNotNullConstraint 
+            columnDataType="int"
+            columnName="sound_exposure_level"
+            tableName="activitygeophysical" />
+    	<dropNotNullConstraint 
+            columnDataType="int"
+            columnName="sound_pressure_level"
+            tableName="activitygeophysical" />
+    	<dropNotNullConstraint 
+            columnDataType="int"
+            columnName="frequency"
+            tableName="activitymultibeames" />
+    	<dropNotNullConstraint 
+            columnDataType="int"
+            columnName="sound_exposure_level"
+            tableName="activitymultibeames" />
+    	<dropNotNullConstraint 
+            columnDataType="int"
+            columnName="sound_pressure_level"
+            tableName="activitymultibeames" />
+    	<dropNotNullConstraint 
+            columnDataType="int"
+            columnName="max_hammer_energy"
+            tableName="activitypiling" />
+    	<dropNotNullConstraint 
+            columnDataType="int"
+            columnName="max_airgun_volume"
+            tableName="activityseismic" />
+    	<dropNotNullConstraint 
+            columnDataType="int"
+            columnName="other_survey_type"
+            tableName="activityseismic" />
+    	<dropNotNullConstraint 
+            columnDataType="int"
+            columnName="sound_exposure_level"
+            tableName="activityseismic" />
+    	<dropNotNullConstraint 
+            columnDataType="int"
+            columnName="sound_pressure_level"
+            tableName="activityseismic" />
+    </changeSet>
+</databaseChangeLog>

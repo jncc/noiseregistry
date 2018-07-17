@@ -1,0 +1,7 @@
+@(number:Integer, field_label_message:String, field_units_message:String="")
+<tr>
+	<td>@Messages(field_label_message)</td>
+	<td>
+		@number @play.twirl.api.Html(Messages(field_units_message))
+	</td>
+</tr>

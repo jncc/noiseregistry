@@ -1,0 +1,34 @@
+@(appUser: AppUser, title: String, message: String, activeTab: String, route_name:Call)
+
+@import layouts._
+@import includes._
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+} 
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, activeTab)	
+}
+	
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+	<main id="page-container" role="main">
+		@noiseregistry_phasebanner()
+		@noiseregistry_breadcrumb("HOME")
+		<a id="content"></a>
+		<h1 class="heading-large">@play.twirl.api.Html(Messages(title))</h1>
+    	@play.twirl.api.Html(Messages(message))
+    	<p>
+    	<a class="button" href="@route_name">@play.twirl.api.Html(Messages("buttons.finished"))</a>
+    	</p>
+    </main><!-- / #page-container -->
+}

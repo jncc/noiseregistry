@@ -1,0 +1,10 @@
+@(elements: helper.FieldElements)
+
+<label class="block-label@if(elements.args.get('class).getOrElse("").toString()!=""){ @elements.args.get('class).getOrElse("").toString()}" for="@elements.id" data-target="@elements.id-div">
+	<input id="@elements.id" name="@elements.name"  
+		@if(elements.args.get('required).getOrElse(false).toString()!="false") {required="required"}
+		value="@elements.args.get('value).getOrElse("").toString()" type="radio" @elements.args.get('checked).getOrElse("").toString()>
+	@elements.label
+</label>
+
+

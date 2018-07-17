@@ -1,0 +1,30 @@
+@(ou:OrgUser, host:String, bHTML: Boolean)
+@import includes._
+@if(bHTML) {
+<html>
+<head>
+</head>
+<body style="font-size:medium; font-size:medium; font-family:Calibri,sans-serif">
+<div>
+@play.twirl.api.Html(Messages("useraccept.mail.salutation", ou.getAu().getFullname()))
+</div>
+<div>
+@play.twirl.api.Html(Messages("useraccept.mail.preamble", ou.getOrg().getOrganisation_name()))
+</div>
+<div>
+<a href="http://@(host + routes.LoginController.index())">@Messages("useraccept.mail.linktext")</a>
+</div>
+<div>
+@play.twirl.api.Html(Messages("useraccept.mail.footer"))
+</div>
+@email_footer(host,bHTML)
+</body>
+</html>
+} else {
+@Messages("useraccept.mail.salutation", ou.getAu().getFullname())
+@Messages("useraccept.mail.preamble.plain", ou.getOrg().getOrganisation_name())
+http://@(host + routes.LoginController.index()) @Messages("useraccept.mail.linktext")
+@Messages("useraccept.mail.footer.plain")
+@email_footer(host,bHTML)
+}
+

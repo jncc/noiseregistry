@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	<changeSet author="unknown" id="datapopulation">
+	    <loadData             
+            file="organisations.csv"
+            separator=","
+            quotchar="'"
+            tableName="organisation">
+    	    <column name="id" type="numeric"/>
+        	<column name="contact_email" type="string"/>
+        	<column name="contact_name" type="string"/>
+        	<column name="contact_phone" type="string"/>
+        	<column name="organisation_name" type="string"/>
+	    </loadData>
+	    <sql>SELECT setval('organisation_id_seq', (SELECT MAX(id) FROM organisation));
+    	</sql>
+	    <loadData             
+            file="regulators.csv"
+            separator=","
+            tableName="regulator">
+    	    <column name="id" type="numeric"/>
+    	    <column name="closeoutdays" type="numeric"/>
+    	    <column name="organisation_id" type="numeric"/>
+	    </loadData>
+	    <sql>SELECT setval('regulator_id_seq', (SELECT MAX(id) FROM regulator));
+    	</sql>    </changeSet>
+</databaseChangeLog>

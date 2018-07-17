@@ -1,0 +1,19 @@
+@()
+<script src="@routes.Assets.at("javascripts/govuk_elements/vendor/jquery-1.11.0.min.js")"></script>
+
+<!-- govuk_frontend_toolkit js -->
+<script src="@routes.Assets.at("govuk_frontend_toolkit/javascripts/vendor/polyfills/bind.js")"></script>
+<script src="@routes.Assets.at("govuk_frontend_toolkit/javascripts/govuk/selection-buttons.js")"></script>
+
+<!-- govuk_elements js -->
+<script src="@routes.Assets.at("javascripts/govuk_elements/vendor/modernizr.custom.77028.js")"></script>
+<script src="@routes.Assets.at("javascripts/govuk_elements/vendor/details.polyfill.js")"></script>
+<script src="@routes.Assets.at("javascripts/govuk_elements/application.js")"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".block-label input[type='radio']:checked").each(function() {
+		this.click();
+	});
+})
+</script>

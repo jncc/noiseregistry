@@ -1,0 +1,48 @@
+@(appUser: AppUser, org: Organisation)
+@import layouts._
+@import scala._
+@import includes._
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+}  
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
+}
+	
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+<main id="page-container" role="main">
+	@noiseregistry_phasebanner()
+	@noiseregistry_breadcrumb("USERJOINORG")
+	<a id="content"></a>
+   	
+  	<h1 class="heading-large">@play.twirl.api.Html(Messages("organisation.joinrequest.title"))</h1>
+  	@helper.form(action = routes.OrganisationController.addUser(org.getId()), 'id -> "form") {
+  		<div class="grid-row">
+    		<div class="column-two-thirds">
+  				<div>@Messages("organisation.joinrequest.formhelp")</div>
+  				<br/>
+   				<table title="Organisation details">
+					<tbody>
+	        			@form_displaytext(org.getOrganisation_name(), "organisation.joinrequest.organisation.title")		
+		        	</tbody>
+	    		</table>
+  				<br/>		
+  				<button class="button" type="submit" name="action" value="submit">@Messages("organisation.joinrequest.submit")</button>
+  		    </div>
+    		<div class="column-third">
+    		</div>
+  		</div>
+	}							
+</main>
+}

@@ -1,0 +1,32 @@
+@(implicit myForm: Form[_], field_id: String, field_label_message:String, field_hint_message:String, radvals:Seq[(String,String)], required:Boolean=false, inline:Boolean=true, classextra:String="", parent_id:String="")
+@import helper._
+@import java.math.BigInteger; var i=1; var c="";
+@implicitField = @{ FieldConstructor(form_element_radio.f) }
+<div class="form-group">
+	<div class="@if(myForm(field_id).hasErrors) {error}">
+		<fieldset@if(inline==true){ class="inline"}>
+			<legend class="form-label-bold">@Messages(field_label_message)</legend>
+			@for(error <- myForm(field_id).errors) {
+    			<div class="validation-message">@Messages(error.message)</div>
+			}
+			@if(parent_id!="") {
+				@for(error <- myForm(parent_id).errors) {
+    				<div class="validation-message">@Messages(error.message)</div>
+    			}
+			}
+			<span class="form-hint">@Messages(field_hint_message)</span>
+			<div class="form-group form-group-compound">
+			@for((value, label) <- radvals){
+				@{c=field_id.replace(".","_")+"-"+i}
+				@if(myForm(field_id).value()==value){
+					@inputText(myForm(field_id), 'id->c, '_label->label, 'value->value, 'class->classextra,'checked->"checked",'required->required)
+				} else {
+					@inputText(myForm(field_id), 'id->c, '_label->label, 'value->value, 'class->classextra, 'required->required)
+				}				
+				@{i=i+1}
+			}
+			</div>
+		</fieldset>
+	</div>
+</div>
+	

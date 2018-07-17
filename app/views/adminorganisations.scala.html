@@ -1,0 +1,84 @@
+@(appUser: AppUser, orgs: List[Organisation])
+
+@import layouts._
+@import includes._
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+}  
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
+}
+	
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+	<main id="page-container" role="main">
+		@noiseregistry_phasebanner()
+  		@noiseregistry_breadcrumb("ADMINORGS")
+		<a id="content"></a>
+    	<div class="grid-row">
+    		<div class="column-two-thirds">
+       			<div class="text">
+					<h1 class="heading-large">@play.twirl.api.Html(Messages("adminorganisations.title"))</h1>
+					<p class="font-small">
+						@play.twirl.api.Html(Messages("adminorganisations.intro"))
+					</p>
+					<table title="Organisations you may administer">
+					    <thead>
+      						<tr>
+        						<th scope="col">@play.twirl.api.Html(Messages("adminorganisations.organisation_name"))</th>
+      						</tr>
+    					</thead>
+    					<tbody>
+							@for(org <- orgs){
+								@if(org.isNoiseProducer()){
+							<tr>
+								<td><a href="@routes.OrganisationController.read(Long.toString(org.getId()))">@org.getOrganisation_name()</a></td>
+							</tr>
+								}
+							}
+						<tbody>
+					</table>
+	    			@if(appUser.getOrgRole()=="OVERALL_ADMIN") {
+					<table title="Organisations you may administer" style="margin-top:20px">
+					    <thead>
+      						<tr>
+        						<th scope="col">@play.twirl.api.Html(Messages("adminorganisations.regulator_name"))</th>
+      						</tr>
+    					</thead>
+    					<tbody>
+							@for(org <- orgs){
+								@if(org.isRegulator()){
+							<tr>
+								<td><a href="@routes.OrganisationController.read(Long.toString(org.getId()))">@org.getOrganisation_name()</a></td>
+							</tr>
+								}
+							}
+						<tbody>
+					</table>
+	    			}
+				</div>
+    		</div>
+    		<div class="column-third">
+    			@if(appUser.getOrgRole()=="OVERALL_ADMIN") {
+				<h2 class="heading-medium">@play.twirl.api.Html(Messages("actions.actions"))</h2>
+				<nav>
+					<ul  class="related-actions">
+						<li><a href="@routes.RegulatorController.add()">@play.twirl.api.Html(Messages("actions.add_regulator"))</a></li>
+					</ul>
+				</nav>    		
+				}
+    		</div>
+  		</div>
+    	    	
+    </main><!-- / #page-container -->
+}

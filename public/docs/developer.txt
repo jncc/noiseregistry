@@ -1,0 +1,57 @@
+Development Environment Setup
+=============================
+
+The following instructions should be used by a developer wishing to set up a development environment on their client:
+
+1. Ensure that a Java 1.7 JDK is available (as 32 bit or 64 bit depending on your version of Windows) 
+	- Download the Java SE Development Kit 7 ( jdk-7u71-windows-1586.exe or jdk-7u71-windows-x64.exe)
+	- Follow the installation instructions at https://docs.oracle.com/javase/7/docs/webnotes/install/windows/jdk-installation-windows.html
+	- Add C:\Program Files\Java\jdk1.7.0_71\bin to your PATH system variable in environment variables
+	- Verify the path is set correctly by opening a command prompt and running: "javac -version" - the response should be something like: "javac 1.7.0_71".
+2. Install the latest version of eclipse (Luna, v4.4)
+	- Download the "Eclipse IDE for Java Developers" (eclipse-java-luna-SR1-win32-x86_64.zip)
+	- Extract the zip file to the required file location (e.g., C:\Prog\eclipse44)
+3. Open eclipse and import the git repository as a new project by following these steps:
+	- File - Import - Git\Projects from GIT
+	- Select the "Clone URI" option and click "Next"
+	- Enter the Location URI as "https://github.com/JNCC-dev-team/noiseregistry.git" (Host and Repository Path should then be populated)
+	- Add the user name and password (as used to sign in to GitHub) and click "Next"
+	- In the branch selection, make sure that "master" has been selected and click "Next"
+	- Enter the local directory to use e.g. C:\Data\eclipse4.4\workspace\noiseregistry and click "Next"
+	- Select "Import as general project" and click "Next"
+	- The project name should have defaulted to the directory name used in 3.6, so click "Finish"
+4. Update the govuk_frontend_toolkit submodule
+	- Use git submodule update 
+	OR 
+	- Right-click on "Submodules" in the "Git Repositories" window and use menu "Update Submodule"
+
+JNCC Noise Registry Application Launch
+To start the JNCC application:
+	- Open a command prompt
+	- Change to the directory entered in 3.6
+	- Run activator eclipse (this is only needed if the dependencies have been changed, or on first use)
+	- Run activator -Dconfig.file=conf/dev.conf ~run (needed every time application to be launched)
+	- Run activator -Dconfig.file=conf/dev.conf -jvm-debug 9999 run (To debug with eclipse)
+
+This will take a bit of time (possibly up to half an hour) on the first run as it downloads all the dependencies, but when it completes you should be able to browse to 
+	http://localhost:9000
+	
+Optional: 
+Scala provides editors that "understand" the content for application routes, scala template files etc. To install this:
+	- From "Help, Install New Software..." menu item in eclipse, add a new site, title "Scala", uri: http://download.scala-ide.org/sdk/lithium/e44/scala211/dev/site
+	- When you get the list of available items, select the all the entries except for the "Scala IDE for Eclipse Development Support"
+After eclipse restarts, you should find that the routes file in conf has a custom editor, as do the *.scala.html template files in the app\views folder.
+
+Optional:
+For running automated tests inside eclipse, after running 'activator clean' you must run 'activator test'.  
+Then modify the Run Configuration for each of the test files as follows:
+- Right click on the test file (e.g., ApplicationTest.java) below the test folder
+- Select Properties, Run/Debug Settings
+- Create or edit a launch configuration
+- On the Arguments tab add the following to the VM arguments: -Dconfig.file=conf/test.conf
+You can then right click the test file and use Run As\JUnit Test to run the tests.  All dependencies need to be up-to-date first.
+
+Stylesheets:
+SASS is used for stylesheets.  This can be installed from http://sass-lang.com/  
+To compile use "sass --watch app/assets/sass:public/stylesheets" in a command line from the noise registry folder.  
+

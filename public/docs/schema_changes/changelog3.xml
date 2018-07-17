@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet author="unknown" id="1417190319455-15">
+        <addColumn tableName="proposedactivity">
+            <column name="enteredBlockCode" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="unknown" id="1417190319455-16">
+        <addColumn tableName="proposedactivity">
+            <column name="lat" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="unknown" id="1417190319455-17">
+        <addColumn tableName="proposedactivity">
+            <column name="lng" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <include file="changeset141205.xml"/>
+    <include file="changeset141205a.xml"/>
+    <include file="changeset141205b.xml"/>
+    <include file="changeset141209.xml" />
+    <include file="changeset141210.xml" />
+    <include file="changeset141211.xml" />
+    <include file="changeset141211a.xml" />
+    <include file="changeset141212.xml" />
+    <include file="changeset141215.xml" />
+    <include file="changeset141215a.xml" />
+    <include file="changeset141216.xml" />
+    <include file="changeset141217.xml" />
+    <!--<include file="datapop.xml" />-->
+    <include file="changeset141217ic.xml" />
+    <include file="changeset141217ic2.xml" />
+    <include file="changeset141218ic.xml" />
+    <include file="changeset141218.xml" />
+    <include file="changeset141218ic2.xml" />
+    <include file="changeset141224.xml" />
+    <include file="changeset150106.xml" />
+    <include file="changeset150109.xml" />
+    <include file="changeset150112.xml" />
+    <include file="changeset150113.xml" />
+    <include file="changeset150114.xml" />
+    <include file="changeset150114a.xml" />
+    <include file="changeset150114b.xml" />
+    <include file="changeset150114c.xml" />
+    <include file="changeset150114d.xml" />
+    <include file="changeset150115ic.xml" />
+    <include file="datapop-ogb.xml" />
+    <include file="changeset150120.xml" />
+    <include file="changeset150122.xml" />
+    <include file="changeset150126.xml" />
+    <include file="datapopmod.xml" />
+    <include file="datapopseq.xml" />
+    <include file="changeset150206.xml" />
+    <include file="changeset150216.xml" />
+    <include file="changeset150216a.xml" />
+    <include file="changeset150216b.xml" />
+    <include file="changeset150226.xml" />
+    <include file="changeset150306.xml" />
+    <include file="changeset160429.xml" />
+    <include file="changeset170623.xml" />
+    <include file="changeset170623a.xml" />
+    <include file="changeset170707.xml" />
+    <include file="changeset170711.xml" />
+    <include file="changeset170725.xml" />
+    <include file="changeset170728.xml" />
+    <include file="changeset170801.xml" />
+    <include file="datapopduedates.xml" />
+    <include file="changeset170810pre.xml" />
+    <include file="changeset170810.xml" />
+    <include file="changeset170810a.xml" />
+    <include file="changeset171123.xml" />
+</databaseChangeLog>

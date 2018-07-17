@@ -1,0 +1,64 @@
+@(appUser: AppUser, nps:List[NoiseProducer])
+@import layouts._
+@import scala._
+@import includes._
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+}  
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
+}
+	
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+<main id="page-container" role="main">
+	@noiseregistry_phasebanner()
+	@noiseregistry_breadcrumb("USERJOINORG")
+	<a id="content"></a>
+   	<div class="grid-row">
+   		<div class="column-two-thirds">
+  		
+  		<h1 class="heading-large">@play.twirl.api.Html(Messages("organisation.join_title"))</h1>
+				
+			@if(!nps.isEmpty) {
+				<table title="@Messages("organisation.joinrequest.noiseproducers_title")">
+		       		<thead>
+			       		<tr>
+			       			<th>@Messages("organisation.joinrequest.noiseproducers_title")</th>
+			       		</tr>
+			       	</thead>
+			       	<tbody>
+			       	@for(np <- nps) {
+			       		<tr>
+		   					<td>
+		   						<a href="@routes.OrganisationController.join(np.getOrganisation().getId())">@np.getOrganisation().getOrganisation_name()</a>
+							</td>
+						</tr>
+					}
+					</tbody>
+				</table>
+			}	
+		</div>
+		<div class="column-third">
+      		@if(appUser.getUserOrgType()!="REGULATOR") {
+				<h2 class="heading-medium">@play.twirl.api.Html(Messages("actions.actions"))</h2>
+				<nav>
+					<ul  class="related-actions">
+						<li><a href="@routes.NoiseproducerController.add()">@play.twirl.api.Html(Messages("actions.create_organisation"))</a></li>
+					</ul>
+				</nav>
+			}
+      	</div>
+	</div>
+</main>
+}

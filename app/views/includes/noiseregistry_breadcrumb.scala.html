@@ -1,0 +1,94 @@
+@(active: String)
+<div id="global-breadcrumb" class="header-context">
+<nav role="navigation">
+	<ol class="group">
+		<li><a href="@routes.ApplicationController.home()">@play.twirl.api.Html(Messages("breadcrumbs.home"))</a></li>
+		@if(active=="DRAFTAPPLS") {
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.draft_activities"))</li>
+		}
+		@if(active=="DRAFTAPPL") {
+			<li><a href="@routes.ActivityApplicationController.findDraft()">@play.twirl.api.Html(Messages("breadcrumbs.draft_activities"))</a></li>
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.activity"))</li>
+		}
+		@if(active=="PROPOSEDAPPLS") {
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.proposed_activities"))</li>
+		}
+		@if(active=="PROPOSEDAPPL") {
+			<li><a href="@routes.ActivityApplicationController.index()">@play.twirl.api.Html(Messages("breadcrumbs.proposed_activities"))</a></li>
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.activity"))</li>
+		}
+		@if(active=="COMPLETEDAPPLS") {
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.completed_activities"))</li>
+		}
+		@if(active=="COMPLETEDAPPL") {
+			<li><a href="@routes.ActivityApplicationController.findCompleted()">@play.twirl.api.Html(Messages("breadcrumbs.completed_activities"))</a></li>
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.activity"))</li>
+		}
+		@if(active=="INCOMPLETEAPPLS") {
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.incomplete_activities"))</li>
+		}
+		@if(active=="INCOMPLETEAPPL") {
+			<li><a href="@routes.ActivityApplicationController.findIncomplete()">@play.twirl.api.Html(Messages("breadcrumbs.incomplete_activities"))</a></li>
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.activity"))</li>
+		}
+		@if(active=="DELETEDAPPLS") {
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.deleted_activities"))</li>
+		}
+		@if(active=="DELETEDAPPL") {
+			<li><a href="@routes.ActivityApplicationController.deletedactivities()">@play.twirl.api.Html(Messages("breadcrumbs.deleted_apps"))</a></li>
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.activity"))</li>
+		}
+		@if(active=="ADMINORGS") {
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.admin_organisations"))</li>
+		}
+		@if(active=="ADMINUNVERIF") {
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.unverified_users"))</li>
+		}
+		@if(active=="LATEAPPLS") {
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.activities_requiring_closeout"))</li>
+		}
+		@if(active=="LATEAPPL") {
+			<li><a href="@routes.ActivityApplicationController.requirecloseout()">@play.twirl.api.Html(Messages("breadcrumbs.activities_requiring_closeout"))</a></li>
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.activity"))</li>
+		}
+		@if((active=="ORGREAD")) {
+			<li><a href="@routes.OrganisationController.adminorgs()">@play.twirl.api.Html(Messages("breadcrumbs.admin_organisations"))</a></li>
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.organisation_read"))</li>
+		}
+		@if((active=="ORGEDIT")) {
+			<li><a href="@routes.OrganisationController.adminorgs()">@play.twirl.api.Html(Messages("breadcrumbs.admin_organisations"))</a></li>
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.organisation_edit"))</li>
+		}
+		@if(active=="ORGUSER") {
+			<li><a href="@routes.OrganisationController.adminorgs()">@play.twirl.api.Html(Messages("breadcrumbs.admin_organisations"))</a></li>
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.org_edit_user"))</li>
+		}
+		@if(active=="ORGREMOVEUSER") {
+			<li><a href="@routes.OrganisationController.adminorgs()">@play.twirl.api.Html(Messages("breadcrumbs.admin_organisations"))</a></li>
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.org_remove_user"))</li>
+		}
+		@if(active=="USERREGISTER") {
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.user_register"))</li>
+		}
+		@if(active=="USERDETAILSREAD") {
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.user_details"))</li>
+		}
+		@if(active=="USERDETAILSEDIT") {
+			<li><a href="@routes.RegistrationController.read()">@play.twirl.api.Html(Messages("breadcrumbs.user_details"))</a></li>
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.user_details_edit"))</li>
+		}
+		@if(active=="USERJOINORG") {
+			<li><a href="@routes.RegistrationController.read()">@play.twirl.api.Html(Messages("breadcrumbs.user_details"))</a></li>
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.user_join_org"))</li>
+		}
+		@if(active=="CREATEORG") {
+			<li><a href="@routes.RegistrationController.read()">@play.twirl.api.Html(Messages("breadcrumbs.user_details"))</a></li>
+			<li><a href="@routes.OrganisationController.list()">@play.twirl.api.Html(Messages("breadcrumbs.user_join_org"))</a></li>
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.create_organisation"))</li>
+		}
+		@if(active=="CHANGEPASSWORD") {
+			<li>@play.twirl.api.Html(Messages("breadcrumbs.change_password"))</li>
+		}
+	</ol>
+</nav>
+</div>

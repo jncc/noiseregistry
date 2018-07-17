@@ -1,0 +1,35 @@
+Liquibase
+=========
+
+Liquibase is used for version control of both schema and data database changes. 
+
+INSTALLATION
+============
+
+Liquibase 3.3.0 is used for databases changes. Liquibase can be downloaded from http://www.liquibase.org/download/index.html to a client with access to PostgreSQL on port 5432.
+
+The PostgreSQL JDBC driver is needed.  It can be downloaded from: http://jdbc.postgresql.org/download.html 
+
+TO UPDATE DATABASE CHANGES
+==========================
+
+Once downloaded and installed the Liquibase update can be run and rerun at any time.  Liquibase 
+records which changes have been executed on the database and so updates will always only be applied if
+they haven't already been applied to this database and will be applied in the correct order.
+ 
+Before running ensure that you know the following:
+1) Where is the postgresql-9.3-1102.jdbc3.jar (JDBC3 version) file on your system?
+2) Where is the changelog.xml file which is part of the application distribution?
+3) Where is the PostgreSQL server?
+4) What is the name of the database?
+5) What is the database username?
+6) What is the database user's password?
+7) What is the schema name? 
+ 
+The command should be run on one line (not on separate lines as displayed below) from the ..\public\docs\scahema_changes directory 
+
+/path/to/liquibase.bat --driver=org.postgresql.Driver --classpath=/path/to/postgresql-9.3-1102.jdbc3.jar 
+--changeLogFile=/path/to/schema_changes/changelog.xml --url="jdbc:postgresql://server:5432/database" 
+--username=xxxx --password=xxxx --defaultSchemaName=jncc update
+
+The command should return with SUCCESS.

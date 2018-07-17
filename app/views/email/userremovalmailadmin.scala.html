@@ -1,0 +1,27 @@
+@(ou:OrgUser, host:String, bHTML: Boolean)
+@import includes._
+@if(bHTML) {
+<html>
+<head>
+</head>
+<body style="font-size:medium; font-family:Calibri,sans-serif">
+<div>
+@play.twirl.api.Html(Messages("userremovaladmin.mail.salutation", ou.getOrg().getOrganisation_name()))
+</div>
+<div>
+@play.twirl.api.Html(Messages("userremovaladmin.mail.preamble", ou.getAu().getFullname(), ou.getOrg().getOrganisation_name()))
+</div>
+<div>
+</div>
+<div>
+@play.twirl.api.Html(Messages("useraccept.mail.footer"))
+</div>
+@email_footer(host,bHTML)
+</body>
+</html>
+} else {
+@Messages("userremovaladmin.mail.salutation", ou.getOrg().getOrganisation_name())
+@Messages("userremovaladmin.mail.preamble.plain", ou.getAu().getFullname(), ou.getOrg().getOrganisation_name())
+@Messages("useraccept.mail.footer.plain")
+@email_footer(host,bHTML)
+}

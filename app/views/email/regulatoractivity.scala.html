@@ -1,0 +1,52 @@
+@(aa:ActivityApplication, host:String, statusKey: String, overrideEmail:String, reg:Regulator, np:NoiseProducer, bHTML: Boolean)
+@import includes._
+@if(bHTML) {
+<html>
+<head>
+</head>
+<body style="font-size:medium; font-family:Calibri,sans-serif">
+@if(!overrideEmail.equals("")) {
+	<div>Email for intended regulator address: @reg.getOrganisation().getContact_email() (Regulator email override has been configured to prevent mail going out)</div>
+	<br />
+}
+<div>
+@play.twirl.api.Html(Messages("regulator.activity." + statusKey + ".mail.salutation", reg.getOrganisation().getOrganisation_name()))
+</div>
+<div>
+@play.twirl.api.Html(Messages("regulator.activity." + statusKey + ".mail.preamble", np.getOrganisation().getOrganisation_name()))
+</div>
+<div>
+	<table style="border-collapse: collapse; border-spacing: 0px; width: 100%;">
+    	<thead>
+   			<tr>
+     			<th style="text-align: left; padding: 0.75em 1em 0.5em 0; border-bottom: 1px solid #BFC1C3; width:5em;" scope="col">@play.twirl.api.Html(Messages("activities.tableheading_aan"))</th>
+     			<th style="text-align: left; padding: 0.75em 1em 0.5em 0; border-bottom: 1px solid #BFC1C3;" scope="col">@play.twirl.api.Html(Messages("activities.tableheading_activity_type"))</th>
+     			<th style="text-align: left; padding: 0.75em 1em 0.5em 0; border-bottom: 1px solid #BFC1C3;" scope="col">@play.twirl.api.Html(Messages("activities.tableheading_earliest_start_date"))</th>
+     			<th style="text-align: left; padding: 0.75em 1em 0.5em 0; border-bottom: 1px solid #BFC1C3;" scope="col">@play.twirl.api.Html(Messages("activities.tableheading_report_due_date"))</th>
+   			</tr>
+ 		</thead>
+ 		<tbody>
+			<tr>
+				<td style="text-align: left; padding: 0.75em 1em 0.5em 0; border-bottom: 1px solid #BFC1C3;"><a href="http://@(host + routes.ActivityApplicationController.read(aa.getId()))">@aa.getId()</a></td>
+				<td style="text-align: left; padding: 0.75em 1em 0.5em 0; border-bottom: 1px solid #BFC1C3;">@ActivityTypes.get(aa.getActivitytype_id())</td>
+				<td style="text-align: left; padding: 0.75em 1em 0.5em 0; border-bottom: 1px solid #BFC1C3;">@aa.getDate_start().format("dd-MM-yyyy")</td>
+				<td style="text-align: left; padding: 0.75em 1em 0.5em 0; border-bottom: 1px solid #BFC1C3;">@aa.getDate_due().format("dd-MM-yyyy")</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div>
+@play.twirl.api.Html(Messages("regulator.activity." + statusKey + ".mail.footer"))
+</div>
+@email_footer(host,bHTML)
+</body>
+</html>
+} else {
+@Messages("regulator.activity." + statusKey + ".mail.salutation", reg.getOrganisation().getOrganisation_name())
+@Messages("regulator.activity." + statusKey + ".mail.preamble.plain", np.getOrganisation().getOrganisation_name())
+
+@Messages("activities.tableheading_aan") @Messages("activities.tableheading_activity_type") @Messages("activities.tableheading_earliest_start_date") @Messages("activities.tableheading_report_due_date")
+@aa.getId() @ActivityTypes.get(aa.getActivitytype_id()) @aa.getDate_start().format("dd-MM-yyyy") @aa.getDate_due().format("dd-MM-yyyy")
+@Messages("regulator.activity." + statusKey + ".mail.footer.plain")
+@email_footer(host,bHTML)
+}

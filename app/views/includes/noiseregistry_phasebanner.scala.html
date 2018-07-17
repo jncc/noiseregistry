@@ -1,0 +1,7 @@
+@()
+<div class="phase-banner">
+	<p>
+		<strong class="phase-tag" style="background-color: #f47738">@play.twirl.api.Html(Messages("phasebanner.phase"))</strong>
+		<span>@play.twirl.api.Html(Messages("phasebanner.before_link")) <a href="@routes.ApplicationController.feedback()">@play.twirl.api.Html(Messages("phasebanner.link_text"))</a> @play.twirl.api.Html(Messages("phasebanner.after_link"))</span>
+	</p>
+</div>

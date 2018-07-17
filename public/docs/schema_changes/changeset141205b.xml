@@ -1,0 +1,19 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet author="unknown" id="regdatachange">
+    	<update 
+            tableName="organisation">
+        	<column name="contact_email" value="${NEW_EMAIL_ADDRESS}"/>
+        	<where>organisation_name='${ORGANISATION_NAME}'</where>
+    	</update>   
+    	<update 
+            tableName="organisation">
+        	<column name="contact_phone" value="${NEW_PHONE_NUMBER}"/>
+        	<where>organisation_name='${ORGANISATION_NAME}'</where>
+    	</update>   
+    </changeSet>
+</databaseChangeLog>

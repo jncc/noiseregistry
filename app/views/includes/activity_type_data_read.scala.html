@@ -1,0 +1,48 @@
+@(activityapp: ActivityApplication)
+
+@if(activityapp.getActivitytype_id()==ActivityTypes.Seismic_Survey.toLong()) {
+	@if(activityapp.getActivitySeismic().getSurvey_type()=="Other") {
+		@form_displaytext(activityapp.getActivitySeismic().getOther_survey_type(), "activityform.field_heading.seismic_survey_type")
+	} else {
+		@form_displaytext(ActivitySeismic.surveyTypeValue(activityapp.getActivitySeismic().getSurvey_type()), "activityform.field_heading.seismic_survey_type")
+	}
+	@form_displaytext(ActivitySeismic.dataTypeValue(activityapp.getActivitySeismic().getData_type()), "activityform.field_heading.seismic_data_type")
+	@form_displayinteger(activityapp.getActivitySeismic().getMax_airgun_volume(), "activityform.field_heading.seismic_max_airgun", "units.max_airgun_volume")
+	@form_displayinteger(activityapp.getActivitySeismic().getSound_pressure_level(), "activityform.field_heading.seismic_sound_pressure", "units.sound_pressure_level")
+	@form_displayinteger(activityapp.getActivitySeismic().getSound_exposure_level(), "activityform.field_heading.seismic_sound_exposure", "units.sound_exposure_level")	
+}
+
+@if(activityapp.getActivitytype_id()==ActivityTypes.Sub_Bottom_Profilers.toLong()) {
+	@form_displaytext(ActivitySubBottomProfilers.sourceValue(activityapp.getActivitySubBottomProfilers().getSource()), "activityform.field_heading.sbp_source")
+	@form_displayinteger(activityapp.getActivitySubBottomProfilers().getFrequency(), "activityform.field_heading.sbp_frequency", "units.frequency")
+	@form_displayinteger(activityapp.getActivitySubBottomProfilers().getSound_pressure_level(), "activityform.field_heading.sbp_sound_pressure", "units.sound_pressure_level")
+	@form_displayinteger(activityapp.getActivitySubBottomProfilers().getSound_exposure_level(), "activityform.field_heading.sbp_sound_exposure", "units.sound_exposure_level")
+}
+
+@if(activityapp.getActivitytype_id()==ActivityTypes.Piling.toLong()) {
+	@form_displayinteger(activityapp.getActivityPiling().getMax_hammer_energy(), "activityform.field_heading.piling_max_hammer", "units.max_hammer_energy")
+	@form_displayinteger(activityapp.getActivityPiling().getSound_pressure_level(), "activityform.field_heading.piling_sound_pressure", "units.sound_pressure_level")
+	@form_displayinteger(activityapp.getActivityPiling().getSound_exposure_level(), "activityform.field_heading.piling_sound_exposure", "units.sound_exposure_level")
+}
+
+@if(activityapp.getActivitytype_id()==ActivityTypes.Explosives.toLong()) {
+	@form_displaydouble(activityapp.getActivityExplosives().getTnt_equivalent(), "activityform.field_heading.explosive_tnt","%.1f","units.tnt_equivalent")
+	@form_displayinteger(activityapp.getActivityExplosives().getSound_pressure_level(), "activityform.field_heading.explosive_sound_pressure", "units.sound_pressure_level")
+	@form_displayinteger(activityapp.getActivityExplosives().getSound_exposure_level(), "activityform.field_heading.explosive_sound_exposure", "units.sound_exposure_level")
+}
+
+@if(activityapp.getActivitytype_id()==ActivityTypes.Acoustic_Deterrent_Device.toLong()) {
+	@form_displayinteger(activityapp.getActivityAcousticDD().getFrequency(), "activityform.field_heading.acoustic_frequency", "units.frequency.acousticDD")
+	@form_displayinteger(activityapp.getActivityAcousticDD().getSound_pressure_level(), "activityform.field_heading.acoustic_sound_pressure", "units.sound_pressure_level")
+	@form_displayinteger(activityapp.getActivityAcousticDD().getSound_exposure_level(), "activityform.field_heading.acoustic_sound_exposure", "units.sound_exposure_level")
+}
+
+@if(activityapp.getActivitytype_id()==ActivityTypes.Multibeam_Echosounders.toLong()) {
+	@form_displayinteger(activityapp.getActivityMultibeamES().getFrequency(), "activityform.field_heading.mb_frequency", "units.frequency")
+	@form_displayinteger(activityapp.getActivityMultibeamES().getSound_pressure_level(), "activityform.field_heading.mb_sound_pressure", "units.sound_pressure_level")
+	@form_displayinteger(activityapp.getActivityMultibeamES().getSound_exposure_level(), "activityform.field_heading.mb_sound_exposure", "units.sound_exposure_level")
+}
+
+@if(activityapp.getActivitytype_id()==ActivityTypes.MoD.toLong()) {
+	@form_displaytext(ActivityMoD.sourceValue(activityapp.getActivityMoD().getSource()), "activityform.field_heading.mod_source")
+}	

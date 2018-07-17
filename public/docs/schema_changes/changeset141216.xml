@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet author="unknown" id="1418734798682-27">
+        <dropForeignKeyConstraint baseTableName="activityapplication" constraintName="FK_gkss2lps7lcqiwt5s7wxifq6r"/>
+    </changeSet>
+    
+    <changeSet author="unknown" id="1418737122942-22">
+        <dropColumn columnName="organisation_id" tableName="activityapplication"/>
+    </changeSet>
+    
+    <changeSet author="unknown" id="fk-fix">
+        <dropForeignKeyConstraint baseTableName="activityapplication" constraintName="FK_ek1stjpclcljj1189kellqfi0"/>
+    </changeSet>
+    
+    <changeSet author="unknown" id="1418741607637-20">
+        <dropColumn columnName="regulator" tableName="organisation"/>
+    </changeSet>
+    
+    <changeSet author="unknown" id="1418746322158-17">
+        <createTable tableName="noiseproducer">
+            <column name="id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="organisation_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="unknown" id="1418746322158-18">
+        <createTable tableName="regulator">
+            <column name="id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="closeoutdays" type="INT"/>
+            <column name="organisation_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="unknown" id="1418746322158-19">
+        <addPrimaryKey columnNames="id" constraintName="noiseproducerPK" tableName="noiseproducer"/>
+    </changeSet>
+    <changeSet author="unknown" id="1418746322158-20">
+        <addPrimaryKey columnNames="id" constraintName="regulatorPK" tableName="regulator"/>
+    </changeSet>     
+    <changeSet author="unknown" id="1418746322158-23">
+        <addForeignKeyConstraint baseColumnNames="regulator_id" baseTableName="activityapplication" constraintName="FK_ek1stjpclcljj1189kellqfi0" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="regulator"/>
+    </changeSet>
+    <changeSet author="unknown" id="1418737122942-17">
+        <addColumn tableName="activityapplication">
+            <column name="noiseproducer_id" type="serial">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="unknown" id="1418746322158-24">
+        <addForeignKeyConstraint baseColumnNames="noiseproducer_id" baseTableName="activityapplication" constraintName="FK_g6l7033ygee8hx9by3oepa92s" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="noiseproducer"/>
+    </changeSet>
+    <changeSet author="unknown" id="1418746322158-25">
+        <addForeignKeyConstraint baseColumnNames="organisation_id" baseTableName="regulator" constraintName="FK_hniwxi8cgdasdvfudyxk75a3e" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="organisation"/>
+    </changeSet>
+    <changeSet author="unknown" id="1418746322158-26">
+        <addForeignKeyConstraint baseColumnNames="organisation_id" baseTableName="noiseproducer" constraintName="FK_kq0eauek1nijbnc7n0p12f7nv" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="organisation"/>
+    </changeSet>
+    
+</databaseChangeLog>

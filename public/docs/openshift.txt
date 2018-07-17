@@ -1,0 +1,51 @@
+OpenShift Staging
+=================
+
+OpenShift is being used for initial pre-QA review.  Pushing the application to OpenShift is a Tron Systems task.
+ 
+The application will push to OpenShift correctly, but manual steps are needed to get it to run.
+
+The OpenShift repository settings can be found by logging in to OpenShift (https://openshift.redhat.com/).
+The following need to be installed first:
+	- OpenShift client tools (including Ruby and Git) (https://developers.openshift.com/en/getting-started-overview.html)
+	- GitHub for Windows (https://windows.github.com/)
+	- Putty (see https://developers.openshift.com/en/managing-remote-connection.html#download-the-putty-installer)
+
+To avoid any problems with eclipse pushing to multiple remote locations, it is recommended that this is run from a 
+command line in GitShell (part of GitHub for Windows).  Navigate to the project directory first.
+
+The first time you do this run the following to set up the git repository keys:
+>rhc setup  (this may need to be done every 30 days)
+
+The first time the repository is synched you will need to run the following:
+>git remote add openshift -f ssh://OPENSHIFT_USER@OPENSHIFT_SERVER/~/git/jncc.git/  
+then
+>git merge openshift/master -s recursive -X ours
+
+Subsequently you will only need to run the following to update it on OpenShift:
+>git push openshift master
+
+This will take a long time to complete, with messages from the remote end as activator performs its resource resolving
+and compilation steps.  This normally seems to fail (Connection closed by remote host) after the packaging of the 
+javadoc jar file is complete - in that case:
+
+open an ssh connection (using Putty) to the openshift server (ssh OPENSHIFT_USER@OPENSHIFT_SERVER)
+cd play2/bin
+./control build
+./control start
+
+This should complete fairly quickly, and at this point the application will be available at:
+http://jncc-trondev1.rhcloud.com
+
+Liquibase changes will need to be done using the Liquibase instructions.  The following instructions for port forwarding will be needed first:
+https://blog.openshift.com/getting-started-with-port-forwarding-on-openshift/
+rhc port-forward -a jncc (in GitShell)
+
+The admin user may need access: 
+GRANT ALL ON ALL TABLES IN SCHEMA jncc TO adminhmjmrkx
+In pgAdmin.exe use show search_path; to check it is jncc,public
+Use set search_path to jncc,public; to set it if necessary (though this has now been done)
+
+
+
+

@@ -1,0 +1,50 @@
+@(appUser: AppUser, orgsOther: List[Organisation], orgCur:Organisation)
+
+@import java.math.BigInteger; var users:List[OrgUser]=null; var verus=false;var unverus=false;
+@import layouts._
+@import scala._
+@import includes._
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+}  
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
+}
+	
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+<main id="page-container" role="main">
+	@noiseregistry_phasebanner()
+	@noiseregistry_breadcrumb("ORGREAD")
+	<a id="content"></a>
+   	<div class="grid-row">
+   		<div class="column-two-thirds">
+  		
+  		<h1 class="heading-large">@play.twirl.api.Html(Messages("merge.title"))</h1>
+		@helper.form(action = routes.OrganisationController.mergeOrgsConfirm(orgCur.getId()), 'id -> "form") {
+	  		@for(org <- orgsOther) {
+    	   		<label class="block-label" for="org@org.getId()">
+       				<input type="checkbox" id="org@org.getId()" name="mergeorgs@org.getId()" value="true" />
+       				@org.getOrganisation_name()
+	       		</label>  		
+  			}
+	 		<div style="clear:both">&nbsp;</div> 
+  			<input class="button" type="submit" value="@Messages("merge.button_choose")">
+		}
+
+      	</div>
+      	<div class="column-third">
+      	</div>
+	</div>
+</main>
+}

@@ -1,0 +1,71 @@
+@(appUser: AppUser, userForm: Form[AppUserRegistration], title: String)
+@import layouts._
+@import scala._
+@import includes._
+@import helper._
+
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+}  
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
+}
+	
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+	<main id="page-container" role="main">
+	@noiseregistry_phasebanner()
+  	@noiseregistry_breadcrumb("USERREGISTER")
+  	<a id="content"></a>
+  	<h1 class="heading-large">@title</h1>
+	@helper.form(action = routes.RegistrationController.save()) {
+
+		@if(userForm.hasGlobalErrors) {
+		    <p class="validation-message">
+		        @userForm.globalError.message
+		    </p>
+		}
+		
+		@inputText(userForm("email_address"), 
+			'_label->Messages("userform.field_heading.email_address"), 
+			'_fieldhint->Messages("userform.field_hint.email_address"), 
+			'_showConstraints -> false,
+			'class->"form-control")(govuk.govukFieldConstructor, implicitly[Lang])
+		@inputPassword(userForm("password_entry"), 
+			'_label->Messages("userform.field_heading.password_entry"), 
+			'_fieldhint->Messages("userform.field_hint.password_entry"), 
+			'_showConstraints -> false,
+			'class->"form-control")(govuk.govukFieldConstructor, implicitly[Lang])
+		@inputPassword(userForm("password_confirm"), 
+			'_label->Messages("userform.field_heading.password_confirm"), 
+			'_fieldhint->Messages("userform.field_hint.password_confirm"), 
+			'_showConstraints -> false,
+			'class->"form-control")(govuk.govukFieldConstructor, implicitly[Lang])
+		@inputText(userForm("fullname"), 
+			'_label->Messages("userform.field_heading.fullname"), 
+			'_fieldhint->Messages("userform.field_hint.fullname"),
+			'_showConstraints -> false, 
+			'class->"form-control")(govuk.govukFieldConstructor, implicitly[Lang])
+		@inputText(userForm("phone"), 
+			'_label->Messages("userform.field_heading.phone"), 
+			'_fieldhint->Messages("userform.field_hint.phone"), 
+			'_showConstraints -> false,
+			'class->"form-control")(govuk.govukFieldConstructor, implicitly[Lang])
+		
+		<p><a href="@routes.Assets.at("help/marine-noise-registry-privacy-notice-version-1-2.pdf")" target="_blank">View Privacy Policy Notice for the Marine Noise Registry</a></p>
+		
+		<input class="button" type="submit" value="@Messages("form.submit")">
+		
+	}
+	</main>
+}

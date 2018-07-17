@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	<changeSet author="unknown" id="audittrail">
+        <createTable tableName="audittrail">
+            <column name="id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="who" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_when" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tablename" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fk_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reason" type="VARCHAR(1500)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="id" constraintName="audittrailPK" tableName="audittrail"/>
+    </changeSet>
+</databaseChangeLog>

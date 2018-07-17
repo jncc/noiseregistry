@@ -1,0 +1,57 @@
+@(loginForm: Form[AppUserLogin], title: String)
+@import layouts._
+@import scala._
+@import includes._
+@import helper._
+
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+}  
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation("NONE", "HOME")	
+}
+	
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+	<main id="page-container" role="main">
+	@noiseregistry_phasebanner()
+  	@noiseregistry_breadcrumb("HOME")
+  	<a id="content"></a>
+  	<h1 class="heading-large">@title</h1>
+  	@play.twirl.api.Html(Messages("loginform.register_link"))
+  	@play.twirl.api.Html(Messages("loginform.forgottenpassword_link"))
+	@helper.form(action = routes.LoginController.authenticate()) {
+	
+		@if(loginForm.hasGlobalErrors) {
+             <p class="validation-message">
+                 @loginForm.globalError.message
+             </p>
+       	}
+
+		<input type="hidden" name="@loginForm("redirectTo").name" id="@loginForm("redirectTo").id" value="@loginForm("redirectTo").value" />
+			
+		@inputText(loginForm("email"), 
+			'_label->Messages("loginform.field_heading.email"),
+			'_fieldhint->Messages("loginform.field_hint.email"), 
+			'class->"form-control")(govuk.govukFieldConstructor, implicitly[Lang])
+	
+		@inputPassword(loginForm("password"), 
+			'_label->Messages("loginform.field_heading.password"),
+			'_fieldhint->Messages("loginform.field_hint.password"), 
+			'class->"form-control")(govuk.govukFieldConstructor, implicitly[Lang])
+
+	       <input class="button" type="submit" value="@Messages("loginform.field_heading.submit")">
+	
+	}
+	</main>
+}

@@ -1,0 +1,25 @@
+@(implicit myForm: Form[_], baseFieldName: String, group_label_message:String, style:String="")
+@import helper._
+@implicitField = @{ FieldConstructor(includes.form_element_date.f) }
+<div class="form-group" style="@style">
+	<fieldset>
+		<legend class="form-label-bold">@Messages(group_label_message)</legend>
+		@for(error <- myForm(baseFieldName).errors) {
+    		<div class="validation-message">@Messages(error.message)</div>
+		}
+		<div class="form-date">
+			<p class="form-hint">@Messages("date.field-hint")</p>
+
+			<div class="form-group form-group-day">
+				@inputText(myForm(baseFieldName + "_day"), '_label->Messages("date.day"), 'class->"form-control")
+			</div>
+			<div class="form-group form-group-month">
+				@inputText(myForm(baseFieldName + "_month"), '_label->Messages("date.month"), 'class->"form-control")
+			</div>
+			<div class="form-group form-group-year">
+				@inputText(myForm(baseFieldName + "_year"), '_label->Messages("date.year"), 'class->"form-control")
+			</div>
+		</div>
+
+    </fieldset>
+</div>

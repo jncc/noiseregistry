@@ -1,0 +1,56 @@
+@(appUser: AppUser, appForm: Form[Organisation], org:Organisation)
+
+@import layouts._
+@import scala._
+@import includes._
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+}  
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
+}
+	
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+	<main id="page-container" role="main">
+		@noiseregistry_phasebanner()
+  		@noiseregistry_breadcrumb("ORGEDIT")
+  		<a id="content"></a>
+    	<div class="grid-row">
+    		<div class="column-two-thirds">
+  		<h1 class="heading-large">@play.twirl.api.Html(Messages("organisationform.title"))</h1>
+			@helper.form(action = routes.OrganisationController.save(), 'id -> "form") {
+				<input type="hidden" name="id" value="@org.getId()">
+				@if(appForm.hasGlobalErrors) {
+			    <p class="validation-message">
+		    	    @appForm.globalError.message
+		    	</p>
+				}
+	        	@form_inputtext(appForm, "organisation_name", "organisationform.organisation_name", "organisationform.field_hint.organisation_name","","")		
+	        	@form_inputtext(appForm, "contact_name", "organisationform.contact_name", "organisationform.field_hint.contact_name","","")		
+	        	@form_inputtext(appForm, "contact_email", "organisationform.contact_email", "organisationform.field_hint.contact_email","","")
+	        	@if(org.getRegulator()!=null) {
+	        		<div class="form-group">
+	        		<label class="block-label" for="@appForm("accepts_email").id">
+	        			@helper.checkbox(appForm("accepts_email"), '_label->"organisationform.accepts_email")(govuk.govukGroupFieldConstructor, implicitly[Lang])
+	        			@Messages("organisationform.accepts_email")
+	        		</label>
+	        		</div>
+	        	}		
+	        	@form_inputtext(appForm, "contact_phone", "organisationform.contact_phone", "organisationform.field_hint.contact_phone","","")		
+				<input class="button" type="submit" value="@Messages("form.submit")">
+			}
+	 		</div>
+  		</div>
+  	</main>
+}

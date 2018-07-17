@@ -1,0 +1,48 @@
+.related-actions {
+	list-style-type: none;
+	list-style-image: none;
+	margin: 0;
+	padding: 0;
+	padding: 0em 0em 0 0em;
+
+	li {
+    	margin: 0;
+    	padding: 0;
+	}
+}
+
+.radio-orgs {
+	width: 25em;
+}
+
+.radio-activitytypes {
+	width: 15em;
+}
+
+.radio-location {
+	width: 15em;
+} 
+
+#global-header {
+	background-color: #ffffff;
+}
+#global-header .header-wrapper {
+	background-color: #ffffff;
+}
+#global-header-bar .header-bar {
+    background-color: #04647C;
+}
+#global-header #logo, #global-header #logo img {
+	height: 84px;
+	width: 228px;
+}
+#global-header .header-proposition #proposition-name {
+    color: #04647C;
+}
+#global-header .header-proposition #proposition-links li a {
+    color: #04647C;
+}
+#global-header .header-proposition #proposition-links li a.active {
+    color: #000000;
+}
+

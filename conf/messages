@@ -1,0 +1,1156 @@
+# Statuses
+draft=Draft
+interim=Interim
+proposed=Proposed
+closed=Closed
+
+# Template messages
+jncc.full_name=Joint Nature Conservation Committee
+jncc.abbrev_name=JNCC
+jncc.googleanalytics.code=UA-81181748-1
+
+application.app_name=Marine Noise Registry
+application.service_name=Marine Noise Registry Service
+
+header.start_title=GOV.UK
+header.subtitle=Record noise activity in UK waters
+
+phasebanner.phase=BETA
+phasebanner.before_link=This is a new service - your 
+phasebanner.link_text=feedback
+phasebanner.after_link=will help us to improve it.
+
+navigation.home=Home
+navigation.administration=Administration
+navigation.feedback=Feedback
+navigation.logout=Logout
+
+status.proposed=Proposed
+status.closed=Closed
+status.cancelled=Cancelled
+
+actions.actions=Actions
+actions.org_actions=Organisation actions
+actions.admin_actions=Organisation and regulator administration
+actions.overall_admin_actions=Overall administration actions
+actions.user_actions=User actions
+actions.view_draft_activities=View draft activities
+actions.edit_draft_activity=Edit draft activity
+actions.create_linked_activity=Create linked activity
+actions.delete_draft_activity=Delete draft activity
+actions.delete_activity=Delete activity
+actions.view_proposed_activities=View proposed activities/submit close-out report
+actions.view_proposed_activities_regulator=View proposed activities
+actions.view_completed_activities=View completed activities
+actions.view_incomplete_activities=View incomplete activities
+actions.view_activities_requiring_closeout=View activities requiring close-out
+actions.create_new_activity=Create new proposed activity
+actions.organisation_administration=Administer organisations and regulators
+actions.organisation_administration_view_unverified_users=View unverified users
+actions.edit_user_details=Edit user details
+actions.change_password=Change password
+actions.cancel_activity=Cancel activity
+actions.submit_closeout_data=Submit close-out data
+actions.edit_organisation=Edit organisation details
+actions.merge_organisations=Merge other organisations into this
+actions._organisation=Edit organisation details
+actions.edit_mydetails=Edit my details
+actions.join_organisation=Join/create organisation
+actions.create_organisation=Create new organisation
+actions.change_password=Change password
+actions.revert_activity_status=Revert to {0}
+actions.regulator_administration=Administer regulators
+actions.edit_regulator=Edit regulator details
+actions.add_regulator=Create regulator 
+actions.org_add_user=Add user
+actions.downloadlate=Download activities requiring close-out
+actions.submit_draft_activity=Submit proposed activity
+actions.view_deleted_activities=View deleted activities
+actions.restore_draft_activity=Restore to draft
+
+validation.field_too_long=Field too long (maximum {0} characters)
+
+breadcrumbs.home=Home
+breadcrumbs.draft_activities=Draft activities
+breadcrumbs.proposed_activities=Proposed activities
+breadcrumbs.completed_activities=Completed activities
+breadcrumbs.incomplete_activities=Incomplete activities
+breadcrumbs.activity=Activity
+breadcrumbs.admin_organisations=Administer organisations
+breadcrumbs.unverified_users=Unverified users
+breadcrumbs.activities_requiring_closeout=Activities requiring close-out
+breadcrumbs.deleted_activities=Deleted activities
+breadcrumbs.organisation_read=My organisation
+breadcrumbs.organisation_edit=Edit organisation details
+breadcrumbs.org_remove_user=Remove user
+breadcrumbs.org_edit_user=Edit user
+breadcrumbs.edit=Edit
+breadcrumbs.user_register=Register user
+breadcrumbs.user_details=User details
+breadcrumbs.user_details_edit=Edit user details
+breadcrumbs.user_join_org=Join/create organisation
+breadcrumbs.create_organisation=Create organisation
+breadcrumbs.change_password=Change password
+breadcrumbs.regulator_read=Regulator
+breadcrumbs.deleted_apps=Deleted activities
+breadcrumbs.restore_app=Restore application
+
+footer.support_links=Support Links
+footer.help=Help
+footer.cookies=Cookies
+footer.termsandconditions=Terms and Conditions
+footer.contact=Contact
+footer.built_by=Operated by
+footer.name_suffix=
+
+buttons.start_now=Start now
+buttons.finished=Finished
+
+# General form messages
+form.submit=Save
+form.savedraft=Save as draft
+form.cancel=Cancel
+form.confirm=Confirm
+form.copyparentlocations=Copy Locations From Parent
+
+date.day=Day
+date.month=Month
+date.year=Year
+date.field-hint=For example, 08 04 2015
+
+#Static pages text
+welcome.message_before_button=\
+	<p class="lede">\n\
+		Defra and JNCC have developed the Marine Noise Registry (MNR) to record human activities in UK seas that produce \n\
+		loud, low to medium frequency (10Hz – 10kHz) impulsive noise. Developing the MNR was a commitment made in the \n\
+		<a href="https://www.gov.uk/government/publications/marine-strategy-part-one-uk-initial-assessment-and-good-environmental-status">UK Marine Strategy</a>.\n\
+	</p>\n\
+	<section>\n\
+		<p class="font-small">\n\
+			Activities include;\n\
+		</p>\n\
+		<ul class="list list-bullet font-small" style="margin-bottom: 20px;">\n\
+			<li>Seismic surveys</li>\n\
+			<li>Sub bottom profiling</li>\n\
+			<li>Impact pile driving</li>\n\
+			<li>Explosive detonation</li>\n\
+			<li>Acoustic deterrent devices</li>\n\
+			<li>Multibeam echo-sounders (&le;12kHz)</li>\n\
+		</ul>\n\
+		<p class="font-small">\n\
+			Data input to the MNR is via completion of 2 simple forms, the first a proposed activity form (detailing \n\
+			the planned activity) and second a close-out report (an accurate account of where and when the activity had \n\
+			occurred). Data specifics include location, dates and source property data; frequency, maximum airgun volume, \n\
+			maximum hammer energy, TNT equivalent, sound pressure level and sound exposure level. \n\
+		</p>\n\
+		<p class="font-small">\n\
+			The initial purpose of monitoring man-made impulsive noise is to quantify the pressure on the environment by \n\
+			making available an overview of relevant impulsive sound sources, throughout the year. This in turn will aid \n\
+			in the definition of a baseline level for impulsive noise in UK waters. </p> \n\
+		<p class="font-small">\n\
+			The MNR is used for data input only. For outputs from the MNR, JNCC will publish maps annually presenting \n\
+			the spread of activities across UK seas. Maps will be made available from: \n\
+			<a href="https://data.gov.uk/">https://data.gov.uk/</a>. Data contained within the MNR is available upon \n\
+			request from JNCC.\n\
+		</p>\n\
+		<p class="font-small">\n\
+			Select Start Now to enter the MNR and begin submission of activity data.\n\
+		</p>\n\
+	</section>
+
+welcome.message_after_button=\
+	<section>\n\
+		<p class="font-small">\n\
+			Guidance is available via the help link at the bottom of each page.\n\
+		</p>\n\
+		<p class="font-small">\n\
+			For more information about the MNR please visit the \n\
+			<a href="http://jncc.defra.gov.uk/page-7070">JNCC MNR webpage</a> or email \n\
+			<a href="mailto:mnr@jncc.gov.uk">mnr@jncc.gov.uk</a>\n\
+		</p>\n\
+	</section>
+
+feedback.message=\
+	<h1 class="heading-large">Feedback</h1>\n\
+	<section>\n\
+	<p class="lede">\n\
+	Your feedback will help us to improve this service. \
+	</p>\n\
+	<p class="font-small">\n\
+	In the event of difficulties or for further information, please \
+	contact us by email at:\n\
+	</p>\n\
+	<p class="font-small">\n\
+	<a href="mailto:mnr@jncc.gov.uk">mnr@jncc.gov.uk</a>\n\
+	</p>\n\
+	</section>
+
+helppage.message=\
+	<h1 class="heading-large">Help</h1>\n\
+	<section>\n\
+	<p class="lede">\n\
+	Help is available for the Marine Noise Registry as a downloadable <a href="/assets/help/Marine_Noise_Registry_Help.pdf">PDF file</a>.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	\n\
+	</p>\n\
+	</section>
+	
+cookies.message=\
+	<h1 class="heading-large">Cookies</h1>\n\
+	<section>\n\
+	<p class="lede">\n\
+	Cookies are used on the Marine Noise Registry.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	When we provide services, we want to make them easy, useful and reliable. Where services are delivered \n\
+	on the internet, this sometimes involves placing small amounts of information on your device, for example, \n\
+	computer or mobile phone. These include small files known as cookies. They cannot be used to identify you personally.\n\
+	</p>\n\
+	<p>\n\
+	These pieces of information are used to improve services for you through:\n\
+	</p>\n\
+	<ul class="list list-bullet">\n\
+	<li>Enabling a service to recognise your device so you don't have to give the same information several times during one task</li>\n\
+	<li>Recognising that you may already have given a username and password so you don't need to do it for every web page requested</li>\n\
+	<li>Measuring how many people are using services, so they can be made easier to use and there's enough capacity to ensure they are fast</li>\n\
+	</ul>\n\
+	<p>\n\
+	You can manage these small files yourself and learn more about them through \n\
+	<a href="http://www.aboutcookies.org">Internet browser cookies - what they are and how to manage them</a>\n\
+	</p>\n\
+	<h2 class="heading-medium">Our use of cookies</h2>\n\
+	<p></p>\n\
+    <table>\n\
+        <thead>\n\
+            <tr>\n\
+                <th>Name</th>\n\
+                <th>Purpose</th>\n\
+                <th>Expires</th>\n\
+            </tr>\n\
+        </thead>\n\
+        <tbody>\n\
+            <tr>\n\
+                <td>PLAY_SESSION</td>\n\
+                <td>A session cookie is used to ensure that choices are preserved during your visit to our site, contains a randomly generated hexadecimal number and the registered email address of the user</td>\n\
+                <td>When user exits browser</td>\n\
+            </tr>\n\
+            <tr>\n\
+                <td>redirectTo</td>\n\
+                <td>A session cookie is used to ensure that the correct content is displayed following user login, contains a URL path of the content to be displayed following login</td>\n\
+                <td>When the user exits the browser, or when the user successfully logs in to the service</td>\n\
+            </tr>\n\
+        </tbody>\n\
+    </table>\n\
+    <h3 class="heading-small">Measuring website usage (Google Analytics)</h3>\n\
+    <p>We use Google Analytics software to collect information about how you use GOV.UK. We do this to help make sure the site is meeting the needs of its users and to help us make improvements.</p>\n\
+    <h3 class="heading-small">Universal Analytics</h3>\n\
+    <table>\n\
+        <thead>\n\
+            <tr>\n\
+                <th>Name</th>\n\
+                <th>Purpose</th>\n\
+                <th>Expires</th>\n\
+            </tr>\n\
+        </thead>\n\
+        <tbody>\n\
+            <tr>\n\
+                <td>_ga</td>\n\
+                <td>This helps us count how many people visit this site by tracking if you've visited before</td>\n\
+                <td>2 years</td>\n\
+            </tr>\n\
+            <tr>\n\
+                <td>_gat</td>\n\
+                <td>Used to manage the rate at which page view requests are made</td>\n\
+                <td>10 minutes</td>\n\
+            </tr>\n\
+        </tbody>\n\
+    </table>\n\
+    <h3 class="heading-small">Google Analytics</h3>\n\
+    <table>\n\
+        <thead>\n\
+            <tr>\n\
+                <th>Name</th>\n\
+                <th>Purpose</th>\n\
+                <th>Expires</th>\n\
+            </tr>\n\
+        </thead>\n\
+        <tbody>\n\
+            <tr>\n\
+                <td>_utma</td>\n\
+                <td>Like _ga, this lets us know if you’ve visited before, so we can count how many of our visitors are new to this site or to a certain page</td>\n\
+                <td>2 years</td>\n\
+            </tr>\n\
+            <tr>\n\
+                <td>_utmb</td>\n\
+                <td>This works with _utmc to calculate the average length of time you spend on this site</td>\n\
+                <td>30 minutes</td>\n\
+            </tr>\n\
+            <tr>\n\
+                <td>_utmc</td>\n\
+                <td>This works with _utmb to calculate when you close your browser</td>\n\
+                <td>When you close your browser</td>\n\
+            </tr>\n\
+            <tr>\n\
+                <td>_utmz</td>\n\
+                <td>This tells us how you reached this site (eg from another website or a search engine)</td>\n\
+                <td>6 months</td>\n\
+            </tr>\n\
+        </tbody>\n\
+    </table>\n\
+    <p><br />You can <a class="external-link" href="https://tools.google.com/dlpage/gaoptout">opt out of Google Analytics cookies</a></p>\n\
+    <h3 class="heading-small">Our introductory message</h3>\n\
+    <p>\n\
+        You may see a pop-up welcome message when you first visit this site. We’ll store a cookie so that your computer knows you've seen it and knows not to show it again.\n\
+    </p>\n\
+    <table>\n\
+        <thead>\n\
+            <tr>\n\
+                <th>Name</th>\n\
+                <th>Purpose</th>\n\
+                <th>Expires</th>\n\
+            </tr>\n\
+        </thead>\n\
+        <tbody>\n\
+            <tr>\n\
+                <td>seen_cookie_message</td>\n\
+                <td>Saves a message to let us know that you’ve seen our cookie message</td>\n\
+                <td>1 month</td>\n\
+            </tr>\n\
+        </tbody>\n\
+    </table>\n\
+	</section>
+	
+contact.message=\
+	<h1 class="heading-large">Contact</h1>\n\
+	<section>\n\
+	<p class="lede">\n\
+	Please send any questions regarding the Marine Noise Registry by email or post to:\n\
+	</p>\n\
+	<p class="font-small">\n\
+	Email: <a href="mailto:mnr@jncc.gov.uk">mnr@jncc.gov.uk</a>\n\
+	</p>\n\
+	<p class="font-small">\n\
+	Address: Marine Noise Registry Adviser, JNCC, Inverdee House, Baxter street, Aberdeen, AB11 9QA\n\
+	</p>\n\
+	</section>
+
+termsandconditions.message=\
+	<h1 class="heading-large">Terms and Conditions</h1>\n\
+	<section>\n\
+	<p class="font-small">\n\
+	The primary purpose of the MNR is to collect data on the distribution in time and space of activities generating low to mid frequency impulsive noise across UK seas.  These data will enable the creation of noise maps and will inform research to determine whether current levels of noise are having an adverse effect on the marine environment. It may also be used for planning and management purposes in the future.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	The MNR collates data on proposed and actual activities in UK waters that generate impulsive noise. The majority of submissions to the MNR will be those licensed by the following regulatory bodies: Department of Energy and Climate Change (DECC), Marine Management Organisation (MMO), Marine Scotland (MS), Department of the Environment Northern Ireland (DoE NI) and Natural Resources Wales (NRW). The MNR will also collect data on relevant noise-generating activities that are not licensed  as voluntary notifications, including activities carried out by the Ministry of Defence (MoD).\n\
+	</p>\n\
+	<p class="lede">\n\
+	1.	Terminology\n\
+	</p>\n\
+	<p class="font-small">\n\
+	<strong>Data Host:</strong> The organisation responsible for managing the MNR, the Joint Nature Conservation Committee (JNCC).<br />\n\
+	<strong>Data Provider:</strong> Any organisation or individual providing data on proposed or actual noise events to the MNR.  This may be a developer or regulatory body.<br />\n\
+	<strong>Data User:</strong> Any organisation or individual making use of data or data products from the MNR, whether obtained via openly available means (data.gov.uk) or via Freedom of Information requests or other means.<br />\n\
+	<strong>Noise Event:</strong> An individual activity that creates impulsive noise covered by the Register such as impact pile driving or seismic surveys.<br /> \n\
+	<strong>Organisation:</strong> A developer/contractor/operator that proposes to carry out a noise generating activity.<br />\n\
+	<strong>Source Property:</strong> Actual or estimated information that describes the noise source such as source volume or maximum hammer energy.<br /> \n\
+	</p>\n\
+	<p class="lede">\n\
+	2.	Purpose\n\
+	</p>\n\
+	<p class="font-small">\n\
+	This document makes transparent how permission to use and pass on data obtained from the MNR will be managed, to:\n\
+	</p>\n\
+	<p class="font-small">\n\
+	* ensure data are managed responsibly; \n\
+	</p>\n\
+	<p class="font-small">\n\
+	* assure Data Providers of this fact; and \n\
+	</p>\n\
+	<p class="font-small">\n\
+	* enable Data Users to better understand the limitations of the data and the conditions under which they are available.\n\
+	</p>\n\
+	<p class="lede">\n\
+	3.	Data Storage\n\
+	</p>\n\
+	<p class="font-small">\n\
+	Data received are stored securely in the MNR which is held by the Data Host, the Joint Nature Conservation Committee (JNCC). All data are held in line with the Data Protection Act and government information management procedures. \n\
+	</p>\n\
+	<p class="font-small">\n\
+	Information contained in the MNR is limited to those activities for which information can be readily obtained by the Data Host from developers and regulators of noise activities. It does not necessarily contain information on all relevant activities producing impulsive noise and it does not provide any information on ambient sound.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	The core information held by the MNR is a temporal and spatial record of activities producing low to mid frequency (10 Hz to 10 kHz) impulsive noise, comprising records of both proposed and actual (completed) noise events. The spatial scale used is UK oil and gas licensing blocks, which cover an area of 10 minutes latitude by 12 minutes longitude. Location data for proposed activities may also include longitude/latitude points and polygons. The temporal scale is one calendar day (24 hours). The duration of each activity is recorded only in terms of the number of days over which noise events will occur. The MNR also collects additional data such as source properties  for all activities, both proposed and actual , and greater survey detail regarding the types of equipment used. \n\
+	</p>\n\
+	<p class="font-small">\n\
+	Data Users are reminded that any proposed activity information obtained from the MNR is, for the majority of cases, a "worst case scenario" representation of the potential occurrence of impulsive noise both temporally and spatially. The primary purpose of the collection of the proposed information is to allocate due dates for the submission of close out reports (actual activity information) to the MNR thus ensuring their prompt completion after the end of a noise event. However, this data could in the future allow for analysis of the differences between proposed and actual work; the findings may help with future noise management if required. \n\
+	</p>\n\
+	<p class="lede">\n\
+	4.	Data access\n\
+	</p>\n\
+	<p class="font-small">\n\
+	In line with Government policy, MNR data will made publicly available. Although the raw data held within the MNR will not be open access to the general public, it is available on request and through FOI and EIR. Outputs will be made publicly available on an annual basis. \n\
+	</p>\n\
+	<p class="font-small">\n\
+	Access from within the MNR to data is as follows:\n\
+	</p>\n\
+	<p class="font-small">\n\
+	* Members of organisations can access activity submissions made on behalf of that organisation. They cannot view any submission made by another organisation.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	* Regulators can only access activity submissions for which they are the named regulatory body.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	* JNCC and Defra can access all activity submissions, proposed and actual, in order to manage the MNR and produce the required outputs.\n\
+	</p>\n\
+	<p class="lede">\n\
+	5.	Data Sharing\n\
+	</p>\n\
+	<p class="font-small">\n\
+	Maps of noise events in UK waters will be made available from data.gov.uk. The maps will show, for each oil and gas block, the best available data on the number of days per month, season and year during which at least one noise event occurred (this unit is referred to as a pulse block day). Regular outputs of such maps are expected annually beginning 2016. Outputs will contain appropriate caveats to reduce the risk of misinterpretation (for example by highlighting gaps in coverage).\n\
+	</p>\n\
+	<p class="font-small">\n\
+	More detailed information from individual applications and licences will not be shown on the maps but are held within the MNR for further/future analysis. The data held within the MNR is also likely to be extracted and fed into a European (or OSPAR) common registry in the future.\n\
+	</p>\n\
+	<p class="lede">\n\
+	6.	Terms and Conditions for users of material, data and/or information\n\
+	</p>\n\
+	<p class="font-small">\n\
+	All raw data held in the MNR are made available upon request for use under the open government licence. Terms and Conditions are set out below. Data Providers have given the Data Host their permission to hold a copy of their data within the MNR and to disseminate it according to the terms laid out in this Data Access/Use Policy. \n\
+	</p>\n\
+	<p class="font-small">\n\
+	Conditions of use:\n\
+	</p>\n\
+	<p class="font-small">\n\
+	* There are no restrictions on who can request raw data and information held by the MNR.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	* Users are free to copy, publish, distribute, transmit and exploit the information commercially and non-commercially, for example by combining it with other information or by including it in their own product or application.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	* Users must acknowledge the source of the data in any information products or publications, whether printed, electronic or broadcast, that are based wholly or in part on data and/or information extracted from the MNR as follows: â€˜These data were extracted from the Marine Noise Registry [at http://mnr.jncc.gov.uk] on the DD/MM/YYYY. Data are collated in the Marine Noise Registry to fulfil the UK requirement for monitoring loud, low to mid frequency impulsive noise for MSFD D11.1. These data are made available under the Open Government Licence.  The Data Host and Data Providers bear no responsibility for any further analysis or interpretation of the material, data and/or information provided.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	Accuracy of information and disclaimer:\n\
+	</p>\n\
+	<p class="font-small">\n\
+	* The Data Host tries to ensure that any data and/or information are accurate, but gives no guarantee that any data and/or information are accurate, up to date or complete.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	* The Data Host accepts no liability for any loss or damage caused by inaccurate, out of date or incomplete data and/or information. All users should independently verify any data and/or information before relying upon it. \n\
+	</p>\n\
+	<p class="font-small">\n\
+	* The data and/or information provided do not constitute any form of advice or recommendation and are not substitutes for the exercise of professional judgement. Users that lack the qualifications and/or experience to make that judgement should take professional advice.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	* The Data Host is not responsible for viruses, or other code that might be harmful, which may be picked up during access or download processes. Each user is responsible for implementing sufficient anti-virus and other security checks to ensure the safety of their systems.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	<strong>IMPORTANT: By accessing the MNR you are agreeing to be bound by these Terms and Conditions. These Terms and Conditions govern the way you can use all material, data and/or information provided to you. Please read them carefully.</strong>\n\
+	</p>\n\
+	</section>
+	
+
+################################  HOME ITEMS ###############################################
+home.title=Welcome 
+home.intro=\
+	<p class="lede">\n\
+	To begin, choose an action from the menu below. Help is available via a link at the bottom of each page.\n\
+	</p>
+home.intro.regulator=\
+	<p class="lede">\n\
+	To begin, choose an action from the menu below. Help is available via a link at the bottom of each page.\n\
+	</p>
+
+################################  ACTIVITY ITEMS ###############################################
+
+#Activity Types
+activity_type.seismic=Seismic Survey
+activity_type.subbottomprofilers=Sub bottom profiling
+activity_type.piling=Impact pile driving
+activity_type.explosives=Explosives
+activity_type.add=Acoustic Deterrent Device
+activity_type.mbes=Multibeam Echosounders
+activity_type.mod=Ministry of Defence Activity
+activity_type.unknown=Unknown
+
+#Field Options
+field_option.pinger=Pinger
+field_option.boomer=Boomer
+field_option.sparker=Sparker
+field_option.chirp=Chirp
+field_option.OBCOBN=Ocean Bottom Cables/Ocean Bottom Nodes
+field_option.VSP=Vertical Seismic Profile
+field_option.Site=Site
+field_option.Regional=Regional
+field_option.Reservoir=Reservoir
+field_option.Route=Route
+field_option.Other=Other
+field_option.2D=2D
+field_option.3D=3D
+field_option.4D=4D
+field_option.asw_sonar=Anti-submarine Warfare Sonar
+field_option.asw_sonar_check=Anti-submarine Warfare Sonar (Check)
+field_option.explosion=Explosion
+field_option.unknown=Unknown
+	        	
+#General view messages
+activities.draft_activities=Draft Activities
+activities.draft_activity_intro=The table below is a list of draft proposed activity forms. To view or update a proposed activity form, please select the corresponding activity application number.
+activities.proposed_activities=Proposed Activities
+activities.proposed_activity_intro=The table below is a list of completed proposed activity forms and partially completed close-out reports (interim close-out reports). To submit a close-out report first select the activity application number for the related proposed activity/interim close-out report and follow the link to submit close-out data.
+activities.proposed_activity_intro.regulator=This table shows all proposed activities where your organisation has been selected as the regulator.
+activities.completed_activities=Completed Activities
+activities.completed_activity_intro=The table below is a list of completed activities (those which have been closed-out or cancelled.
+activities.completed_activity_intro.regulator=This table shows all closed and cancelled activities where your organisation has been selected as the regulator.
+activities.incomplete_activities=Incomplete Activities
+activities.incomplete_activity_intro=The table below shows a list of activities which are draft or proposed and not yet fully closed-out. To propose/close-out an activity first select the activity application number for the related draft/proposed activity report and follow the appropriate link.
+activities.incomplete_activity_intro.regulator=This table shows a list of activities which are draft or proposed and not yet fully closed-out and where your organisation has been selected as the regulator.
+activities.activities=Activities
+activities.deleted_activities=Deleted Activities
+activities.deleted_activity_intro=This table shows activities which have been deleted from the Marine Noise Registry.
+activities.activity_intro=The following list shows activities for organisations who have accepted your membership request.
+activities.activity_intro.regulator=This table shows activities where your organisation has been selected as the regulator.
+activities.activities_requiring_closeout=Activities Requiring Close-out
+activities.activities_requiring_closeout_intro=These tables show activities where close-out is required. Late activities are recorded under their associated Regulator.
+activities.tableheading_aan=Activity Application Number
+activities.tableheading_parent_aa=Parent Activity
+activities.tableheading_status=Status
+activities.tableheading_activity_type=Activity Type
+activities.tableheading_status=Status
+activities.tableheading_start_date=Start Date
+activities.tableheading_end_date=End Date
+activities.tableheading_earliest_start_date=Earliest Start Date
+activities.tableheading_closed_date=Closed Date
+activities.tableheading_report_due_date=Close-out Report Due Date
+activities.tableheading_regulator=Regulator
+activities.tableheading_noiseproducer=Organisation
+activities.tableheading_supp_info=Supplementary Information
+ 
+# Activity form messages
+activityform.title_new=New Activity
+activityform.title=Activity
+activityform.submit=Save and Submit
+activityform.linked_activity_heading=Linked Activity Details
+activityform.field_heading.aan=Activity Application Number
+activityform.field_heading.status=Status
+activityform.field_heading.regulator=Regulator
+activityform.field_heading.regulator_orig=Regulator Name when Created
+activityform.field_heading.noiseproducer=Organisation
+activityform.field_heading.noiseproducer_name=Contact Name
+activityform.field_heading.noiseproducer_phone=Phone
+activityform.field_heading.noiseproducer_email=Email Address
+
+activityform.field_heading.non_licensable=Voluntary Notification
+activityform.field_hint.non_licensable=Is this a voluntary notification (for example a non-licensable activity)?
+activityform.non_licensable.true=Yes
+activityform.non_licensable.false=No	
+
+activityform.field_heading.date_start=Earliest Start Date
+activityform.field_heading.date_end=Latest End Date
+activityform.field_heading.date_due=Close-out Report Due Date
+activityform.field_hint.date_due=Close-out report due date is calculated from the latest end date and is dependent upon the regulator associated with the project.
+activityform.field_heading.date_closed=Closed Date
+activityform.field_heading.duration=Duration
+activityform.field_hint.duration=The estimated maximum number of days over which the impulsive noise will occur
+
+activityform.field_heading.activity_type=Activity Type
+activityform.field_hint.activity_type=To enter more than one activity type, start by submitting an activity for the main activity type. You will then be given the opportunity to create linked activities for further activity types at the draft and proposed stages of submission.
+
+activityform.field_heading.actual_data=Actual Activity Data
+activityform.field_hint.actual_data=Enter the actual values for the activity
+
+activityform.field_heading.seismic_survey_type=Survey Type
+activityform.field_heading.seismic_othersurvey_type=Other Survey Type
+activityform.field_hint.seismic_othersurvey_type=Please give details
+activityform.field_heading.seismic_data_type=Data Type
+activityform.field_heading.seismic_max_airgun=Maximum Airgun Volume
+activityform.field_hint.seismic_max_airgun=An integer value
+activityform.field_heading.seismic_sound_pressure=Sound pressure level at 1 metre over frequency band 10Hz - 10KHz
+activityform.field_hint.seismic_sound_pressure=An integer value
+activityform.field_heading.seismic_sound_exposure=Sound exposure level at 1 metre over frequency band 10Hz – 10KHz
+activityform.field_hint.seismic_sound_exposure=An integer value
+activityform.field_heading.seismic_max_airgun_actual=Actual Maximum Airgun Volume
+activityform.field_hint.seismic_max_airgun_actual=An integer value
+activityform.field_heading.seismic_sound_pressure_actual=Actual Sound Pressure Level
+activityform.field_hint.seismic_sound_pressure_actual=An integer value
+activityform.field_heading.seismic_sound_exposure_actual=Actual Sound Exposure Level
+activityform.field_hint.seismic_sound_exposure_actual=An integer value
+
+activityform.field_heading.sbp_source=Source
+activityform.field_heading.sbp_frequency=Frequency
+activityform.field_hint.sbp_frequency=An integer value
+activityform.field_heading.sbp_sound_pressure=Sound pressure level at 1 metre over frequency band 10Hz - 10KHz
+activityform.field_hint.sbp_sound_pressure=An integer value
+activityform.field_heading.sbp_sound_exposure=Sound exposure level at 1 metre over frequency band 10Hz – 10KHz
+activityform.field_hint.sbp_sound_exposure=An integer value
+activityform.field_heading.sbp_frequency_actual=Actual Frequency
+activityform.field_hint.sbp_frequency_actual=An integer value
+activityform.field_heading.sbp_sound_pressure_actual=Actual Sound Pressure Level
+activityform.field_hint.sbp_sound_pressure_actual=An integer value
+activityform.field_heading.sbp_sound_exposure_actual=Actual Sound Exposure Level
+activityform.field_hint.sbp_sound_exposure_actual=An integer value
+
+activityform.field_heading.piling_max_hammer=Maximum Hammer Energy
+activityform.field_hint.piling_max_hammer=An integer value
+activityform.field_heading.piling_sound_pressure=Sound pressure level at 1 metre over frequency band 10Hz - 10KHz
+activityform.field_hint.piling_sound_pressure=An integer value
+activityform.field_heading.piling_sound_exposure=Sound exposure level at 1 metre over frequency band 10Hz – 10KHz
+activityform.field_hint.piling_sound_exposure=An integer value
+activityform.field_heading.piling_max_hammer_actual=Actual Maximum Hammer Energy
+activityform.field_hint.piling_max_hammer_actual=An integer value
+activityform.field_heading.piling_sound_pressure_actual=Actual Sound Pressure Level
+activityform.field_hint.piling_sound_pressure_actual=An integer value
+activityform.field_heading.piling_sound_exposure_actual=Actual Sound Exposure Level
+activityform.field_hint.piling_sound_exposure_actual=An integer value
+
+activityform.field_heading.explosive_tnt=TNT Equivalent
+activityform.field_hint.explosive_tnt=Please provide TNT Equivalent in kilograms for the maximum individual charge used during the whole activity in question. To one decimal place.
+activityform.field_heading.explosive_sound_pressure=Sound pressure level at 1 metre over frequency band 10Hz - 10KHz
+activityform.field_hint.explosive_sound_pressure=An integer value
+activityform.field_heading.explosive_sound_exposure=Sound exposure level at 1 metre over frequency band 10Hz – 10KHz
+activityform.field_hint.explosive_sound_exposure=An integer value
+activityform.field_heading.explosive_tnt_actual=Actual TNT Equivalent
+activityform.field_hint.explosive_tnt_actual=To one decimal place
+activityform.field_heading.explosive_sound_pressure_actual=Actual Sound Pressure Level
+activityform.field_hint.explosive_sound_pressure_actual=An integer value
+activityform.field_heading.explosive_sound_exposure_actual=Actual Sound Exposure Level
+activityform.field_hint.explosive_sound_exposure_actual=An integer value
+
+activityform.field_heading.acoustic_frequency=Frequency
+activityform.field_hint.acoustic_frequency=An integer value
+activityform.field_heading.acoustic_sound_pressure=Sound pressure level at 1 metre over frequency band 10Hz - 10KHz
+activityform.field_hint.acoustic_sound_pressure=An integer value
+activityform.field_heading.acoustic_sound_exposure=Sound exposure level at 1 metre over frequency band 10Hz – 10KHz
+activityform.field_hint.acoustic_sound_exposure=An integer value
+activityform.field_heading.acoustic_frequency_actual=Actual Frequency
+activityform.field_hint.acoustic_frequency_actual=An integer value
+activityform.field_heading.acoustic_sound_pressure_actual=Actual Sound Pressure Level
+activityform.field_hint.acoustic_sound_pressure_actual=An integer value
+activityform.field_heading.acoustic_sound_exposure_actual=Actual Sound Exposure Level
+activityform.field_hint.acoustic_sound_exposure_actual=An integer value
+
+activityform.field_heading.mb_frequency=Frequency
+activityform.field_hint.mb_frequency=An integer value
+activityform.field_heading.mb_sound_pressure=Sound pressure level at 1 metre over frequency band 10Hz - 12KHz
+activityform.field_hint.mb_sound_pressure=An integer value
+activityform.field_heading.mb_sound_exposure=Sound exposure level at 1 metre over frequency band 10Hz – 12KHz
+activityform.field_hint.mb_sound_exposure=An integer value
+activityform.field_heading.mb_frequency_actual=Actual Frequency
+activityform.field_hint.mb_frequency_actual=An integer value
+activityform.field_heading.mb_sound_pressure_actual=Actual Sound Pressure Level
+activityform.field_hint.mb_sound_pressure_actual=An integer value
+activityform.field_heading.mb_sound_exposure_actual=Actual Sound Exposure Level
+activityform.field_hint.mb_sound_exposure_actual=An integer value
+
+activityform.field_heading.mod_source=Source
+
+activityform.field_heading.activity_locations=Locations
+activityform.field_heading.locations=Locations
+activityform.field_heading.dates=Activity Dates
+activityform.field_heading.actual_data=Actual Values
+activityform.field_hint.actual_data=The actual values that occurred during the activity
+activityform.add_location=Save Location
+
+activityform.field_heading.revert_reason=Reason
+activityform.field_heading.delete_reason=Reason
+activityform.field_heading.supplementary_info=Supplementary Information
+activityform.field_hint.supplementary_info=Additional references or other information about this activity (e.g. licence numbers).
+
+activityform.heading.audit_trail=Audit Trail
+activityform.field_hint.csvupload=Select whether you would like to upload a CSV file containing locations following submission of the activity.
+activityform.csvuploadfollows.true=Yes
+activityform.csvuploadfollows.false=No	
+activityform.field_hint.csvuploadlabel=CSV data upload
+
+activityform.confirmadd.proposed=Your activity has been successfully submitted with the following values:
+activityform.confirmadd.draft=Your activity has been successfully saved with the following values:
+
+activityform.uses_parent=(uses parent locations)
+
+activityform.field_heading.activity_location_date_entry=Locations and Dates
+xactivityform.field_hint.activity_location_date_entry=To add dates to entered locations please select ‘CSV data upload’ \
+	to supply a CSV file with the location(s)/date(s) of the activity; type the date in the box (DD/MM/YYYY); \
+	and/or use the drop-down calendar to select dates. Dates can be deleted by highlighting the text and \
+	using the delete or backspace key. All date entries are restricted to those between the earliest start date and \
+	latest end date of the proposed activity. If a proposed location was entered as a polygon, please add \
+	actual locations as lat/long points (decimal degrees) or Oil and Gas Blocks. See the help document for \
+	more guidance.
+activityform.field_hint.activity_location_date_entry=<p>If a proposed location was entered as a polygon, you are required to add actual locations of the activity as latitude/longitude points (decimal degrees) or Oil and Gas Blocks.</p><p>To add dates to entered locations select yes and type the date in the box (DD/MM/YYYY); and/or use the drop-down calendar to select dates. Dates are restricted to those between the earliest start date and latest end date of the proposed activity. Alternatively, you can select 'CSV data upload' and submit a .csv file containing	the location(s) and date(s) of the activity. For further guidance see the help document.</p>	
+activityformcloseout.title=Activity Close-Out
+activityformcloseout.interim=Submit Interim Close-out Data
+activityformcloseout.submit=Close Out Activity
+activityformcloseout.cancel=Return to Activity
+activityformcloseout.heading.location_entry=Additional Activity Locations
+activityformcloseout.field_hint.location_entry_type=\
+	Additional activity locations may be entered here.	
+activityformcloseout.text.location_entry=Select the additional location entry type
+activityformcloseout.activitytorecord=Did the activity occur in this location?
+activityformcloseout.activitytorecord.yes=Yes
+activityformcloseout.activitytorecord.no=No
+activityformcloseout.field_heading.activitydate=Dates of activity
+activityformcloseout.field_hint.activitydate=Enter dates as DD/MM/YYYY separated by commas
+activityformcloseout.confirmcloseout=Confirm Close Out
+activityformcloseout.cancel2=Cancel
+activityformcloseout.closeoutwarning=<p>Following close out the activity can no longer be edited. Please ensure that all details are correct before confirming.</p>
+
+activityform.submithelp=Save as draft to enable further editing. Save and submit when no further edits are required. \
+	When saved as draft or submitted, a due date for close-out report is generated.
+
+activityform.error.start_date=Start date is not valid please enter a valid date
+activityform.error.end_date=End date is not valid please enter a valid date
+activityform.error.global_heading=There are errors with the submitted form, please correct them and then resubmit
+activityform.error.csvupload=Please indicate whether a CSV file upload follows submission
+activityform.error.nolocationtype=No location entry type chosen
+activityform.csvhelp=To submit a CSV file with locations, first save the activity as draft. You will then be prompted to upload a CSV file with locations for your activity.
+activityform.nolocationshelp=Location entry for the activity is mandatory at close-out report stage.
+activityform.useparenthelp=If the linked activity will occur in exactly the same location(s) as the parent activity, please select ‘Use Parent Activity Location’. If the linked activity differs in its locations (even by one point), please enter locations below.
+
+############## LOCATION TYPES ##################
+location.type.latlng=Latitude/Longitude
+location.type.ogb=Oil and Gas Block Code
+location.type.polygon=Polygon
+location.type.map=Map
+
+############## LOCATION DATA ENTRY ##################
+lng=Longitude
+lat=Latitude
+entered_ogb_code=Quadrant/Block Number
+
+############## LOCATION FIELDS ##################
+activityform.location_type.parent=Use parent activity locations
+activityform.location_type.parenttext=By copying parent locations it will be assumed that this linked activity is planned to occur in the same location(s) as the parent activity
+activityform.location_type.enter_locations=Enter locations
+activityform.location_type.manual=Use manual entry
+activityform.location_type.file_upload=Use CSV entry
+activityform.location_type.none=No location entries at present
+activityform.nolocations=No locations added
+activityform.removelocation.heading=Delete
+activityform.removelocation.text=-
+activityform.removelocation.title=Remove Location Entry
+activityform.heading.location_entry=Location Entry
+activityform.text.location_entry=Select the entry type
+activityform.field_heading.location_entry_type=Entry Type
+activityform.field_hint.location_entry_type=\
+	To add a succession of locations, enter the first latitude/longitude point, quadrant/block, or polygon, \
+	and click Save Location. The location will appear under the heading Locations. To add a second location, \
+	repeat the first steps and the second location will appear below the first. An unlimited number \
+	of locations can be added.  
+activityform.field_heading.block_code=Quadrant/Block Number
+activityform.field_hint.block_code=Please include the greater working area as Quadrant/Block number, for example 113/29
+activityform.field_heading.latlng=Latitude/Longitude
+activityform.field_heading.lat=Latitude
+activityform.field_hint.lat=Value between 48.00 and 64.00
+activityform.field_heading.lng=Longitude
+activityform.field_hint.lng=Value between -24.00 and 4.00
+activityform.field_hint.latlng=Enter in decimal degrees, between 2-7 decimal places. Use a negative sign if longitude is West, for example 48.442 -1.234
+activityform.field_heading.polygon=Polygon
+activityform.field_hint.polygon=\
+	Please enter a succession of latitude/longitude corner points, working clockwise around the shape. \
+	Select "Add Another Polygon Point" to include extra points to a polygon. Only a simple \
+	polygon (a minimum of three points) is required.
+activityform.add_polygon_point=Add Another Polygon Point
+
+############## ACTIVITY FORM CANCELLATION ##################
+activityform.cancel.title=Confirm Proposed Activity Cancellation
+activityform.cancel.text=Please confirm that you wish to cancel the proposed activity
+activityformcancel.submit=Cancel Activity
+activityformcancel.dontcancel=Return to Activity
+
+############## ACTIVITY FORM REVERT STATUS ##################
+activityform.revert.title=Revert Status
+activityform.revert.text=Please confirm that you wish to revert the activity to {0} status
+activityform.revert.submit=Revert Status
+activityform.revert.dontcancel=Return to Activity
+
+############## ACTIVITY FORM DELETION (FOR DRAFTS) ##################
+activityform.delete.title=Confirm {0} Activity Deletion
+activityform.delete.text=Please confirm that you wish to delete the {0} activity
+activityform.delete.submit=Delete {0} Activity
+activityform.delete.dontdelete=Return to Activity
+activityform.delete.canttdeleteduetoparent=This activity cannot be deleted whilst this is marked as the parent of other activities.
+
+############## ACTIVITY CSV UPLOAD ##################
+csvform.title=Data Upload
+csvform.submit=Submit
+csvform.confirm=Confirm
+csvform.preamble=Choose the .csv file and submit. To complete the upload of location data, identify the relevant \
+	data type from the list below and choose from the drop down list the corresponding column heading from \
+	your .csv file. Latitude/longitude points must be in decimal degrees. Polygons cannot be submitted at \
+	close-out and must be replaced by actual locations in latitude/longitude points or Oil and Gas blocks.	
+############## UNITS ##################
+units.sound_exposure_level=dB re 1&micro;Pa2.s
+units.sound_pressure_level=dB re 1&micro;Pa (peak)
+units.frequency=hertz
+units.frequency.acousticDD=kilohertz
+units.max_airgun_volume=cubic inches
+units.max_hammer_energy=kilojoules
+units.tnt_equivalent=kilograms
+units.duration=days
+
+############## CUSTOM ERRORS #########################
+validation.required=Value must be entered
+validation.min=Value must be greater or equal to {0}
+validation.max=Value must be less than or equal to {0}
+validation.invalidrange=Value must be between {1} and {0}
+validation.duration.too_long=Duration exceeds the number of days between the entered start and end date
+validation.not.valid.start=The start date must be a valid date on or after 01 Jan 2000
+validation.not.valid.end=The end date must be a valid date
+validation.not.valid.closed=The date closed must be a valid date
+validation.startafterend=The start date must be before the end date
+validation.invalidogbformat=This field must contain from 1 to 3 digits, forward slash (/) then 1 to 2 digits
+validation.entered_ogb_code.invalid=Invalid block entered
+validation.appcloseout.datesrequired=The activity dates must be entered and valid
+validation.activitybeforestart=The activity dates must be after the entered start date
+validation.activityafterend=The activity dates must be before the entered end date
+validation.activityforpolygon=Activity dates recorded against polygon entries are not supported
+validation.polygon_latlngs.parseerror=The entered latitude/longitude values could not be used to create a valid polygon
+validation.polygon_latlngs.invalid=The entered latitude/longitude values do not create a valid polygon
+validation.polygon_latlngs.bounds=The entered latitude/longitude values do not fall within the allowed range
+validation.appcloseout.noactivity=No activity has been recorded.  Please enter a location \
+	(latitude/longitude point or Oil and Gas Block) and the corresponding dates on which the activity occurred.
+validation.noiseproducer.invalid=Invalid organisation
+validation.regulator.invalid=Invalid regulator
+validation.noiseproducer.null=Please select an organisation
+validation.regulator.null=Please select an organisation
+validation.closeout.locations.empty=A location must be added before close-out
+validation.closeout.locations.error=The activity locations section contains some errors, please correct these and continue
+error.something.went.wrong=An unexpected error occurred - please report this, including any actions you were taking
+validation.delete.reason_required=A reason for deletion is required
+validation.revert.reason_required=A reason for reversion is required 
+validation.startendsameyear=Activity entries cannot be entered when spanning consecutive years, (for example start date: 01/12/2017 to end date: 01/02/2018). Please create separate entries for each year the activity spans.
+############## CONSTRAINTS #################
+constraint.required=
+constraint.maxLength=Maximum length: {0} characters
+
+################################  USER ITEMS ###############################################
+
+userform.title_new=User registration
+userform.field_heading.email_address=Email Address
+userform.field_heading.password_entry=Password
+userform.field_heading.password_confirm=Confirm Password
+userform.field_heading.fullname=Full Name
+userform.field_heading.phone=Phone
+userform.field_heading.date_last_login=Date Last Login
+userform.field_heading.date_registered=Date Registered
+userform.field_hint.email_address=
+userform.field_hint.password_entry=Password needs to be at least 8 characters and contain at least 1 uppercase character and 1 number
+userform.field_hint.password_confirm=
+userform.field_hint.fullname=
+userform.field_hint.phone=
+userform.save.failed=Unable to store these details - please check that the email address has not already been registered.
+
+userform.title_mydetails=My details
+userform.organisationmembership=Organisation Membership
+userform.organisation.name=Organisation Name
+userform.organisation.nomembership=You have not yet joined an organisation, please join or create an organisation that you wish to submit noise event data for.
+userform.organisation.unverifiedmember=(Unverified)
+
+registration.confirmation_title=Registration successful
+registration.success=\
+	<p>Your registration details have been saved.</p>\
+	<p>An email containing a verification link has been sent to the address that you registered.</p>\
+	<p class="heading-medium">Next Step</p>\
+	<p>To activate your account please open the link in the email sent to your email address, this will complete the registration process.</p> 
+
+registration.mail.subject=Marine Noise Registry - User Email Verification
+registration.mail.salutation={0},
+registration.mail.preamble=<p>Thank you for registering with the Marine Noise Registry. To complete your registration, and verify your email address, please visit the link shown below:</p>
+registration.mail.preamble.plain=Thank you for registering with the Marine Noise Registry. To complete your registration, and verify your email address, please visit the link shown below:
+registration.mail.linktext=Complete verification
+registration.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p> 
+registration.mail.footer.plain=Regards,\n\nMarine Noise Registry 
+
+verification.successpage_title=Registration Success
+verification.success=\
+	<p>The user registration has been verified.  You may now log in with the email address and password supplied at registration.</p>
+verification.errorpage_title=Registration Error
+verification.error=\
+	<p>No unverified user registration matching the supplied verification token was found.</p>
+
+loginform.title=Login
+loginform.register_link=<p>New user? <a href="/registration/add">Register</a></p>
+loginform.forgottenpassword_link=<p>Forgotten password? <a href="/forgot">Reset</a></p>
+loginform.field_heading.email=Email Address
+loginform.field_heading.password=Password
+loginform.field_heading.submit=Log In
+loginform.field_hint.email=The email address that you registered with
+loginform.field_hint.password=Note: The password is case-sensitive
+loginform.error.invalid=Invalid email address or password
+loginform.error.unverified=The account has not been verified - you cannot log on until you have opened an email message containing an activation link and clicked on the link
+
+unverified_users.title=Unverified Users
+unverified_users.intro=This page allows the resending of verification emails to users and the manual authorising of users. 
+unverified_users.fullname=Full Name
+unverified_users.emailaddress=Email Address
+unverified_users.lastsentverification=Last Sent Verification
+unverified_users.resend_button=Resend
+unverified_users.authorise_button=Authorise
+resendverif.ok=Resent verification message
+resendverif.notok=There is a problem with this user's email address or the sending of the email
+
+
+changepasswordform.title=Change Password
+changepasswordform.field_heading.current_password=Current Password
+changepasswordform.field_hint.current_password=
+changepasswordform.field_heading.password_entry=New Password
+changepasswordform.field_hint.password_entry=Password needs to be at least 8 characters and contain at least 1 uppercase character and 1 number
+changepasswordform.field_heading.password_confirm=Confirm New Password
+changepasswordform.field_hint.password_confirm=
+changepasswordform.field_heading.submit=Change Password
+changepasswordform.error.invalid=Invalid email address or password
+changepasswordform.error.notloggedin=You are not currently logged in
+
+changepassword.confirmation_title=Password Change Successful
+changepassword.success=\
+	<p>Your password has been updated.</p>
+
+error.passwords_must_match=The password and confirmation value must match
+error.passwords_strength=The password must contain at least 1 uppercase character and 1 number
+
+resetpasswordform.title=Reset Password
+resetpasswordform.error.nouser=Unable to find an account for this email address
+resetpasswordform.field_heading.email=Email Address
+resetpasswordform.field_hint.email=Enter the email address that you registered with
+resetpasswordform.field_heading.submit=Reset Password
+
+resetpassword.confirmation_title=Password Reset Successful
+resetpassword.success=\
+	<p>A new password has been emailed to your registered email address</p>
+
+resetpassword.mail.subject=Marine Noise Registry - Forgotten Password
+resetpassword.mail.salutation={0},
+resetpassword.mail.preamble=<p>Your password has been reset for the Marine Noise Registry.  Your new password is shown below:</p>
+resetpassword.mail.preamble.plain=Your password has been reset for the Marine Noise Registry.  Your new password is shown below:\n
+resetpassword.mail.prelink=Please use the following link to login using your new password:
+resetpassword.mail.linktext=Marine Noise Registry
+resetpassword.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p> 
+resetpassword.mail.footer.plain=\nRegards,\n\nMarine Noise Registry 
+
+changeuserdetails.confirmation_title=Update Successful
+changeuserdetails.success=\
+	<p>Your details have been updated.</p>\
+
+################################ ORGANISATION ITEMS ###############################################
+organisationform.verified.users=Organisation Members
+organisationform.unverified.users=Organisation Membership Requests
+organisationform.activity_summary=Current Activity Summary
+organisationform.title=Organisation
+organisationform.titlereg=Regulator
+organisationform.organisation_name=Organisation Name
+organisationform.regulator_name=Regulator Name
+organisationform.field_hint.organisation_name=
+organisationform.contact_name=Contact Name
+organisationform.field_hint.contact_name=
+organisationform.contact_email=Contact Email Address
+organisationform.accepts_email=Send Notifications via Email
+organisationform.accepts_email.true=Yes
+organisationform.accepts_email.false=No
+organisationform.field_hint.contact_email=
+organisationform.contact_phone=Contact Phone Number
+organisationform.field_hint.contact_phone=
+organisationform.closeoutdays=Number of Days for Close Out
+organisationform.field_hint.closeoutdays=
+
+organisationform.contact.name=Contact Name
+organisationform.organisation.name=Organisation Name
+organisationform.contact.email=Contact Email Address
+organisationform.contact.phone=Contact Phone Number
+organisationform.user.name=Name
+organisationform.user.administrators=Administrator
+organisationuser.title=User
+organisationform.no.verified=There are no members
+organisationform.no.unverified=There are no membership requests outstanding
+
+organisation.confirmsave.title=Update Successful
+organisation.confirmsave.message=\
+	<p>The organisation details have been saved</p>
+
+organisation.join_title=Choose Organisation to Join
+organisation.joinrequest.regulators_title=Regulator Organisations
+organisation.joinrequest.noiseproducers_title=Registered organisations
+organisation.joinrequest.title=Request Organisation Membership
+organisation.joinrequest.formhelp=Organisation Membership requests must be approved by the administrator
+organisation.joinrequest.organisation.title=Organisation Name
+organisation.joinrequest.submit=Request Membership
+organisation.joinrequest.confirmmessage=Your membership request has been created
+organisation.joinrequestsamename.confirmmessage=You have attempted to create an organisation using the name of an organisation that already exists. An application to join this organisation has been created for you.  
+organisation.joinrequest.errormessage=Unable to process this join request
+
+organisationuser.field_heading.administrator=Organisation Administrator
+organisationuser.verify=Mark this user as Verified
+organisationuser.true=True
+organisationuser.false=False
+organisationuser.field_heading.verify=This user requires verification
+organisationuser.remove.user=Remove User
+organisationuser.accept=Accept User into Organisation
+organisationuser.reject=Reject User
+organisationuser.reject_reason.hint=The user is notified including the reason given here
+organisationuser.reject_reason.heading=Rejection Reason
+
+organisationconfirmdelete.title=Confirm User Removal
+organisationconfirmdelete.prename=You have selected the following user to be removed from your organisation
+organisationconfirmdelete.postname=Press the confirm button if you are sure you wish to delete this user
+
+userjoinrequest.mail.subject=Marine Noise Registry - User Application for Organisation Membership
+userjoinrequest.mail.salutation={0} Administrators,
+userjoinrequest.mail.preamble=<p>User {1} (email {2}) has applied for membership to {0}. Please log onto the Marine Noise Registry to accept or reject membership.</p>
+userjoinrequest.mail.preamble.plain=User {1} (email {2}) has applied for membership to {0}. Please log onto the Marine Noise Registry to accept or reject membership.\n
+userjoinrequest.mail.linktext=Marine Noise Registry
+userjoinrequest.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p> 
+userjoinrequest.mail.footer.plain=\nRegards,\n\nMarine Noise Registry 
+
+userremoval.mail.subject=Marine Noise Registry - User Removal
+userremoval.mail.salutation={0},
+userremoval.mail.preamble=<p>You have been removed from {0}. You will no longer be able to view or complete activity notices on behalf of {0}. If this was an error please re-apply for membership or contact the organisation directly.</p> 
+userremoval.mail.preamble.plain=You have been removed from {0}. You will no longer be able to view or complete activity notices on behalf of {0}. If this was an error please re-apply for membership or contact the organisation directly.\n 
+userremoval.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p> 
+userremoval.mail.footer.plain=\nRegards,\n\nMarine Noise Registry 
+userremoval.mail.linktext=Marine Noise Registry
+
+userremovaladmin.mail.subject=Marine Noise Registry - Organisation Membership Removal
+userremovaladmin.mail.salutation={0} administrators,
+userremovaladmin.mail.preamble=<p>{0} has been successfully removed from the organisation therefore will no longer be able to view or complete activity notices on behalf of {1}.</p>
+userremovaladmin.mail.preamble.plain={0} has been successfully removed from the organisation therefore will no longer be able to view or complete activity notices on behalf of {1}.\n
+userremovaladmin.mail.linktext=Marine Noise Registry
+userremovaladmin.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p> 
+userremovaladmin.mail.footer.plain=\nRegards,\n\nMarine Noise Registry 
+
+useraccept.mail.subject=Marine Noise Registry - Organisation Membership Approved
+useraccept.mail.salutation={0},
+useraccept.mail.preamble=<p>Your membership for {0} has been approved.  You may login and complete activity notices on behalf of the organisation by following the link below.</p> 
+useraccept.mail.preamble.plain=Your membership for {0} has been approved.  You may login and complete activity notices on behalf of the organisation by following the link below.\n 
+useraccept.mail.linktext=Marine Noise Registry
+useraccept.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p> 
+useraccept.mail.footer.plain=\nRegards,\n\nMarine Noise Registry 
+
+userreject.mail.subject=Marine Noise Registry - Organisation Membership Rejected 
+userreject.mail.salutation={0},
+userreject.mail.preamble=<p>Your membership for {0} has been rejected because: {1}. If you believe this was in error, please contact the organisation to clarify the situation and re-apply for membership.</p>
+userreject.mail.preamble.plain=Your membership for {0} has been rejected because: {1}. If you believe this was in error, please contact the organisation to clarify the situation and re-apply for membership.\n
+userreject.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p>  
+userreject.mail.footer.plain=\nRegards,\n\nMarine Noise Registry  
+
+adminorganisations.title=Organisations
+adminorganisations.intro=You are administrator for the following organisations:
+adminorganisations.organisation_name=Organisation Name
+adminorganisations.regulator_name=Regulator Name
+
+adminregulators.title=Regulators
+adminregulators.intro=You may edit the following regulators:
+adminregulators.organisation_name=Regulator Name
+
+form.abort=You will lose all data entered.  Are you sure you wish to cancel?
+
+closeout.form.return=You will lose all data entered.  Are you sure you wish to return to the activity?
+
+regulator.activity.proposed.mail.subject=Marine Noise Registry - Proposed Activity Submission
+regulator.activity.proposed.mail.salutation={0},
+regulator.activity.proposed.mail.preamble=<p>{0} has submitted a proposed activity form for the following activity:<br /><br />
+regulator.activity.proposed.mail.preamble.plain={0} has submitted a proposed activity form for the following activity:\n\n
+regulator.activity.proposed.mail.linktext=Proposed Activity
+regulator.activity.proposed.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p>  
+regulator.activity.proposed.mail.footer.plain=\nRegards,\n\nMarine Noise Registry  
+
+regulator.activity.cancelled.mail.subject=Marine Noise Registry - Activity Cancellation
+regulator.activity.cancelled.mail.salutation={0},
+regulator.activity.cancelled.mail.preamble=<p>{0} has cancelled the following activity:<br /><br />
+regulator.activity.cancelled.mail.preamble.plain={0} has cancelled the following activity:\n\n
+regulator.activity.cancelled.mail.linktext=Cancelled Activity
+regulator.activity.cancelled.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p>  
+regulator.activity.cancelled.mail.footer.plain=\nRegards,\n\nMarine Noise Registry  
+
+regulator.activity.closed.mail.subject=Marine Noise Registry - Close-out Report Submission
+regulator.activity.closed.mail.salutation={0},
+regulator.activity.closed.mail.preamble=<p>{0} has submitted a close-out report for the following activity:<br /><br />
+regulator.activity.closed.mail.preamble.plain={0} has submitted a close-out report for the following activity:\n\n
+regulator.activity.closed.mail.linktext=Closed Activity
+regulator.activity.closed.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p> 
+regulator.activity.closed.mail.footer.plain=\nRegards,\n\nMarine Noise Registry 
+
+regulator.activity.interim_close-out.mail.subject=Marine Noise Registry - Interim Close-out Data Submission
+regulator.activity.interim_close-out.mail.salutation={0},
+regulator.activity.interim_close-out.mail.preamble=<p>{0} has submitted interim close-out data for the following activity:<br /><br />
+regulator.activity.interim_close-out.mail.preamble.plain={0} has submitted interim close-out data for the following activity:\n\n
+regulator.activity.interim_close-out.mail.linktext=Activity
+regulator.activity.interim_close-out.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p>  
+regulator.activity.interim_close-out.mail.footer.plain=\nRegards,\n\nMarine Noise Registry  
+
+regulator.activity.latecloseout.mail.subject=Marine Noise Registry - Late Activity Close-out Report
+regulator.activity.latecloseout.mail.salutation={0},
+regulator.activity.latecloseout.mail.preamble=<p>The following Activity notice(s) have not been closed and are now overdue:</p>
+regulator.activity.latecloseout.mail.preamble.plain=The following Activity notice(s) have not been closed and are now overdue:\n
+regulator.activity.latecloseout.mail.linktext=Activity
+regulator.activity.latecloseout.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p>  
+regulator.activity.latecloseout.mail.footer.plain=\nRegards,\n\nMarine Noise Registry
+
+jncc.notify.mail.subject=Marine Noise Registry - Activities missing closeout
+jncc.notify.mail.salutation=Dear JNCC Administrator,
+jncc.notify.mail.preamble=<p>{0} has submitted a proposed activity form for the following activity:<br /><br />
+jncc.notify.mail.preamble.plain={0} has submitted a proposed activity form for the following activity:\n\n
+jncc.notify.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p>  
+jncc.notify.mail.footer.plain=\nRegards,\n\nMarine Noise Registry
+
+noiseproducer.activity.latecloseout.mail.subject=Marine Noise Registry - Late Activity Close-out Report
+noiseproducer.activity.latecloseout.mail.salutation={0},
+noiseproducer.activity.latecloseout.mail.preamble=<p>The Marine Noise Registry (MNR) currently holds the following\
+	activity notices associated with your organisation that have not been closed and are now overdue. \
+	See close-out report due date.</p><p>Please log into the MNR to complete the associated close out reports.</p>
+noiseproducer.activity.latecloseout.mail.preamble.plain=The Marine Noise Registry (MNR) currently holds the following\
+	activity notices associated with your organisation that have not been closed and are now overdue. \
+	See close-out report due date.  Please log into the MNR to complete the associated close out reports.
+noiseproducer.activity.latecloseout.mail.linktext=Activity
+noiseproducer.activity.latecloseout.mail.footer=<p>If the activity has been postponed, extended or cancelled please\
+	log into the MNR and make the relevant changes to the entry.</p><p>If the end date is 31st December it is possible \
+	that the activity spans consecutive years. In that case, you will be required to submit a close-out report \
+	for the year ending 31st December. If no activity occurred in that year, please cancel the entry above. \
+	This will not affect the subsequent year entries for the same activity.</p>   
+noiseproducer.activity.latecloseout.mail.footer.plain=If the activity has been postponed, extended or cancelled please\
+	log into the MNR and make the relevant changes to the entry.  If the end date is 31st December it is possible \
+	that the activity spans consecutive years. In that case, you will be required to submit a close-out report \
+	for the year ending 31st December. If no activity occurred in that year, please cancel the entry above. \
+	This will not affect the subsequent year entries for the same activity.  
+
+orgchanges.mail.subject=Organisational changes
+orgchanges.mail.preamble=An organisation to which you belong has changed.  The details are below:
+orgchanges.mail.preamble.plain=An organisation to which you belong has changed.  The details are below:\n
+orgchanges.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p>
+orgchanges.mail.neworgname=<h2>New Organisation Name</h2>
+orgchanges.mail.newcontactname=<h2>New Contact Name</h2>
+orgchanges.mail.newcontactphone=<h2>New Contact Phone Number</h2>
+orgchanges.mail.newcontactemail=<h2>New Email Address</h2>
+
+merge.title=Merge Organisations
+merge.button_choose=Merge
+merge.button_confirm=Confirm Merge
+merge.confirmpreamble=
+merge.mergedinto=<div>The above organisations will be merged into:</div>
+
+csvform.file_upload.legend=Upload Type
+csvform.file_upload.replace_data=CSV file to replace existing location data
+csvform.file_upload.append_data=CSV file to be added to existing location data
+
+csverror.parse=An error occurred with your data submission. Please see the help document to ensure you have supplied the correct file, location and/or date format
+csverror.insufficientcols=Insufficient columns - need 4 (block, polygon identifier, latitude, longitude)
+csverror.blockandlatlng=Line {0} - Oil and Gas Block error - cannot have block and latitude/longitude
+csverror.blockinvalidcode=Line {0} - Oil and Gas Block error - invalid code
+csverror.polynolatlng=Line {0} - Polygon error - missing latitude or longitude
+csverror.polyoutofbounds=Line {0} - Polygon error - latitude or longitude outside area
+csverror.latlngoutofbounds=Line {0} - Lat/Long error – the latitude/longitude point is either outside of UK waters or not expressed in decimal degrees
+csverror.latlngmissing=Line {0} - Lat/Long error – missing latitude or longitude
+csverror.polytoofewpoints=Polygon error - Polygon {0} has fewer than 3 points
+csverror.colsdifferent=You must select different columns for each item
+csverror.noheadersfound=We cannot find the headers in the CSV file
+csverror.musthavecols=It is not possible to process the file using the selected columns
+csverror.noparsedates=Line {0} - Unable to accept this date format. Please see the help document for accepted formats
+csverror.datesoutsiderange=Line {0} - The activity dates supplied do not occur within the proposed start and end date of this activity
+csverror.nodata=It was not possible to determine any valid data in the file. Please see the help document to ensure you have supplied the correct file, location and/or date format
+csverror.mustendcsv=Please see the help document. The file must be in CSV format and the filename must have a .csv extension 
+csverror.invalidpoly=Polygon error - Polygon {0} has invalid geometry
+csverror.choosereplace=Please choose whether the CSV replaces existing data points or not
+csverror.filetoolarge=The file uploaded is too big.  Please see the help for current limits
+
+orgadduser.title=Add User to Organisation
+orgadduser.confirm=Confirm
+orgadduser.field_heading.users=Choose user
+orgadduser.field_hint.users=Only users who are not part of another organisation can be added

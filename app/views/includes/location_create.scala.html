@@ -1,0 +1,12 @@
+@(appForm:Form[ActivityApplication], aaPar: ActivityApplication, creationType: String = "Proposed", closeOut: Boolean = false)
+@* 
+ * This partial is used on the draft and proposed activity application form to allow the user to 
+ * add intended locations for activity, but no date entry for actual activity
+ *@
+
+@includes.location_input_fields(appForm, 
+   		Messages("activityform.heading.location_entry"), 
+   		Messages("activityform.field_hint.location_entry_type"),
+   		Messages("activityform.text.location_entry"), true, aaPar, false, closeOut, creationType 
+)
+<br />

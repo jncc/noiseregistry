@@ -1,0 +1,23 @@
+@(elements: helper.FieldElements)
+<div class="form-group">
+	<div class="@if(elements.hasErrors) {error}">
+		<label
+		@if(elements.args.get('label_class)!="") {
+    		class="@elements.args.get('label_class).getOrElse("form-label").toString()"
+    	} else {
+    		class="form-label"
+    	}		
+		for="@elements.id">
+		@elements.label
+		@for(error <- elements.errors) {
+			<div class="validation-message">@error</div>
+		}
+		<span class="form-hint">@Messages(elements.infos.mkString(", "))</span>
+		</label>
+		<input class="form-control" id="@elements.id" type="text" name="@elements.name" value="@elements.field.value" style="width:6em"> 
+    		@if(elements.args.get('field_suffix)!="") {
+    			@play.twirl.api.Html(Messages(elements.args.get('field_suffix).getOrElse("").toString()))
+    		}
+		<p class="form-hint">@elements.field.constraints.map(c => play.api.i18n.Messages(c._1, c._2: _*))</p>
+	</div>
+</div>

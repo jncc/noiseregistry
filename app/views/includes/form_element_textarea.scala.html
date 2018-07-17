@@ -1,0 +1,28 @@
+@(elements: helper.FieldElements)
+<div class="form-group@if(!elements.args.get('target).getOrElse("").toString().isEmpty){panel-indent js-hidden}" 
+	@if(!elements.args.get('target).getOrElse("").toString().isEmpty) {
+		id="@elements.args.get('target).getOrElse("").toString()"
+	}
+	>
+	<div class="@if(elements.hasErrors) {error}">
+		<label
+			@if(elements.args.get('label_class)!="") {
+    			class="@elements.args.get('label_class).getOrElse("form-label").toString()"
+    		} else {
+    			class="form-label"
+    		}		
+			for="@elements.id">
+			@elements.label
+	
+			@for(error <- elements.errors) {
+				<div class="validation-message">@Messages(error)</div>
+			}
+			<span class="form-hint">@Messages(elements.infos.mkString(", "))</span>
+		</label>
+		<textarea class="form-control" rows="@elements.args.get('rows).getOrElse("").toString()" id="@elements.id" name="@elements.name">@elements.field.value</textarea> 
+		@if(elements.args.get('field_units)!="") {
+	    	@Messages(elements.args.get('field_units).getOrElse("").toString())
+    	}
+		<p class="form-hint">@elements.field.constraints.map(c => play.api.i18n.Messages(c._1, c._2: _*))</p>
+	</div>
+</div>

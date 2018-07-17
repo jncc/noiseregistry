@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	<changeSet author="unknown" id="addmodregulator">
+    	<insert tableName="organisation">
+        	<column name="contact_email" value="${CONTACT_EMAIL_ADDRESS}" />
+        	<column name="contact_name" value="${CONTACT_NAME}" />
+        	<column name="contact_phone" value="${CONTACT_PHONE}" />
+        	<column name="organisation_name" value="${REGULATOR_NAME}" />
+    	</insert>	
+    	<insert tableName="regulator">
+    	    <column name="organisation_id" valueComputed="(SELECT id from organisation where organisation_name='${REGULATOR_NAME}')"/>
+        	<column name="closeoutdays" value="${REGULATOR_CLOSEOUT_DAYS}"/>
+	    </insert>    	
+	</changeSet>
+</databaseChangeLog>

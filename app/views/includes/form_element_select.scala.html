@@ -1,0 +1,17 @@
+@(elements: helper.FieldElements)
+<div class="form-group">
+	<div class="@if(elements.hasErrors) {error}">
+		<label class="form-label" for="@elements.id">
+		@elements.label
+		<span class="form-hint">@Messages(elements.infos.mkString(", "))</span>
+		</label>
+		@for(error <- elements.errors) {
+			<div class="validation-message">@Messages(error)</div>
+		}
+		<input class="form-control" id="@elements.id" type="text" name="@elements.id"> 
+    		@if(elements.args.get('field_units)!="") {
+    			@Messages(elements.args.get('field_units).getOrElse("").toString())
+    		}
+		<p class="form-hint">@elements.field.constraints.map(c => play.api.i18n.Messages(c._1, c._2: _*))</p>
+	</div>
+</div>

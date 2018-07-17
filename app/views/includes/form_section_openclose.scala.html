@@ -1,0 +1,11 @@
+@(divid:String, disp:String, fldname:String, retid:String, elements: List[play.twirl.api.HtmlFormat.Appendable],myForm: Form[_])
+
+	<label class="block-label radio-activitytypes" data-target="@divid-activity" for="@divid-1">
+		<input id="@divid-1" type="radio" name="@fldname" value="@retid" @if(retid==myForm(fldname).value) {checked="checked"} />
+			@Messages(disp) 
+	</label>
+<div class="panel-indent js-hidden" id="@divid-activity">
+@for(element <- elements){
+@element
+}
+</div>

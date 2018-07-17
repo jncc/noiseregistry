@@ -1,0 +1,17 @@
+@(userRole: String, activeTab: String)
+
+<div class="header-proposition">
+	<div class="content">
+		<a href="#proposition-links" class="js-header-toggle menu">Menu</a>
+		<nav id="proposition-menu">
+			<a href="/" id="proposition-name">@play.twirl.api.Html(Messages("application.app_name"))</a>
+			<ul id="proposition-links">
+				<li><a href="@routes.ApplicationController.home()"  @if(activeTab=="HOME"){ class="active"}>@play.twirl.api.Html(Messages("navigation.home"))</a></li>
+				<li><a href="@routes.ApplicationController.feedback()" @if(activeTab=="FEEDBACK"){ class="active"}>@play.twirl.api.Html(Messages("navigation.feedback"))</a></li>
+				@if(userRole!="NONE") {
+					<li><a href="@routes.LoginController.logout()">@play.twirl.api.Html(Messages("navigation.logout"))</a></li>
+				}
+			</ul>
+		</nav>
+	</div>
+</div>

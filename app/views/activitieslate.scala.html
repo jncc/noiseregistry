@@ -1,0 +1,97 @@
+@(appUser: AppUser, activityapps: List[ActivityApplication])
+
+@import layouts._
+@import includes._
+@import java.math.BigInteger; var last_reg=""; var ctx="act_req_close";
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+}  
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
+}
+	
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+	<main id="page-container" role="main">
+		@noiseregistry_phasebanner()
+		@noiseregistry_breadcrumb("LATEAPPLS")
+		<a id="content"></a>
+    	<div class="grid-row">
+    		<div class="column-two-thirds">
+       			<div class="text">
+       				<h1 class="heading-large">@play.twirl.api.Html(Messages("activities.activities_requiring_closeout"))</h1>
+       				<p class="font-small">
+						@play.twirl.api.Html(Messages("activities.activities_requiring_closeout_intro"))
+	  				</p>
+				</div>			
+			</div>
+    		<div class="column-third">
+				<h2 class="heading-medium">@play.twirl.api.Html(Messages("actions.actions"))</h2>
+				<nav>
+					<ul class="related-actions">
+						<li>
+							<a href="@routes.ActivityApplicationController.downloadAppsRequiringCloseOut()">@play.twirl.api.Html(Messages("actions.downloadlate"))</a>
+						</li>
+    				</ul>
+    			</nav>
+    		</div>
+  		</div>
+  		
+  		@for(activityapp <- activityapps){
+  			@if(last_reg!=activityapp.getRegulator().getOrganisation().getOrganisation_name()) {
+  			 	@if(last_reg!="") {
+  						</tbody>
+  					</table>
+  				}	
+  				@(last_reg=activityapp.getRegulator().getOrganisation().getOrganisation_name())
+  				<h2 class="heading-medium">@(last_reg)</h2>
+  				<table style="table-layout:fixed" title="Activities for @last_reg">
+			    	<thead>
+      					<tr>
+        					<th scope="col" style="width:5em">@play.twirl.api.Html(Messages("activities.tableheading_aan"))</th>
+        					<th scope="col" style="width:3em">@play.twirl.api.Html(Messages("activities.tableheading_parent_aa"))</th>
+        					<th scope="col" style="width:6em">@play.twirl.api.Html(Messages("activities.tableheading_start_date"))</th>
+        					<th scope="col" style="width:6em">@play.twirl.api.Html(Messages("activities.tableheading_end_date"))</th>
+        					<th scope="col">@play.twirl.api.Html(Messages("activities.tableheading_activity_type"))</th>
+        					<th scope="col">@play.twirl.api.Html(Messages("activities.tableheading_status"))</th>
+   							<th scope="col" style="width:6em">@play.twirl.api.Html(Messages("activities.tableheading_report_due_date"))</th>
+        					<th scope="col">@play.twirl.api.Html(Messages("activities.tableheading_noiseproducer"))</th>
+      					</tr>
+    				</thead>
+    				<tbody>
+    		}
+    		
+    		<tr>
+				<td @if(activityapp.getSupp_info()!=null && activityapp.getSupp_info()!=""){style="border-style:none;"}><a href="@routes.ActivityApplicationController.read(activityapp.getId())">@activityapp.getId()</a></td>
+				<td @if(activityapp.getSupp_info()!=null && activityapp.getSupp_info()!=""){style="border-style:none;"}>@if(activityapp.getParent()!=null){	
+					<a href="@routes.ActivityApplicationController.read(activityapp.getParent().getId())">@activityapp.getParent().getId()</a></td>
+				}
+				<td>@view_displaydate(activityapp.getDate_start())</td>
+				<td>@view_displaydate(activityapp.getDate_end())</td>
+				<td>@ActivityTypes.get(activityapp.getActivitytype_id())</td>
+				<td>@activityapp.getStatus()</td>
+				<td style="@{if(activityapp.getDate_closed()==null && (activityapp.getDate_due() == null || activityapp.getDate_due().before(new java.util.Date()))) { "font-weight:bold; color:red;" }}">@view_displaydate(activityapp.getDate_due())</td>
+				<td>@activityapp.getNoiseproducer().getOrganisation().getOrganisation_name()</td>
+			</tr>  
+			@if(activityapp.getSupp_info()!=null && activityapp.getSupp_info()!="") {
+				<tr><td colspan="2">&nbsp;</td><td colspan="6"><div style="overflow-x:auto">@activityapp.getSupp_info()</div></td></tr>
+			}  		  			
+  		}
+		
+  		@if(last_reg!="") {
+  				</tbody>
+  			</table>
+  		}
+    	    	
+    </main><!-- / #page-container -->
+}

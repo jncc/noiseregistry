@@ -1,0 +1,36 @@
+@(orgType:String, userRole:String, context:String="")
+<div class="noiseregistry-noprint">
+<h2 class="heading-medium">@play.twirl.api.Html(Messages("actions.actions"))</h2>
+
+@if((orgType=="REGULATOR") || (orgType=="NOISEPRODUCER")) {
+	<nav>
+		<ul class="related-actions">
+			@if(orgType=="NOISEPRODUCER") {
+				@if(context=="PROPOSEDAPPLS" || context=="INCOMPLETEAPPLS" || context=="COMPLETEDAPPLS" || context=="DRAFTAPPLS") {
+					<li><a href="@routes.ActivityApplicationController.add()">@play.twirl.api.Html(Messages("actions.create_new_activity"))</a></li>
+				}
+				@if(context!="DRAFTAPPLS" && context!="INCOMPLETEAPPLS") {
+					<li><a href="@routes.ActivityApplicationController.findDraft()">@play.twirl.api.Html(Messages("actions.view_draft_activities"))</a></li>
+				}
+			}
+			@if(context!="PROPOSEDAPPLS" && context!="INCOMPLETEAPPLS") {
+				@if(orgType=="REGULATOR") {
+					<li><a href="@routes.ActivityApplicationController.index()">@play.twirl.api.Html(Messages("actions.view_proposed_activities_regulator"))</a></li>
+				}
+				@if(orgType=="NOISEPRODUCER") {
+					<li><a href="@routes.ActivityApplicationController.index()">@play.twirl.api.Html(Messages("actions.view_proposed_activities"))</a></li>
+				}
+			}
+			@if(context!="COMPLETEDAPPLS") {
+				<li><a href="@routes.ActivityApplicationController.findCompleted()">@play.twirl.api.Html(Messages("actions.view_completed_activities"))</a></li>
+			}
+			@if(context!="INCOMPLETEAPPLS") {
+				<li><a href="@routes.ActivityApplicationController.findIncomplete()">@play.twirl.api.Html(Messages("actions.view_incomplete_activities"))</a></li>
+			}
+		</ul>
+	</nav>
+}
+
+</div>
+		
+

@@ -1,0 +1,23 @@
+@(linkedApps: List[ActivityApplication], id:Long)
+@if(!linkedApps.isEmpty) {
+	<h2 class="heading-medium">Linked Applications</h2>
+	<table title="Linked activities">
+	    <thead>
+			<tr>
+   				<th scope="col" style="width:5em">@play.twirl.api.Html(Messages("activities.tableheading_aan"))</th>
+   				<th scope="col">@play.twirl.api.Html(Messages("activities.tableheading_activity_type"))</th>
+   				<th scope="col">@play.twirl.api.Html(Messages("activities.tableheading_status"))</th>
+   			</tr>
+   		</thead>
+   		<tbody>
+	@for(app<-linkedApps) {
+			<tr>
+				<td>@if(id!=app.getId()){<a href="@routes.ActivityApplicationController.read(app.getId())">@app.getId()</a>}else{@app.getId()}</td>
+				<td>@ActivityTypes.get(app.getActivitytype_id())</td>
+				<td>@app.getStatus()</td>
+			</tr>
+	}
+		</tbody>
+	</table>
+	<br />
+}

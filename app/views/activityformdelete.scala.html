@@ -1,0 +1,80 @@
+@(appUser: AppUser, activityapp: ActivityApplication, appForm: Form[ActivityApplication])
+
+@import layouts._
+@import scala._
+@import java.math.BigInteger; var regtxt=""; 
+@import includes._
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+}  
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
+}
+	
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+	<main id="page-container" role="main">
+		@noiseregistry_phasebanner()
+  		@if(activityapp.getStatus()=="Proposed" || activityapp.getStatus()=="Interim Close-out") {
+			@noiseregistry_breadcrumb("PROPOSEDAPPL")
+  		} else {
+			@if(activityapp.getStatus()=="Closed" || activityapp.getStatus()=="Cancelled") {
+				@noiseregistry_breadcrumb("COMPLETEDAPPL")
+			} else {
+  				@noiseregistry_breadcrumb("DRAFTAPPL")
+  			}
+  		}
+  		<a id="content"></a>
+    	<div class="grid-row">
+    		<div class="column-two-thirds">
+    		
+  		<h1 class="heading-large">@play.twirl.api.Html(Messages("activityform.delete.title",activityapp.getStatus()))</h1>
+  		<p>@play.twirl.api.Html(Messages("activityform.delete.text",activityapp.getStatus()))</p>
+  		
+  		<table title="Submitted values for activity">
+			<tbody>
+				@form_displaylong(activityapp.getId(), "activityform.field_heading.aan")
+				@form_displaytext(activityapp.getNoiseproducer().getOrganisation().getOrganisation_name(), "activityform.field_heading.noiseproducer")
+				@{regtxt=activityapp.getRegulator().getOrganisation().getOrganisation_name()}					
+				@form_displaytext(regtxt, "activityform.field_heading.regulator")
+				@if(regtxt!=activityapp.getReg_name_orig()) {
+					@form_displaytext(activityapp.getReg_name_orig(), "activityform.field_heading.regulator_orig")
+				}
+				@if(activityapp.getNon_licensable()) {
+					@form_displaytext(Messages("activityform.non_licensable.true"), "activityform.field_heading.non_licensable")
+				} else {
+					@form_displaytext(Messages("activityform.non_licensable.false"), "activityform.field_heading.non_licensable")
+				}
+				@form_displaydate(activityapp.getDate_start(), "activityform.field_heading.date_start")				
+				@form_displaydate(activityapp.getDate_end(), "activityform.field_heading.date_end")
+				@form_displayinteger(activityapp.getDuration(), "activityform.field_heading.duration", "units.duration")
+				@form_displaytext(ActivityTypes.get(activityapp.getActivitytype_id()), "activityform.field_heading.activity_type")
+			</tbody>
+ 		</table>
+ 		@helper.form(routes.ActivityApplicationController.delete(activityapp.getId())) {
+ 			<table title="Delete reason field">
+				<tbody>
+					<tr><td>
+						@form_inputtextarea(appForm, "reason", "activityform.field_heading.delete_reason", "", "", "", "")
+					</td></tr>						
+	 			</tbody>
+ 			</table>
+ 			<div style="clear:both">&nbsp;</div> 
+	 		<input class="button" type="submit" value="@play.twirl.api.Html(Messages("activityform.delete.submit",activityapp.getStatus()))">
+			<a href="@routes.ActivityApplicationController.read(activityapp.getId())">@play.twirl.api.Html(Messages("activityform.delete.dontdelete"))</a>
+		}
+		
+	 		</div>
+  		</div>
+	</main>
+}

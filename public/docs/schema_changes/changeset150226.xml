@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	<changeSet author="unknown" id="addedview">
+	    <sql>
+create or replace view activityapplicationblocks as (SELECT
+	aan,
+	noise_producer,
+	regulator,
+	activity_type,
+	status,
+	non_licensable,
+	date_start,
+	date_end,
+	date_due,
+	date_closed,
+	date_updated,
+	duration,
+	parent_id,
+	seismic_survey_type,
+	seismic_data_type,
+	seismic_other_survey_type,
+	seismic_max_airgun_volume,
+	seismic_sound_pressure_level,
+	seismic_sound_exposure_level,
+	seismic_max_airgun_volume_actual,
+	seismic_sound_pressure_level_actual,
+	seismic_sound_exposure_level_actual,
+	sbp_source,
+	sbp_frequency,
+	sbp_sound_pressure_level,
+	sbp_sound_exposure_level,
+	sbp_frequency_actual,
+	sbp_sound_pressure_level_actual,
+	sbp_sound_exposure_level_actual,
+	piling_max_hammer_energy,
+	piling_sound_pressure_level,
+	piling_sound_exposure_level,
+	piling_max_hammer_energy_actual,
+	piling_sound_pressure_level_actual,
+	piling_sound_exposure_level_actual,
+	exp_tnt_equivalent,
+	exp_sound_pressure_level,
+	exp_sound_exposure_level,
+	exp_tnt_equivalent_actual,
+	exp_sound_pressure_level_actual,
+	exp_sound_exposure_level_actual,
+	add_frequency,
+	add_sound_pressure_level,
+	add_sound_exposure_level,
+	add_frequency_actual,
+	add_sound_pressure_level_actual,
+	add_sound_exposure_level_actual,
+	mbes_frequency,
+	mbes_sound_pressure_level,
+	mbes_sound_exposure_level,
+	mbes_frequency_actual,
+	mbes_sound_pressure_level_actual,
+	mbes_sound_exposure_level_actual,
+	actlocn_id,
+	entered_ogb_code,
+	point_text,
+	polygon_text,
+	creation_type,
+	decomposed,
+	no_activity,
+	block_code,
+	quadrant,
+	lessthan_five,
+	tw_code,
+	split_block,
+	assignment_block_code,
+	point_req
+FROM
+((SELECT 
+	nporg.organisation_name as noise_producer,
+	regorg.organisation_name as regulator,
+	atyp.name as activity_type,
+	aapp.id as aan,
+	aapp.status,
+	aapp.non_licensable,
+	aapp.date_start,
+	aapp.date_end,
+	aapp.date_due,
+	aapp.date_closed,
+	aapp.date_updated,
+	aapp.duration,
+	aapp.parent_id,
+	aseismic.survey_type as seismic_survey_type,
+	aseismic.data_type as seismic_data_type,
+	aseismic.other_survey_type as seismic_other_survey_type,
+	aseismic.max_airgun_volume as seismic_max_airgun_volume,
+	aseismic.sound_pressure_level as seismic_sound_pressure_level,
+	aseismic.sound_exposure_level as seismic_sound_exposure_level,
+	aseismic.max_airgun_volume_actual as seismic_max_airgun_volume_actual,
+	aseismic.sound_pressure_level_actual as seismic_sound_pressure_level_actual,
+	aseismic.sound_exposure_level_actual as seismic_sound_exposure_level_actual,
+	asbp.source as sbp_source,
+	asbp.frequency as sbp_frequency,
+	asbp.sound_pressure_level as sbp_sound_pressure_level,
+	asbp.sound_exposure_level as sbp_sound_exposure_level,
+	asbp.frequency_actual as sbp_frequency_actual,
+	asbp.sound_pressure_level_actual as sbp_sound_pressure_level_actual,
+	asbp.sound_exposure_level_actual as sbp_sound_exposure_level_actual,
+	apiling.max_hammer_energy as piling_max_hammer_energy,
+	apiling.sound_pressure_level as piling_sound_pressure_level,
+	apiling.sound_exposure_level as piling_sound_exposure_level,
+	apiling.max_hammer_energy_actual as piling_max_hammer_energy_actual,
+	apiling.sound_pressure_level_actual as piling_sound_pressure_level_actual,
+	apiling.sound_exposure_level_actual as piling_sound_exposure_level_actual,
+	aexp.tnt_equivalent as exp_tnt_equivalent,
+	aexp.sound_pressure_level as exp_sound_pressure_level,
+	aexp.sound_exposure_level as exp_sound_exposure_level,
+	aexp.tnt_equivalent_actual as exp_tnt_equivalent_actual,
+	aexp.sound_pressure_level_actual as exp_sound_pressure_level_actual,
+	aexp.sound_exposure_level_actual as exp_sound_exposure_level_actual,
+	aadd.frequency as add_frequency,
+	aadd.sound_pressure_level as add_sound_pressure_level,
+	aadd.sound_exposure_level as add_sound_exposure_level,
+	aadd.frequency_actual as add_frequency_actual,
+	aadd.sound_pressure_level_actual as add_sound_pressure_level_actual,
+	aadd.sound_exposure_level_actual as add_sound_exposure_level_actual,
+	ambes.frequency as mbes_frequency,
+	ambes.sound_pressure_level as mbes_sound_pressure_level,
+	ambes.sound_exposure_level as mbes_sound_exposure_level,
+	ambes.frequency_actual as mbes_frequency_actual,
+	ambes.sound_pressure_level_actual as mbes_sound_pressure_level_actual,
+	ambes.sound_exposure_level_actual as mbes_sound_exposure_level_actual,
+	aloc.id as actlocn_id,
+	aloc.entered_ogb_code,
+	ST_AsText(aloc.entered_point) as point_text,
+	ST_AsText(aloc.entered_polygon) as polygon_text,
+	aloc.creation_type,
+	aloc.decomposed,
+	aloc.no_activity,
+	ogb.block_code,
+	ogb.quadrant,
+	ogb.lessthan_five,
+	ogb.tw_code,
+	ogb.split_block,
+	ogb.assignment_block_code,
+	ogb.point_req
+FROM 
+ActivityApplication aapp
+LEFT JOIN NoiseProducer np on np.id = aapp.noiseproducer_id
+LEFT JOIN Organisation nporg on nporg.id = np.organisation_id
+LEFT JOIN Regulator reg on reg.id = aapp.regulator_id
+LEFT JOIN Organisation regorg on regorg.id = reg.organisation_id
+LEFT JOIN ActivityType atyp on atyp.id = aapp.activitytype_id
+LEFT JOIN ActivitySeismic aseismic on aseismic.activityapplication_id = aapp.id
+LEFT JOIN ActivitySubBottomProfilers asbp on asbp.activityapplication_id = aapp.id
+LEFT JOIN ActivityPiling apiling on apiling.activityapplication_id = aapp.id
+LEFT JOIN ActivityExplosives aexp on aexp.activityapplication_id = aapp.id
+LEFT JOIN ActivityAcousticDD aadd on aadd.activityapplication_id = aapp.id
+LEFT JOIN ActivityMultibeamES ambes on ambes.activityapplication_id = aapp.id
+LEFT JOIN ActivityMoD amod on amod.activityapplication_id = aapp.id
+LEFT JOIN ActivityLocation aloc on aloc.activityapplication_id = aapp.id
+INNER JOIN OilAndGasBlock ogb
+ON ST_Intersects(ogb.geom, aloc.entered_point)
+WHERE 
+aloc.entered_point is not null)
+UNION
+(SELECT 
+	nporg.organisation_name as noise_producer,
+	regorg.organisation_name as regulator,
+	atyp.name as activity_type,
+	aapp.id as aan,
+	aapp.status,
+	aapp.non_licensable,
+	aapp.date_start,
+	aapp.date_end,
+	aapp.date_due,
+	aapp.date_closed,
+	aapp.date_updated,
+	aapp.duration,
+	aapp.parent_id,
+	aseismic.survey_type as seismic_survey_type,
+	aseismic.data_type as seismic_data_type,
+	aseismic.other_survey_type as seismic_other_survey_type,
+	aseismic.max_airgun_volume as seismic_max_airgun_volume,
+	aseismic.sound_pressure_level as seismic_sound_pressure_level,
+	aseismic.sound_exposure_level as seismic_sound_exposure_level,
+	aseismic.max_airgun_volume_actual as seismic_max_airgun_volume_actual,
+	aseismic.sound_pressure_level_actual as seismic_sound_pressure_level_actual,
+	aseismic.sound_exposure_level_actual as seismic_sound_exposure_level_actual,
+	asbp.source as sbp_source,
+	asbp.frequency as sbp_frequency,
+	asbp.sound_pressure_level as sbp_sound_pressure_level,
+	asbp.sound_exposure_level as sbp_sound_exposure_level,
+	asbp.frequency_actual as sbp_frequency_actual,
+	asbp.sound_pressure_level_actual as sbp_sound_pressure_level_actual,
+	asbp.sound_exposure_level_actual as sbp_sound_exposure_level_actual,
+	apiling.max_hammer_energy as piling_max_hammer_energy,
+	apiling.sound_pressure_level as piling_sound_pressure_level,
+	apiling.sound_exposure_level as piling_sound_exposure_level,
+	apiling.max_hammer_energy_actual as piling_max_hammer_energy_actual,
+	apiling.sound_pressure_level_actual as piling_sound_pressure_level_actual,
+	apiling.sound_exposure_level_actual as piling_sound_exposure_level_actual,
+	aexp.tnt_equivalent as exp_tnt_equivalent,
+	aexp.sound_pressure_level as exp_sound_pressure_level,
+	aexp.sound_exposure_level as exp_sound_exposure_level,
+	aexp.tnt_equivalent_actual as exp_tnt_equivalent_actual,
+	aexp.sound_pressure_level_actual as exp_sound_pressure_level_actual,
+	aexp.sound_exposure_level_actual as exp_sound_exposure_level_actual,
+	aadd.frequency as add_frequency,
+	aadd.sound_pressure_level as add_sound_pressure_level,
+	aadd.sound_exposure_level as add_sound_exposure_level,
+	aadd.frequency_actual as add_frequency_actual,
+	aadd.sound_pressure_level_actual as add_sound_pressure_level_actual,
+	aadd.sound_exposure_level_actual as add_sound_exposure_level_actual,
+	ambes.frequency as mbes_frequency,
+	ambes.sound_pressure_level as mbes_sound_pressure_level,
+	ambes.sound_exposure_level as mbes_sound_exposure_level,
+	ambes.frequency_actual as mbes_frequency_actual,
+	ambes.sound_pressure_level_actual as mbes_sound_pressure_level_actual,
+	ambes.sound_exposure_level_actual as mbes_sound_exposure_level_actual,
+	aloc.id as actlocn_id,
+	aloc.entered_ogb_code,
+	ST_AsText(aloc.entered_point) as point_text,
+	ST_AsText(aloc.entered_polygon) as polygon_text,
+	aloc.creation_type,
+	aloc.decomposed,
+	aloc.no_activity,
+	ogb.block_code,
+	ogb.quadrant,
+	ogb.lessthan_five,
+	ogb.tw_code,
+	ogb.split_block,
+	ogb.assignment_block_code,
+	ogb.point_req
+FROM 
+ActivityApplication aapp
+LEFT JOIN NoiseProducer np on np.id = aapp.noiseproducer_id
+LEFT JOIN Organisation nporg on nporg.id = np.organisation_id
+LEFT JOIN Regulator reg on reg.id = aapp.regulator_id
+LEFT JOIN Organisation regorg on regorg.id = reg.organisation_id
+LEFT JOIN ActivityType atyp on atyp.id = aapp.activitytype_id
+LEFT JOIN ActivitySeismic aseismic on aseismic.activityapplication_id = aapp.id
+LEFT JOIN ActivitySubBottomProfilers asbp on asbp.activityapplication_id = aapp.id
+LEFT JOIN ActivityPiling apiling on apiling.activityapplication_id = aapp.id
+LEFT JOIN ActivityExplosives aexp on aexp.activityapplication_id = aapp.id
+LEFT JOIN ActivityAcousticDD aadd on aadd.activityapplication_id = aapp.id
+LEFT JOIN ActivityMultibeamES ambes on ambes.activityapplication_id = aapp.id
+LEFT JOIN ActivityMoD amod on amod.activityapplication_id = aapp.id
+LEFT JOIN ActivityLocation aloc on aloc.activityapplication_id = aapp.id
+INNER JOIN OilAndGasBlock ogb
+ON ST_Intersects(ogb.geom, aloc.entered_polygon)
+WHERE 
+aloc.entered_polygon is not null)
+UNION
+(SELECT
+	nporg.organisation_name as noise_producer,
+	regorg.organisation_name as regulator,
+	atyp.name as activity_type,
+	aapp.id as aan,
+	aapp.status,
+	aapp.non_licensable,
+	aapp.date_start,
+	aapp.date_end,
+	aapp.date_due,
+	aapp.date_closed,
+	aapp.date_updated,
+	aapp.duration,
+	aapp.parent_id,
+	aseismic.survey_type as seismic_survey_type,
+	aseismic.data_type as seismic_data_type,
+	aseismic.other_survey_type as seismic_other_survey_type,
+	aseismic.max_airgun_volume as seismic_max_airgun_volume,
+	aseismic.sound_pressure_level as seismic_sound_pressure_level,
+	aseismic.sound_exposure_level as seismic_sound_exposure_level,
+	aseismic.max_airgun_volume_actual as seismic_max_airgun_volume_actual,
+	aseismic.sound_pressure_level_actual as seismic_sound_pressure_level_actual,
+	aseismic.sound_exposure_level_actual as seismic_sound_exposure_level_actual,
+	asbp.source as sbp_source,
+	asbp.frequency as sbp_frequency,
+	asbp.sound_pressure_level as sbp_sound_pressure_level,
+	asbp.sound_exposure_level as sbp_sound_exposure_level,
+	asbp.frequency_actual as sbp_frequency_actual,
+	asbp.sound_pressure_level_actual as sbp_sound_pressure_level_actual,
+	asbp.sound_exposure_level_actual as sbp_sound_exposure_level_actual,
+	apiling.max_hammer_energy as piling_max_hammer_energy,
+	apiling.sound_pressure_level as piling_sound_pressure_level,
+	apiling.sound_exposure_level as piling_sound_exposure_level,
+	apiling.max_hammer_energy_actual as piling_max_hammer_energy_actual,
+	apiling.sound_pressure_level_actual as piling_sound_pressure_level_actual,
+	apiling.sound_exposure_level_actual as piling_sound_exposure_level_actual,
+	aexp.tnt_equivalent as exp_tnt_equivalent,
+	aexp.sound_pressure_level as exp_sound_pressure_level,
+	aexp.sound_exposure_level as exp_sound_exposure_level,
+	aexp.tnt_equivalent_actual as exp_tnt_equivalent_actual,
+	aexp.sound_pressure_level_actual as exp_sound_pressure_level_actual,
+	aexp.sound_exposure_level_actual as exp_sound_exposure_level_actual,
+	aadd.frequency as add_frequency,
+	aadd.sound_pressure_level as add_sound_pressure_level,
+	aadd.sound_exposure_level as add_sound_exposure_level,
+	aadd.frequency_actual as add_frequency_actual,
+	aadd.sound_pressure_level_actual as add_sound_pressure_level_actual,
+	aadd.sound_exposure_level_actual as add_sound_exposure_level_actual,
+	ambes.frequency as mbes_frequency,
+	ambes.sound_pressure_level as mbes_sound_pressure_level,
+	ambes.sound_exposure_level as mbes_sound_exposure_level,
+	ambes.frequency_actual as mbes_frequency_actual,
+	ambes.sound_pressure_level_actual as mbes_sound_pressure_level_actual,
+	ambes.sound_exposure_level_actual as mbes_sound_exposure_level_actual,
+	aloc.id as actlocn_id,
+	aloc.entered_ogb_code,
+	ST_AsText(aloc.entered_point) as point_text,
+	ST_AsText(aloc.entered_polygon) as polygon_text,
+	aloc.creation_type,
+	aloc.decomposed,
+	aloc.no_activity,
+	ogb.block_code,
+	ogb.quadrant,
+	ogb.lessthan_five,
+	ogb.tw_code,
+	ogb.split_block,
+	ogb.assignment_block_code,
+	ogb.point_req
+FROM 
+ActivityApplication aapp
+LEFT JOIN NoiseProducer np on np.id = aapp.noiseproducer_id
+LEFT JOIN Organisation nporg on nporg.id = np.organisation_id
+LEFT JOIN Regulator reg on reg.id = aapp.regulator_id
+LEFT JOIN Organisation regorg on regorg.id = reg.organisation_id
+LEFT JOIN ActivityType atyp on atyp.id = aapp.activitytype_id
+LEFT JOIN ActivitySeismic aseismic on aseismic.activityapplication_id = aapp.id
+LEFT JOIN ActivitySubBottomProfilers asbp on asbp.activityapplication_id = aapp.id
+LEFT JOIN ActivityPiling apiling on apiling.activityapplication_id = aapp.id
+LEFT JOIN ActivityExplosives aexp on aexp.activityapplication_id = aapp.id
+LEFT JOIN ActivityAcousticDD aadd on aadd.activityapplication_id = aapp.id
+LEFT JOIN ActivityMultibeamES ambes on ambes.activityapplication_id = aapp.id
+LEFT JOIN ActivityMoD amod on amod.activityapplication_id = aapp.id
+LEFT JOIN ActivityLocation aloc on aloc.activityapplication_id = aapp.id
+INNER JOIN OilAndGasBlock ogb
+ON ogb.block_code = aloc.entered_ogb_code
+WHERE 
+aloc.entered_ogb_code is not null)) as block_data)
+    	</sql>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,46 @@
+@(host:String, bHTML: Boolean)
+@if(bHTML) {
+	<div id="mail_footer" style="font-size:small; font-family:Calibri,sans-serif">
+		<div style="font-weight:bold">Marine Noise Registry</div>
+				
+		<div>Website: 
+			<a href="https://mnr.jncc.gov.uk/" target="_blank" rel="noopener"><font size="2" color="#0563C1" face="Calibri"><u>https://mnr.jncc.gov.uk/</u></font></a>
+		</div>
+		
+	
+		<div>Email: 
+			<a href="mailto:mnr@@jncc.gov.uk" class="mailto-link" target="_blank"><font size="2" color="#0563C1" face="Calibri"><u>mnr@@jncc.gov.uk</u></font></a>
+		</div>
+			
+		<div>Address: Marine Noise Registry, JNCC, Inverdee House, Baxter Street, Aberdeen, AB11 9QA</div>
+			
+		<img src="http://@(host + routes.Assets.at("images/jncc/email_logo.jpg"))" alt="JNCCLogo_3DCol" width="97" height="42" style="width: 97px; height: 42px;">
+		<br />
+	
+		<div><a href="http://www.jncc.defra.gov.uk/" target="_blank" rel="noopener"><font size="2" color="#0000FF" face="Calibri"><u>jncc.defra.gov.uk</u></font></a>
+		</div>
+		
+		<div>&nbsp;</div>
+		
+		<div>
+			<a href="https://twitter.com/JNCC_UK?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank" rel="noopener"><img src="http://@(host + routes.Assets.at("images/jncc/twitter.gif"))" alt="Twitter logo" width="24" height="24" border="0" style="width: 24px; height: 24px;"></a>
+			&nbsp;
+			<a href="https://www.facebook.com/JNCCUK/" target="_blank" rel="noopener"><img src="http://@(host + routes.Assets.at("images/jncc/facebook.gif"))" alt="Facebook logo" width="24" height="24" border="0" style="width: 24px; height: 24px;"></a>
+			&nbsp;
+			<a href="https://uk.linkedin.com/company/jncc" target="_blank" rel="noopener"><img src="http://@(host + routes.Assets.at("images/jncc/linkedin.jpg"))" alt="Linkedin logo" width="25" height="23" border="0" style="width: 25px; height: 23px;"></a>
+			&nbsp; &nbsp; 
+			<span style="font-style:italic">25 years delivering innovative solutions to realise the value of nature.</span>
+		</div>
+		<div>&nbsp;</div>	
+	</div>
+} else {
+		Marine Noise Registry
+		Website: https://mnr.jncc.gov.uk/
+		Email: mnr@@jncc.gov.uk
+		Address: Marine Noise Registry, JNCC, Inverdee House, Baxter Street, Aberdeen, AB11 9QA
+		http://www.jncc.defra.gov.uk
+		Twitter: https://twitter.com/JNCC_UK?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor
+		Facebook: https://www.facebook.com/JNCCUK/
+		LinkedIn: https://uk.linkedin.com/company/jncc
+		25 years delivering innovative solutions to realise the value of nature.
+}

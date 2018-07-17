@@ -1,0 +1,30 @@
+@(user:AppUser, host:String, bHTML: Boolean)
+@import includes._
+@if(bHTML) {
+<html>
+<head>
+</head>
+<body style="font-size:medium; font-family:Calibri,sans-serif">
+<div>
+@play.twirl.api.Html(Messages("registration.mail.salutation", user.getFullname()))
+</div>
+<div>
+@play.twirl.api.Html(Messages("registration.mail.preamble"))
+</div>
+<div>
+<a href="http://@(host + routes.RegistrationController.verify(user.getVerification_token()))">@Messages("registration.mail.linktext")</a>
+</div>
+<br/>
+<div>
+@play.twirl.api.Html(Messages("registration.mail.footer"))
+</div>
+@email_footer(host,bHTML)
+</body>
+</html>
+} else {
+@Messages("registration.mail.salutation", user.getFullname())
+@Messages("registration.mail.preamble.plain")
+http://@(host + routes.RegistrationController.verify(user.getVerification_token()))
+@Messages("registration.mail.footer.plain")
+@email_footer(host,bHTML)
+}

@@ -1,0 +1,10 @@
+@(number:Float, field_label_message:String, fmt:String, field_units_message:String="")
+<tr>
+	<td>@Messages(field_label_message)</td>
+	<td>
+	@if(number!=null){
+		@{fmt.format(number)} @play.twirl.api.Html(Messages(field_units_message))
+	}
+	</td>
+
+</tr>

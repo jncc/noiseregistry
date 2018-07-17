@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet author="unknown" id="1416840056377-2">
+        <createTable tableName="activityacousticdd">
+            <column name="id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="frequency" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sound_exposure_level" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sound_pressure_level" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="activityapplication_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-3">
+        <createTable tableName="activityapplication">
+            <column name="id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_closed" type="date"/>
+            <column name="date_due" type="date"/>
+            <column name="date_end" type="date"/>
+            <column name="date_start" type="date"/>
+            <column name="date_updated" type="timestamp"/>
+            <column name="duration" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(10)"/>
+            <column name="activitytype_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="organisation_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="regulator_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-4">
+        <createTable tableName="activityexplosives">
+            <column name="id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tnt_equivalent" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="activityapplication_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-5">
+        <createTable tableName="activitygeophysical">
+            <column name="id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="frequency" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sound_exposure_level" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sound_pressure_level" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="source" type="VARCHAR(10)"/>
+            <column name="activityapplication_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-6">
+        <createTable tableName="activitymultibeames">
+            <column name="id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="frequency" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sound_exposure_level" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sound_pressure_level" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="activityapplication_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-7">
+        <createTable tableName="activitypiling">
+            <column name="id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="max_hammer_energy" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="activityapplication_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-8">
+        <createTable tableName="activityseismic">
+            <column name="id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_type" type="VARCHAR(2)"/>
+            <column name="max_airgun_volume" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="other_survey_type" type="VARCHAR(50)"/>
+            <column name="sound_exposure_level" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sound_pressure_level" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="survey_type" type="VARCHAR(10)"/>
+            <column name="activityapplication_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-9">
+        <createTable tableName="activitytype">
+            <column name="id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(30)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-10">
+        <createTable tableName="actualactivity">
+            <column name="id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_activity" type="timestamp"/>
+            <column name="activityapplication_id" type="INT"/>
+            <column name="oilandgasblock_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-11">
+        <createTable tableName="appuser">
+            <column name="id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_last_login" type="timestamp"/>
+            <column name="date_registered" type="timestamp"/>
+            <column name="email_address" type="VARCHAR(50)"/>
+            <column name="fullname" type="VARCHAR(50)"/>
+            <column name="phone" type="VARCHAR(20)"/>
+            <column name="username" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-12">
+        <createTable tableName="oilandgasblock">
+            <column name="id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="action" type="VARCHAR(15)"/>
+            <column name="assignment_block_id" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="block" type="VARCHAR(15)"/>
+            <column name="block_1" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="block_name" type="VARCHAR(15)"/>
+            <column name="block_no" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="block_part" type="VARCHAR(15)"/>
+            <column name="combined_c" type="VARCHAR(15)"/>
+            <column name="comments" type="VARCHAR(15)"/>
+            <column name="feature_co" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="five_percent" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="label" type="VARCHAR(50)"/>
+            <column name="licence" type="VARCHAR(15)"/>
+            <column name="new_block" type="VARCHAR(15)"/>
+            <column name="note1" type="VARCHAR(15)"/>
+            <column name="note2" type="VARCHAR(15)"/>
+            <column name="note3" type="VARCHAR(15)"/>
+            <column name="objectid" type="INT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="q_b" type="VARCHAR(15)"/>
+            <column name="q_b_1" type="VARCHAR(15)"/>
+            <column name="quad" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quadrant" type="VARCHAR(15)"/>
+            <column name="round" type="VARCHAR(15)"/>
+            <column name="shape_area" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="shape_leng" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="split" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="split_bloc" type="VARCHAR(15)"/>
+            <column name="tw_code" type="VARCHAR(15)"/>
+            <column name="water_type" type="VARCHAR(15)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-13">
+        <createTable tableName="organisation">
+            <column name="id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contact_email" type="VARCHAR(50)"/>
+            <column name="contact_name" type="VARCHAR(50)"/>
+            <column name="contact_phone" type="VARCHAR(20)"/>
+            <column name="organisation_name" type="VARCHAR(50)"/>
+            <column name="regulator" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-14">
+        <createTable tableName="orguser">
+            <column name="id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="organisation_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-15">
+        <createTable tableName="proposedactivity">
+            <column name="id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="activityapplication_id" type="INT"/>
+            <column name="oilandgasblock_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-16">
+        <addPrimaryKey columnNames="id" constraintName="activityacousPK" tableName="activityacousticdd"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-17">
+        <addPrimaryKey columnNames="id" constraintName="activityappliPK" tableName="activityapplication"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-18">
+        <addPrimaryKey columnNames="id" constraintName="activityexploPK" tableName="activityexplosives"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-19">
+        <addPrimaryKey columnNames="id" constraintName="activitygeophPK" tableName="activitygeophysical"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-20">
+        <addPrimaryKey columnNames="id" constraintName="activitymultiPK" tableName="activitymultibeames"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-21">
+        <addPrimaryKey columnNames="id" constraintName="activitypilinPK" tableName="activitypiling"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-22">
+        <addPrimaryKey columnNames="id" constraintName="activityseismPK" tableName="activityseismic"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-23">
+        <addPrimaryKey columnNames="id" constraintName="activitytypePK" tableName="activitytype"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-24">
+        <addPrimaryKey columnNames="id" constraintName="actualactivitPK" tableName="actualactivity"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-25">
+        <addPrimaryKey columnNames="id" constraintName="appuserPK" tableName="appuser"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-26">
+        <addPrimaryKey columnNames="id" constraintName="oilandgasblocPK" tableName="oilandgasblock"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-27">
+        <addPrimaryKey columnNames="id" constraintName="organisationPK" tableName="organisation"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-28">
+        <addPrimaryKey columnNames="id" constraintName="orguserPK" tableName="orguser"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-29">
+        <addPrimaryKey columnNames="id" constraintName="proposedactivPK" tableName="proposedactivity"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-30">
+        <addUniqueConstraint columnNames="activitytype_id" constraintName="UC_ACTIVITYAPPLICATION_ACTIVITYTYPE_ID" deferrable="false" disabled="false" initiallyDeferred="false" tableName="activityapplication"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-31">
+        <addUniqueConstraint columnNames="organisation_id" constraintName="UC_ACTIVITYAPPLICATION_ORGANISATION_ID" deferrable="false" disabled="false" initiallyDeferred="false" tableName="activityapplication"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-32">
+        <addUniqueConstraint columnNames="regulator_id" constraintName="UC_ACTIVITYAPPLICATION_REGULATOR_ID" deferrable="false" disabled="false" initiallyDeferred="false" tableName="activityapplication"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-33">
+        <addUniqueConstraint columnNames="organisation_id" constraintName="UC_ORGUSER_ORGANISATION_ID" deferrable="false" disabled="false" initiallyDeferred="false" tableName="orguser"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-34">
+        <addUniqueConstraint columnNames="user_id" constraintName="UC_ORGUSER_USER_ID" deferrable="false" disabled="false" initiallyDeferred="false" tableName="orguser"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-35">
+        <addForeignKeyConstraint baseColumnNames="activityapplication_id" baseTableName="activityacousticdd" constraintName="FK_3mvcr34ryb1siy3lpjtum2lb6" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="activityapplication"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-36">
+        <addForeignKeyConstraint baseColumnNames="activityapplication_id" baseTableName="actualactivity" constraintName="FK_3r3t3ri37in9tjav15iajhv2a" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="activityapplication"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-37">
+        <addForeignKeyConstraint baseColumnNames="activityapplication_id" baseTableName="activityexplosives" constraintName="FK_5b4skn8vslqgwu7qf4dvwe64c" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="activityapplication"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-38">
+        <addForeignKeyConstraint baseColumnNames="activityapplication_id" baseTableName="activitygeophysical" constraintName="FK_clhcxfrbcnnsfef53niqjaxqp" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="activityapplication"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-39">
+        <addForeignKeyConstraint baseColumnNames="regulator_id" baseTableName="activityapplication" constraintName="FK_ek1stjpclcljj1189kellqfi0" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="organisation"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-40">
+        <addForeignKeyConstraint baseColumnNames="activityapplication_id" baseTableName="proposedactivity" constraintName="FK_f7idf2qf5r8p4xwrolbsj6903" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="activityapplication"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-41">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="orguser" constraintName="FK_fhs5vvkrq8ddaj8ydjnqj7fad" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="appuser"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-42">
+        <addForeignKeyConstraint baseColumnNames="organisation_id" baseTableName="activityapplication" constraintName="FK_gkss2lps7lcqiwt5s7wxifq6r" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="organisation"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-43">
+        <addForeignKeyConstraint baseColumnNames="activityapplication_id" baseTableName="activitypiling" constraintName="FK_jdm4kevgkjlsthi4ytpu7cqpg" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="activityapplication"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-44">
+        <addForeignKeyConstraint baseColumnNames="organisation_id" baseTableName="orguser" constraintName="FK_k4au2oyrrj8qjs303uhd7p3gg" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="organisation"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-45">
+        <addForeignKeyConstraint baseColumnNames="activityapplication_id" baseTableName="activitymultibeames" constraintName="FK_kwaqfvmvae4funmnow185jod1" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="activityapplication"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-46">
+        <addForeignKeyConstraint baseColumnNames="oilandgasblock_id" baseTableName="actualactivity" constraintName="FK_lalr2wmfae4s04uxxym5mbyu9" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="oilandgasblock"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-47">
+        <addForeignKeyConstraint baseColumnNames="activitytype_id" baseTableName="activityapplication" constraintName="FK_qw0m9uqpi2tx37wf8b9whpfj6" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="activitytype"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-48">
+        <addForeignKeyConstraint baseColumnNames="oilandgasblock_id" baseTableName="proposedactivity" constraintName="FK_s95adkm8chvlvlp9o7vpugrwi" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="oilandgasblock"/>
+    </changeSet>
+    <changeSet author="unknown" id="1416840056377-49">
+        <addForeignKeyConstraint baseColumnNames="activityapplication_id" baseTableName="activityseismic" constraintName="FK_wqltvlpdiqm6cysoxath38cp" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="activityapplication"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,163 @@
+@(appUser: AppUser, title: String, errors: List[String], headers:HashMap[Integer,String], filename: String, hmChosen:HashMap[String,String], liOGB: List[String], hmPoly: HashMap[String,Integer], liPt: List[List[String]], replace:String, id: Long)
+
+@import layouts._
+@import includes._
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+} 
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "")	
+}
+	
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+	<main id="page-container" role="main">
+		@noiseregistry_phasebanner()
+		@noiseregistry_breadcrumb("HOME")
+		<a id="content"></a>
+		<h1 class="heading-large">@play.twirl.api.Html(Messages("csvform.title"))</h1>
+
+		@if(errors!=null) {
+			@for(error<-errors) {
+				<p class="validation-message">
+               		@error
+             	</p>
+             }
+		}
+		@play.twirl.api.Html(Messages("csvform.preamble"))
+		<table>
+		@if(liOGB!=null) {
+			@for(ogb<-liOGB) {
+				<tr>
+					<td>Oil and Gas Block</td>
+					<td>@ogb</td>
+				</tr>
+			}
+		}
+		@if(hmPoly!=null) {
+			@for((k,v)<-hmPoly) {
+				<tr>
+					<td>Polygon reference</td>
+					<td>@k</td>
+				</tr>
+			}
+		}
+		@if(liPt!=null) {
+			@for(l1<-liPt) {
+			<tr>
+				<td>Point</td>
+				<td>
+				@for(l2<-l1) {
+					@l2 &nbsp;
+				}
+				</td>
+			}</tr>
+		}
+		</table>
+		@helper.form(action = routes.ActivityApplicationController.uploadfile(id), 'enctype -> "multipart/form-data") {
+			@if(filename!=null) {			
+		    <input type="hidden" name="filename" value="@filename">
+		    <input type="hidden" name="replace" value="@if(replace!=null) {@replace}">
+		    }
+			@if(filename==null) {   
+			<div>
+    		<input type="file" name="csvfile">
+    		</div>
+    		}
+			@if(filename==null) {
+			<div>   
+				<fieldset class="inline">
+					<legend class="form-label-bold">@play.twirl.api.Html(Messages("csvform.legend"))</legend>
+					<label class="block-label" for="replace-1" data-target="replace-1-div">
+						<input id="replace-1" name="replace" value="true" type="radio" >
+						Yes
+					</label>
+					<label class="block-label" for="replace-2" data-target="replace-2-div">
+						<input id="replace-2" name="replace" value="false" type="radio" >
+						No
+					</label>
+				</fieldset>
+			</div>		
+			}    
+			@if(filename!=null && hmChosen==null  && headers!=null) {
+			<table>
+				<tr>
+					<td>
+						<label for="ogbcol">OGB Column</label>
+					</td>
+    				<td>
+	    				<select name="ogbcol" id="ogbcol">
+    						<option value="-1">choose...</option>
+				   		@for((k,v)<-headers) {
+    						<option value="@k">@v</option>
+    					}
+    					</select>
+    				</td>
+    			</tr>
+				<tr>
+					<td>
+						<label for="polycol">Polygon identifier Column</label>
+					</td>
+					<td>
+    					<select name="polycol" id="polycol">
+    						<option value="-1">choose...</option>
+    					@for((k,v)<-headers) {
+    						<option value="@k">@v</option>
+    					}
+    					</select>
+    				</td>
+    			</tr>
+				<tr>
+					<td>
+						<label for="latcol">Latitude Column</label>
+					</td>
+					<td>
+    					<select name="latcol" id="latcol">
+    						<option value="-1">choose...</option>
+    					@for((k,v)<-headers) {
+    						<option value="@k">@v</option>
+    					}
+    					</select>
+    				</td>
+    			</tr>
+				<tr>
+					<td>					
+						<label for="longcol">Longitude Column</label>
+					</td>
+					<td>
+    					<select name="longcol" id="longcol">
+    						<option value="-1">choose...</option>
+    					@for((k,v)<-headers) {
+    						<option value="@k">@v</option>
+    					}
+    					</select>
+    				</td>
+    			</tr>
+    		</table>
+			}   
+			@if(hmChosen!=null) {
+				@for((k,v)<-hmChosen) {
+					<input type="hidden" name="@k" value="@v">
+				}
+			}
+    		<div style="clear:both">
+    			@if(errors!=null && errors.size()==0 && hmChosen!=null) {
+    				<input type="hidden" name="confirm" value="yes">
+					<input class="button" type="submit" value="@Messages("csvform.confirm")">
+    			} else {			 
+					<input class="button" type="submit" value="@Messages("csvform.submit")">
+				}
+    		</div>    
+		}		
+    </main><!-- / #page-container -->
+}

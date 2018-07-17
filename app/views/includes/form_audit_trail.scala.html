@@ -1,0 +1,18 @@
+@(appUser: AppUser, activityapp:ActivityApplication)
+@if(!activityapp.getAuditTrail().isEmpty() && (appUser.getOrgRole()=="ADMIN" || appUser.getOrgRole()=="OVERALL_ADMIN")) {
+	<table>
+		<tr>
+			<th colspan="4">@Messages("activityform.heading.audit_trail")</th>
+		</tr>
+	@for(at <- activityapp.getAuditTrail()){
+		<tr>
+			<td>@view_displaydate(at.getDate_when(),"dd-MM-yyyy HH:mm")</td>
+			<td>@at.getWho()</td>
+			<td>@at.getEvent()</td>
+			<td>@at.getReason()</td>
+		</tr>
+	}
+	</table>
+}
+
+

@@ -1,0 +1,12 @@
+@()
+<h2 class="visuallyhidden">@play.twirl.api.Html(Messages("footer.support_links"))</h2>
+<ul>
+	<li><a href="@routes.ApplicationController.help()">@play.twirl.api.Html(Messages("footer.help"))</a></li>
+	<li><a href="@routes.ApplicationController.cookies()">@play.twirl.api.Html(Messages("footer.cookies"))</a></li>
+	<li><a href="@routes.ApplicationController.terms()">@play.twirl.api.Html(Messages("footer.termsandconditions"))</a></li>
+	<li><a href="@routes.ApplicationController.contact()">@play.twirl.api.Html(Messages("footer.contact"))</a></li>
+	<li>
+		@play.twirl.api.Html(Messages("footer.built_by"))
+		<a href="http://jncc.defra.gov.uk/"><abbr title="@play.twirl.api.Html(Messages("jncc.full_name"))">@play.twirl.api.Html(Messages("jncc.abbrev_name"))</abbr> @play.twirl.api.Html(Messages("footer.name_suffix"))</a>
+	</li>
+</ul>

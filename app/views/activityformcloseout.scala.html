@@ -1,0 +1,155 @@
+@(appUser: AppUser, activityapp: ActivityApplication, appForm: Form[_], id: Long)
+
+@import layouts._
+@import scala._
+@import includes._
+@import java.math.BigInteger; var l:Long=0; var f=""; var regtxt=""; var pre=""; var dts=""; var aalocs=activityapp:ActivityApplication;
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+	@location_script(Option(activityapp.getDate_start), Option(activityapp.getDate_end))
+}  
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
+}
+	
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+	<main id="page-container" role="main">
+		@noiseregistry_phasebanner()
+  		@noiseregistry_breadcrumb("PROPOSEDAPPL")
+    	<a id="content"></a>
+  		<h1 class="heading-large">@play.twirl.api.Html(Messages("activityformcloseout.title"))</h1>
+  		  		
+		<table title="Submitted values for activity">
+			<tbody>
+				@form_displaylong(activityapp.getId(), "activityform.field_heading.aan")
+				@form_displaytext(activityapp.getStatus(), "activityform.field_heading.status")
+				@if(activityapp.getStatus()!="Proposed" && activityapp.getStatus()!="Interim Close-out" && activityapp.getStatus()!="Draft") {
+					@form_displaydate(activityapp.getDate_closed(), "activityform.field_heading.date_closed")
+				}
+				@form_displaytext(activityapp.getNoiseproducer().getOrganisation().getOrganisation_name(), "activityform.field_heading.noiseproducer")
+				@if(appUser.getUserOrgType()=="REGULATOR") {
+					@form_displaytext(activityapp.getNoiseproducer().getOrganisation().getContact_name(), "activityform.field_heading.noiseproducer_name")
+					@form_displaytext(activityapp.getNoiseproducer().getOrganisation().getContact_email(), "activityform.field_heading.noiseproducer_email")
+					@form_displaytext(activityapp.getNoiseproducer().getOrganisation().getContact_phone(), "activityform.field_heading.noiseproducer_phone")
+				}
+				@{regtxt=activityapp.getRegulator().getOrganisation().getOrganisation_name()}					
+				@form_displaytext(regtxt, "activityform.field_heading.regulator")
+				@if(regtxt!=activityapp.getReg_name_orig()) {
+					@form_displaytext(activityapp.getReg_name_orig(), "activityform.field_heading.regulator_orig")
+				}
+				@if(activityapp.getNon_licensable()) {
+				@form_displaytext(Messages("activityform.non_licensable.true"), "activityform.field_heading.non_licensable")
+				} else {
+					@form_displaytext(Messages("activityform.non_licensable.false"), "activityform.field_heading.non_licensable")
+				}
+				@form_displaydate(activityapp.getDate_start(), "activityform.field_heading.date_start")				
+				@form_displaydate(activityapp.getDate_end(), "activityform.field_heading.date_end")
+				@form_displayinteger(activityapp.getDuration(), "activityform.field_heading.duration", "units.duration")
+				@form_displaytext(ActivityTypes.get(activityapp.getActivitytype_id()), "activityform.field_heading.activity_type")
+				@activity_type_data_read(activityapp)				
+				@if(activityapp.getStatus()=="Closed" || activityapp.getStatus()=="Interim Close-out") {
+					@activity_type_data_actual_read(activityapp)
+				}
+				<tr>
+					<td>@Messages("activityform.field_heading.supplementary_info")</td>
+					<td>
+						<div style="width:28em;overflow-x:scroll">
+							@activityapp.getSupp_info()
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th colspan="2">@Messages("activityform.field_heading.activity_locations")</th>
+				</tr>
+				@if(aalocs.getActivitylocations()!=null) {
+					@for(activitylocation <- aalocs.getActivitylocations()) {
+						@if(activitylocation.getActivitydates()!=null && !activitylocation.getActivitydates().isEmpty()) {
+						<tr>
+							@if(activitylocation.getEntered_ogb_code()!=null && activitylocation.getEntered_ogb_code().length>0) {
+								<td style="vertical-align:top">@Messages("activityform.field_heading.block_code")
+									@if(activityapp.getStatus()!="Proposed" && activityapp.getStatus()!="Draft" && activityapp.getStatus()!="Cancelled"){<br />@Messages("activityform.field_heading.dates")}
+								</td>
+								<td style="vertical-align:top">@activitylocation.getEntered_ogb_code()
+									 <br /> 
+										@{dts=""}
+										@{pre=""}
+										@for(dt <- activitylocation.getActivitydates()){
+											@{dts=dts+pre+dt.getActivity_date.format("dd-MM-yyyy")}
+											@{pre=", "}
+										}
+										@dts
+								</td>
+							}
+							@if(activitylocation.getLat()!=null && activitylocation.getLng()!=null) {
+								<td style="vertical-align:top">@Messages("activityform.field_heading.latlng")
+									@if(activityapp.getStatus()!="Proposed" && activityapp.getStatus()!="Draft" && activityapp.getStatus()!="Cancelled"){<br />@Messages("activityform.field_heading.dates")}
+								</td>
+								<td style="vertical-align:top">@activitylocation.getLat().toString() / @activitylocation.getLng().toString() 
+										<br /> 
+										@{dts=""}
+										@{pre=""}
+										@for(dt <- activitylocation.getActivitydates()){
+											@{dts=dts+pre+dt.getActivity_date.format("dd-MM-yyyy")}
+											@{pre=", "}
+										}
+										@dts
+								</td>
+							}
+							@if(activitylocation.getPolygon_latlngs()!=null && activitylocation.getPolygon_latlngs().length>0) {
+								<td style="vertical-align:top">@Messages("activityform.field_heading.polygon")
+								</td>
+								<td style="vertical-align:top">@activitylocation.polyToString() 
+								</td>
+							}
+						</tr>
+						}
+					}
+				}
+			</tbody>
+ 		</table>
+ 		<div style="clear:both">&nbsp;</div>  		
+<!-- closeoutxxx -->
+		@helper.form(action = routes.ActivityApplicationController.closeOutApplication(id), 'id -> "form") {
+			@if(appForm.hasGlobalErrors) {
+				@for(error <- appForm.globalErrors) {
+             		<p class="validation-message">
+                 		@error.message
+             		</p>
+             	}
+       		}
+
+			<div style="@if(activityapp.getMustconfirm()!="") {display:none}">
+				@form_inputtextarea(appForm, "supp_info", "activityform.field_heading.supplementary_info", "activityform.field_hint.supplementary_info", "", "form-label-bold", "6")
+
+   				@activity_type_data_actual_close_out(appForm, activityapp.getActivitytype_id())
+       		
+				@location_record_dates(appForm, activityapp.getParent())
+
+				<div style="clear:both">&nbsp;</div>
+				<input type="hidden" name="mustconfirm" value="@activityapp.getMustconfirm()">
+		    	<input type="hidden" name="activitytype_id" value="@activityapp.getActivitytype_id().toString()">  	
+		    	<input type="hidden" name="id" value="@activityapp.getId().toString()">  	
+		    	<input name="interimcloseout" class="button" type="submit" value="@Messages("activityformcloseout.interim")">	
+				<input class="button" type="submit" value="@Messages("activityformcloseout.submit")">
+				<a onclick="return confirm('@Messages("closeout.form.return")')" href="@routes.ActivityApplicationController.read(activityapp.getId())">@play.twirl.api.Html(Messages("activityformcloseout.cancel"))</a>
+			</div>
+			@if(activityapp.getMustconfirm()!="") {
+				@play.twirl.api.Html(Messages("activityformcloseout.closeoutwarning"))
+  				<input class="button" type="submit" value="@Messages("activityformcloseout.confirmcloseout")">
+  				<a href="@routes.ActivityApplicationController.closeOut(activityapp.getId())">@Messages("activityformcloseout.cancel2")</a>
+			}				
+		}
+		
+	</main>
+}

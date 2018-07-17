@@ -1,0 +1,29 @@
+@(org:Organisation, user:AppUser, host:String, bHTML: Boolean)
+@import includes._
+@if(bHTML) {
+<html>
+<head>
+</head>
+<body style="font-size:medium; font-family:Calibri,sans-serif">
+<div>
+@play.twirl.api.Html(Messages("userjoinrequest.mail.salutation", org.getOrganisation_name()))
+</div>
+<div>
+@play.twirl.api.Html(Messages("userjoinrequest.mail.preamble", org.getOrganisation_name(), user.getFullname(), user.getEmail_address()))
+</div>
+<div>
+<a href="http://@(host + routes.LoginController.index())">@Messages("userjoinrequest.mail.linktext")</a>
+</div>
+<div>
+@play.twirl.api.Html(Messages("userjoinrequest.mail.footer"))
+</div>
+@email_footer(host,bHTML)
+</body>
+</html>
+} else {
+@Messages("userjoinrequest.mail.salutation", org.getOrganisation_name())
+@Messages("userjoinrequest.mail.preamble.plain", org.getOrganisation_name(), user.getFullname(), user.getEmail_address())
+http://@(host + routes.LoginController.index()) @Messages("userjoinrequest.mail.linktext")
+@Messages("userjoinrequest.mail.footer.plain")
+@email_footer(host,bHTML)
+}

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	<changeSet author="unknown" id="actuals">
+	    <renameTable 
+            newTableName="activitysubbottomprofilers"
+            oldTableName="activitygeophysical"/>
+        <addColumn tableName="activitypiling">
+            <column name="sound_pressure_level" type="INT4"/>
+            <column name="sound_exposure_level" type="INT4"/>
+            <column name="sound_pressure_level_actual" type="INT4"/>
+            <column name="sound_exposure_level_actual" type="INT4"/>
+            <column name="max_hammer_energy_actual" type="INT4"/>
+        </addColumn>            
+        <addColumn tableName="activityexplosives">
+            <column name="sound_pressure_level" type="INT4"/>
+            <column name="sound_exposure_level" type="INT4"/>
+            <column name="sound_pressure_level_actual" type="INT4"/>
+            <column name="sound_exposure_level_actual" type="INT4"/>
+            <column name="tnt_equivalent_actual" type="numeric"/>
+        </addColumn>       
+        <addColumn tableName="activityseismic">
+            <column name="max_airgun_volume_actual" type="INT4"/>
+            <column name="sound_pressure_level_actual" type="INT4"/>
+            <column name="sound_exposure_level_actual" type="INT4"/>
+        </addColumn>       
+        <addColumn tableName="activitysubbottomprofilers">
+            <column name="frequency_actual" type="INT4"/>
+            <column name="sound_pressure_level_actual" type="INT4"/>
+            <column name="sound_exposure_level_actual" type="INT4"/>
+        </addColumn>       
+        <addColumn tableName="activityacousticdd">
+            <column name="frequency_actual" type="INT4"/>
+            <column name="sound_pressure_level_actual" type="INT4"/>
+            <column name="sound_exposure_level_actual" type="INT4"/>
+        </addColumn>       
+        <addColumn tableName="activitymultibeames">
+            <column name="frequency_actual" type="INT4"/>
+            <column name="sound_pressure_level_actual" type="INT4"/>
+            <column name="sound_exposure_level_actual" type="INT4"/>
+        </addColumn>       
+    </changeSet>
+</databaseChangeLog>

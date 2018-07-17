@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	<changeSet author="unknown" id="mod org names">
+    	<update 
+            tableName="organisation">
+        	<column name="organisation_name" value="Department of Environment, Northern Ireland"/>
+        	<where>organisation_name='Department of Environment (Marine Division)'</where>
+    	</update>  	
+    	<update 
+            tableName="organisation">
+        	<column name="organisation_name" value="Department of Energy and Climate Change (DECC)"/>
+        	<where>organisation_name='Dept. of Energy and Climate Change (DECC)'</where>
+    	</update>  	
+	</changeSet>	
+</databaseChangeLog>

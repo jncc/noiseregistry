@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	<changeSet author="unknown" id="1420545407399-17">
+        <addColumn tableName="actualactivity">
+            <column name="enteredblockcode" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="unknown" id="1420545407399-18">
+        <addColumn tableName="actualactivity">
+            <column name="lat" type="float8"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="unknown" id="1420545407399-19">
+        <addColumn tableName="actualactivity">
+            <column name="lng" type="float8"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="unknown" id="1420545407399-22">
+        <dropForeignKeyConstraint baseTableName="actualactivity" constraintName="FK_lalr2wmfae4s04uxxym5mbyu9"/>
+    </changeSet>
+    <changeSet author="unknown" id="1420545407399-24">
+        <dropColumn columnName="oilandgasblock_id" tableName="actualactivity"/>
+    </changeSet>
+    
+    
+    <changeSet author="unknown" id="1420552268348-16">
+        <createTable tableName="activitylocation">
+            <column name="id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_type" type="VARCHAR(10)"/>
+            <column name="entered_ogb_code" type="VARCHAR(255)"/>
+            <column name="entered_point" type="GEOMETRY(Point, 4326)"/>
+            <column name="entered_polygon" type="GEOMETRY(Polygon, 4326)"/>
+            <column name="lat" type="FLOAT8"/>
+            <column name="lng" type="FLOAT8"/>
+            <column name="no_activity" type="BIT"/>
+            <column name="activityapplication_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="unknown" id="1420552268348-17">
+        <addPrimaryKey columnNames="id" constraintName="activitylocatPK" tableName="activitylocation"/>
+    </changeSet>
+    <changeSet author="unknown" id="1420552268348-20">
+        <addForeignKeyConstraint baseColumnNames="activityapplication_id" baseTableName="activitylocation" constraintName="FK_sqt5gh3w3lkst5sshffmfgpk4" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="activityapplication"/>
+    </changeSet>
+    
+    <changeSet author="unknown" id="1420552268348-21">
+        <dropForeignKeyConstraint baseTableName="actualactivity" constraintName="FK_3r3t3ri37in9tjav15iajhv2a"/>
+    </changeSet>
+    <changeSet author="unknown" id="1420552268348-22">
+        <dropForeignKeyConstraint baseTableName="proposedactivity" constraintName="FK_f7idf2qf5r8p4xwrolbsj6903"/>
+    </changeSet>
+    <changeSet author="unknown" id="1420552268348-23">
+        <dropTable tableName="actualactivity"/>
+    </changeSet>
+    <changeSet author="unknown" id="1420552268348-24">
+        <dropTable tableName="proposedactivity"/>
+    </changeSet>
+    
+    <changeSet author="unknown" id="1420557551971-17">
+        <createTable tableName="activitylocationdate">
+            <column name="id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="activity_date" type="timestamp"/>
+            <column name="activitylocation_id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="unknown" id="1420557551971-18">
+        <addPrimaryKey columnNames="id" constraintName="actlocdatePK" tableName="activitylocationdate"/>
+    </changeSet>
+    <changeSet author="unknown" id="1420557551971-21">
+        <addForeignKeyConstraint baseColumnNames="activitylocation_id" baseTableName="activitylocationdate" constraintName="FK_7jq8usxi2ql0fw6fk15fhi3wi" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="activitylocation"/>
+    </changeSet>
+    
+    
+</databaseChangeLog>

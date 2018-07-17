@@ -1,0 +1,70 @@
+@(appUser: AppUser, appForm: Form[NoiseProducer], np:NoiseProducer)
+
+@import layouts._
+@import scala._
+@import includes._
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+	<link rel="stylesheet" href="/assets/stylesheets/jquery-ui.css">
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+	@if(np==null) {
+<script src="/assets/javascripts/jqueryui-1.11.0.js"></script>
+<script>
+  $( function() {
+    var availableTags = [
+    @for(nplu<-NoiseProducer.findAll()) {
+    	"@nplu.getOrganisation().getOrganisation_name()",
+    }
+    ];
+    $( "#organisation_organisation_name" ).autocomplete({
+      source: availableTags
+    });
+  } );
+</script>
+	}
+}  
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
+}
+	
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+	<main id="page-container" role="main">
+		@noiseregistry_phasebanner()
+  		@if(np==null) {@noiseregistry_breadcrumb("CREATEORG")} else {@noiseregistry_breadcrumb("ORGEDIT")}
+  		<a id="content"></a>
+    	<div class="grid-row">
+    		<div class="column-two-thirds">
+  		<h1 class="heading-large">@play.twirl.api.Html(Messages("organisationform.title"))</h1>
+			@helper.form(action = routes.NoiseproducerController.save(), 'id -> "form") {
+				@if(np!=null) {
+					<input type="hidden" name="id" value="@np.getId()">
+					<input type="hidden" name="organisation.id" value="@np.getOrganisation().getId()">
+					<input type="hidden" name="organisation.administrator" value="@if(np.getOrganisation().isAdministrator()){true} else {false}">
+				} else {
+					<input type="hidden" name="organisation.administrator" value="false">
+				}
+				@if(appForm.hasGlobalErrors) {
+			    	<p class="validation-message">
+		    	    	@appForm.globalError.message
+			    	</p>
+				}
+	        	@form_inputtext(appForm, "organisation.organisation_name", "organisationform.organisation_name", "organisationform.field_hint.organisation_name","","")		
+	        	@form_inputtext(appForm, "organisation.contact_name", "organisationform.contact_name", "organisationform.field_hint.contact_name","","")		
+	        	@form_inputtext(appForm, "organisation.contact_email", "organisationform.contact_email", "organisationform.field_hint.contact_email","","")
+	        	@form_inputtext(appForm, "organisation.contact_phone", "organisationform.contact_phone", "organisationform.field_hint.contact_phone","","")		
+				<input class="button" type="submit" value="@Messages("form.submit")">
+			}
+	 		</div>
+  		</div>
+  	</main>
+}

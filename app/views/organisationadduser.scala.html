@@ -1,0 +1,53 @@
+@(appUser: AppUser, auOther: List[AppUser], orgCur:Organisation)
+
+@import java.math.BigInteger; var users:List[OrgUser]=null; var verus=false;var unverus=false;
+@import layouts._
+@import scala._
+@import includes._
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+}  
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
+}
+	
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+<main id="page-container" role="main">
+	@noiseregistry_phasebanner()
+	@noiseregistry_breadcrumb("ORGREAD")
+	<a id="content"></a>
+   	<div class="grid-row">
+   		<div class="column-two-thirds">
+  		
+  		<h1 class="heading-large">@play.twirl.api.Html(Messages("orgadduser.title"))</h1>
+		@helper.form(action = routes.OrganisationController.addUserByAdmin(orgCur.getId()), 'id -> "form") {
+			<fieldset>
+				<legend class="form-label-bold">@play.twirl.api.Html(Messages("orgadduser.field_heading.users"))</legend>
+				<span class="form-hint">@Messages("orgadduser.field_hint.users")</span>
+			@for(au<-auOther) {
+				<label class="block-label" for="replace-@au.getId()">
+					<input id="replace-@au.getId()" name="appuser.id" value="@au.getId()" type="radio" >
+					@au.getFullname() - @au.getEmail_address()
+				</label>
+			}
+			</fieldset>		
+  			<input class="button" type="submit" value="@Messages("orgadduser.confirm")">
+        	<a href="@routes.OrganisationController.adminorgs()">@play.twirl.api.Html(Messages("form.cancel"))</a>  			
+		}
+      	</div>
+      	<div class="column-third">
+      	</div>
+	</div>
+</main>
+}

@@ -1,0 +1,75 @@
+@(appUser: AppUser)
+
+@import java.math.BigInteger; var orgs:List[OrgUser]=null; var verus=false;var unverus=false;
+@import layouts._
+@import scala._
+@import includes._
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+}  
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
+}
+	
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+<main id="page-container" role="main">
+	@noiseregistry_phasebanner()
+	@noiseregistry_breadcrumb("USERDETAILSREAD")
+	<a id="content"></a>
+   	<div class="grid-row">
+   		<div class="column-two-thirds">
+  		
+  		<h1 class="heading-large">@play.twirl.api.Html(Messages("userform.title_mydetails"))</h1>
+		<table title="User details">
+			<tbody>
+	        	@form_displaytext(appUser.getFullname(), "userform.field_heading.fullname")		
+	        	@form_displaytext(appUser.getEmail_address(), "userform.field_heading.email_address")		
+	        	@form_displaytext(appUser.getPhone(), "userform.field_heading.phone")
+	        </tbody>
+	    </table>
+
+	    <h2 class="heading-medium">@Messages("userform.organisationmembership")</h2>
+			@if(appUser.getOu().isEmpty) {
+		       	<div>@Messages("userform.organisation.nomembership")</div>
+		    } else {
+	        	<table title="Organisations">
+		       		<thead>
+			       		<tr>
+			       			<th>@Messages("userform.organisation.name")</th>
+			       		</tr>
+			       	</thead>
+			       	<tbody>
+			       			@{orgs=OrgUser.findOrgs(appUser.getId())}
+			       			@if(orgs!=null){
+			       				@for(ou <- orgs) {
+		   					<tr>
+		   						<td>
+		   							@ou.getOrg().getOrganisation_name()
+			    					@if(ou.getStatus()=="unverified"){
+			    						@Messages("userform.organisation.unverifiedmember")
+			    					}
+			    				</td>	       			
+			    			</tr>	
+								}
+							}			
+					</tbody>     
+		       	</table>
+			}
+      	</div>
+      	<div class="column-third">
+      		   @noiseregistry_actions_userdetails(if(appUser==null) {"NONE"} else {appUser.getUserOrgType()}, if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "USERDETAILSREAD")
+       	</div>
+	</div>
+</main>
+}

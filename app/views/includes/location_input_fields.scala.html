@@ -1,0 +1,58 @@
+@(appForm:Form[_], heading:String, hint:String, helpText:String, bIncRead:Boolean, aaPar: ActivityApplication, hidePolygon:Boolean, closeOut: Boolean, creationType: String)
+@**
+ * The location_input_fields is used to output a block of fields for capturing the location type entry.
+ * This makes use of radio buttons for the type selection (e.g. Oil and Gas Block Code, Lat/ Lng entry, Polygon entry)
+ * and sets of input fields for the details.
+ **@
+<fieldset>
+	<legend class="form-label-bold">@heading</legend>
+	    @for(error <- appForm("location_entry_type").errors) {
+		<div class="validation-message">@Messages(error.message)</div>
+		}	
+@if(aaPar!=null) {	
+		<label class="block-label radio-location" data-target="entry-parentlocdiv" for="entry-parentloc">
+			<input id="entry-parentloc" type="radio" name="use_parent_location" value="true" @if("true"==appForm("use_parent_location").value) {checked="checked"} />
+   			@play.twirl.api.Html(Messages("activityform.location_type.parent"))
+		</label>
+		<div class="panel-indent js-hidden" id="entry-parentlocdiv">
+			@play.twirl.api.Html(Messages("activityform.location_type.parenttext"))
+			<div>&nbsp;</div>
+			<input name="copyparentlocations" class="button" type="submit" value="@Messages("form.copyparentlocations")">
+		</div>
+		<label class="block-label radio-location" data-target="location-entrydiv" for="location-entry">
+			<input id="location-entry" type="radio" name="use_parent_location" value="false" @if("false"==appForm("use_parent_location").value) {checked="checked"} />
+   			@play.twirl.api.Html(Messages("activityform.location_type.enter_locations"))
+		</label>
+		<div class="panel-indent js-hidden" id="location-entrydiv">
+} else {
+		<div>
+}
+		@if(appForm("status").value==null || appForm("status").value!="Proposed") {
+		<label class="block-label radio-location" data-target="locationcsv-entrydiv" for="locationcsv-entry">
+			<input id="locationcsv-entry" type="radio" name="location_entry_type" value="usecsventry" @if("usecsventry"==appForm("location_entry_type").value) {checked="checked"} />
+			@play.twirl.api.Html(Messages("activityform.location_type.file_upload"))
+		</label>
+		<div class="panel-indent js-hidden" id="locationcsv-entrydiv">
+		@if(appForm("id").value!=null && appForm("id").value!="") {
+			<input name="csvupload" class="button" type="submit" value="@Messages("activityform.field_hint.csvuploadlabel")">
+		} else {
+			@play.twirl.api.Html(Messages("activityform.csvhelp"))
+		}
+		</div>
+		}
+		<label class="block-label radio-location" data-target="locationman-entrydiv" for="locationman-entry">
+			<input id="locationman-entry" type="radio" name="location_entry_type" value="usemanentry" @if("usemanentry"==appForm("location_entry_type").value) {checked="checked"} />
+   			@play.twirl.api.Html(Messages("activityform.location_type.manual"))
+		</label>
+		<div class="panel-indent js-hidden" id="locationman-entrydiv">
+			@location_manual_fields(appForm, heading, hint, helpText, bIncRead, aaPar, hidePolygon, closeOut, creationType)
+		</div>
+		<label class="block-label radio-location" data-target="locationnone-entrydiv" for="locationnone-entry">
+			<input id="locationnone-entry" type="radio" name="location_entry_type" value="usenoneentry" @if("usenoneentry"==appForm("location_entry_type").value) {checked="checked"} />
+   			@play.twirl.api.Html(Messages("activityform.location_type.none"))
+		</label>
+		<div class="panel-indent js-hidden" id="locationnone-entrydiv">
+		@play.twirl.api.Html(Messages("activityform.nolocationshelp"))
+		</div>
+	</div>
+</fieldset>

@@ -1,0 +1,164 @@
+@(appUser: AppUser, activityapps: List[ActivityApplication], status: List[String])
+
+@import layouts._
+@import includes._
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+}  
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
+}
+	
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+	<main id="page-container" role="main">
+		@noiseregistry_phasebanner()
+		@if(status.contains("Deleted")) {
+  			@noiseregistry_breadcrumb("DELETEDAPPLS")
+		} else { 
+			@if(status.contains("Proposed") && !status.contains("Draft") && !status.contains("Closed") && !status.contains("Cancelled")) {
+  				@noiseregistry_breadcrumb("PROPOSEDAPPLS")
+			} else { 
+				@if(!status.contains("Draft") && !status.contains("Proposed") && !status.contains("Interim Close-out") && status.contains("Closed") && status.contains("Cancelled")) {
+					@noiseregistry_breadcrumb("COMPLETEDAPPLS")
+				} else { 
+					@if(status.contains("Draft") && status.contains("Proposed") && status.contains("Interim Close-out") && !status.contains("Closed") && !status.contains("Cancelled")) {
+					@noiseregistry_breadcrumb("INCOMPLETEAPPLS")
+					} else { 
+						@if(status.contains("Draft")) {
+							@noiseregistry_breadcrumb("DRAFTAPPLS")
+  						} else {
+  							@noiseregistry_breadcrumb("")
+  						}
+  					}
+  				}
+  			}
+  		}	
+		<a id="content"></a>
+    	<div class="grid-row">
+    		<div class="column-two-thirds">
+       			<div class="text">
+       				@if(status.contains("Proposed") && !status.contains("Draft") && !status.contains("Closed") && !status.contains("Cancelled")) {
+						<h1 class="heading-large">@play.twirl.api.Html(Messages("activities.proposed_activities"))</h1>
+						<p class="font-small">
+							@if(appUser.getUserOrgType()=="REGULATOR") {
+								@play.twirl.api.Html(Messages("activities.proposed_activity_intro.regulator"))
+							} else {
+  								@play.twirl.api.Html(Messages("activities.proposed_activity_intro"))
+  							}
+						</p>
+					} else {
+       					@if(!status.contains("Proposed") && !status.contains("Draft") && status.contains("Closed") && status.contains("Cancelled")) {
+							<h1 class="heading-large">@play.twirl.api.Html(Messages("activities.completed_activities"))</h1>
+							<p class="font-small">
+								@if(appUser.getUserOrgType()=="REGULATOR") {
+									@play.twirl.api.Html(Messages("activities.completed_activity_intro.regulator"))
+								} else {
+  									@play.twirl.api.Html(Messages("activities.completed_activity_intro"))
+  								}
+							</p>
+						} else {
+							@if(status.contains("Draft") && status.contains("Proposed") && status.contains("Interim Close-out") && !status.contains("Closed") && !status.contains("Cancelled")) {
+								<h1 class="heading-large">@play.twirl.api.Html(Messages("activities.incomplete_activities"))</h1>
+								<p class="font-small">
+									@if(appUser.getUserOrgType()=="REGULATOR") {
+										@play.twirl.api.Html(Messages("activities.incomplete_activity_intro.regulator"))
+									} else {
+  										@play.twirl.api.Html(Messages("activities.incomplete_activity_intro"))
+  									}
+								</p>
+							} else {
+								@if(status.contains("Draft")) {
+									<h1 class="heading-large">@play.twirl.api.Html(Messages("activities.draft_activities"))</h1>
+									<p class="font-small">
+										@play.twirl.api.Html(Messages("activities.draft_activity_intro"))
+									</p>
+								} else {
+									@if(status.contains("Deleted")) {
+										<h1 class="heading-large">@play.twirl.api.Html(Messages("activities.deleted_activities"))</h1>
+										<p class="font-small">
+											@play.twirl.api.Html(Messages("activities.deleted_activity_intro"))
+										</p>										
+									} else {
+										<h1 class="heading-large">@play.twirl.api.Html(Messages("activities.activities"))</h1>
+										<p class="font-small">
+											@if(appUser.getUserOrgType()=="REGULATOR") {
+												@play.twirl.api.Html(Messages("activities.activity_intro.regulator"))
+											} else {
+	  											@play.twirl.api.Html(Messages("activities.activity_intro"))
+	  										}
+										</p>
+									}
+								}
+							}
+						}
+					}
+				</div>			
+			</div>
+    		<div class="column-third">
+    			@noiseregistry_actions_activityviews(if(appUser==null) {"NONE"} else {appUser.getUserOrgType()}, 
+    						if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, 
+    						if(status.contains("Proposed") && !status.contains("Draft") && !status.contains("Closed") && !status.contains("Cancelled")) {"PROPOSEDAPPLS"} 
+    						else {
+    							if(status.contains("Draft") && status.contains("Proposed") && status.contains("Interim Close-out") && !status.contains("Closed") && !status.contains("Cancelled")) {"INCOMPLETEAPPLS"} 
+    							else { 
+    								if(!status.contains("Proposed") && status.contains("Closed") && status.contains("Cancelled")) {"COMPLETEDAPPLS"} 
+    								else {if(status.contains("Draft")) {"DRAFTAPPLS"} else {""}}}
+    							}
+    						)
+    		</div>
+  		</div>
+		
+			<table title="Activities for your organisations">
+			    <thead>
+      				<tr>
+        				<th scope="col" style="width:3em">@play.twirl.api.Html(Messages("activities.tableheading_aan"))</th>
+        				<th scope="col" style="width:3em">@play.twirl.api.Html(Messages("activities.tableheading_parent_aa"))</th>
+        				<th scope="col" style="width:6em">@play.twirl.api.Html(Messages("activities.tableheading_start_date"))</th>
+        				<th scope="col" style="width:6em">@play.twirl.api.Html(Messages("activities.tableheading_end_date"))</th>
+        				<th scope="col">@play.twirl.api.Html(Messages("activities.tableheading_activity_type"))</th>
+        				<th scope="col">@play.twirl.api.Html(Messages("activities.tableheading_status"))</th>
+    	    			@if(!status.contains("Draft") && !status.contains("Proposed") && !status.contains("Interim Close-out") &&  status.contains("Closed") && status.contains("Cancelled")) {
+        					<th scope="col">@play.twirl.api.Html(Messages("activities.tableheading_closed_date"))</th>
+        				} else {
+        					<th scope="col" style="width:6em">@play.twirl.api.Html(Messages("activities.tableheading_report_due_date"))</th>
+        				}
+        				<th scope="col">@play.twirl.api.Html(Messages("activities.tableheading_noiseproducer"))</th>
+      					<th scope="col">@play.twirl.api.Html(Messages("activities.tableheading_regulator"))</th>
+      				</tr>
+    			</thead>
+    			<tbody>
+					@for(activityapp <- activityapps){
+						<tr>
+							<td><a href="@routes.ActivityApplicationController.read(activityapp.getId())">@activityapp.getId()</a></td>
+							<td>@if(activityapp.getParent()!=null){	
+								<a href="@routes.ActivityApplicationController.read(activityapp.getParent().getId())">@activityapp.getParent().getId()</a></td>
+							}
+							<td>@view_displaydate(activityapp.getDate_start())</td>
+							<td>@view_displaydate(activityapp.getDate_end())</td>
+							<td>@ActivityTypes.get(activityapp.getActivitytype_id())</td>
+							<td>@activityapp.getStatus()</td>
+							@if(!status.contains("Draft") && !status.contains("Proposed") && !status.contains("Interim Close-out") &&  status.contains("Closed") && status.contains("Cancelled")) {
+       							<td>@view_displaydate(activityapp.getDate_closed())</td>
+							} else {
+								<td style="@{if(activityapp.getDate_closed()==null && (activityapp.getDate_due() == null || activityapp.getDate_due().before(new java.util.Date()))) { "font-weight:bold; color:red;" }}">@view_displaydate(activityapp.getDate_due())</td>
+							}
+							<td>@activityapp.getNoiseproducer().getOrganisation().getOrganisation_name()</td>
+							<td>@activityapp.getRegulator().getOrganisation().getOrganisation_name()</td>
+						</tr>
+					}
+				<tbody>
+			</table>
+    	    	
+    </main><!-- / #page-container -->
+}

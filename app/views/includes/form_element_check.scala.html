@@ -1,0 +1,5 @@
+@(elements: helper.FieldElements)
+<label class="block-label" for="@elements.id" data-target="@elements.id-div">
+	<input id="@elements.id" name="@elements.name" value="@elements.args.get('value).getOrElse("").toString()" type="checkbox">
+	@elements.label
+</label>

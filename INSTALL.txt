@@ -1,0 +1,158 @@
+INSTALL.txt
+
+This document describes the required steps for the installation of a web application running under Apache Tomcat 7.
+
+In addition to the Tomcat server, a Postgres 9.3 database server is required.  The Postgres server can be on the same 
+server as Tomcat or on another server.  The Tomcat server must be able to access the Postgres server on the configured
+port for Postgres (the default is 5432) - any firewall(s) between the two servers must be configured appropriately.
+
+1. Install an Apache Tomcat 7 server
+
+The Apache Tomcat 7 installation is available from: 
+	http://tomcat.apache.org/download-70.cgi
+	 
+and instructions on the installation process can be found at: 
+	http://tomcat.apache.org/tomcat-7.0-doc/setup.html
+
+To allow application deployments through the manager web interface, follow the additional steps described here:
+	http://tomcat.apache.org/tomcat-7.0-doc/manager-howto.html
+
+
+2. Install Postgres 9.3 server 
+
+The Postgres server install is available from:
+	http://www.postgresql.org/download/ 
+	
+Detailed steps for installation can be found at:
+	https://wiki.postgresql.org/wiki/Detailed_installation_guides
+	
+	
+3. Configure the Postgres database/ schema/ user
+
+A new database, schema and user are needed for the application - a sample SQL script to create these
+can be found in the file "public/docs/postgres.txt" - the password for the new user should be changed to a suitable value.
+The modified script can then be run from a psql command prompt on the server or via any additional Postgres tools installed 
+(e.g. pgAdmin).
+
+The PostGIS extension must be enabled for the database.
+Details steps for installation and enabling PostGIS can be found at:
+	http://postgis.net/install/
+	
+Once PostGIS is installed the extension needs to be enabled for the database:
+CREATE EXTENSION postgis;
+
+Oil and gas block spatial fields use the WGS coordinate system and are of type GEOMETRY (polygon,4326). 
+	
+
+4. Configure the Apache Tomcat server
+
+Three extra files are required.  These must be copied to the Tomcat "lib" folder under the main Tomcat application folder:
+	A. Java library containing the Postgres JDBC Driver
+		Name: postgres-9.4-1200.jdbc41.jar
+		Download from: http://jdbc.postgresql.org/download.html
+		Instructions: Select the version with support for JDBC41. 
+	B. PostGIS jar file used by Hibernate
+		Name: postgis-jdbc-1.5.2.jar
+		Download from: http://www.hibernatespatial.org/repository/org/postgis/postgis-jdbc/1.5.2/postgis-jdbc-1.5.2.jar
+	C. Java Mail libraries
+		Name: javax.mail.jar
+		Download from: https://java.net/projects/javamail/pages/Home
+
+The Tomcat server must be configured to allow the web application to access the Postgres database, mail server and to support different settings for 
+QA and Production environments.
+ 
+The server.xml document is found in the "conf" folder under the main Tomcat application folder on Windows platforms.
+Extra resources and environment configuration settings are required, e.g., 
+
+	<GlobalNamingResources>
+		<Resource name="jdbc/NoiseRegistryDS"
+			username="<postgres_username>"
+			password="<postgres_password>"
+			url="jdbc:postgresql://<postgres_server>:<postgres_port>/<postgres_database>"
+			auth="Container"
+			type="javax.sql.DataSource"
+	        maxActive="100" 
+			maxIdle="30" 
+			maxWait="10000"
+			driverClassName="org.postgresql.Driver"
+			factory="org.apache.commons.dbcp.BasicDataSourceFactory"  (this line may not be needed in Windows)
+			removeAbandoned="true"
+	        removeAbandonedTimeout="20"
+	        logAbandoned="true" />
+	        
+	    <Resource name="mail/Session"
+            type="javax.mail.Session"
+            auth="Container"
+            mail.smtp.host="<mail_server>"
+            mail.smtp.port="<mail_port>" />
+           
+        <Environment name="sendMailFrom"
+            type="java.lang.String"
+            value="<system_email_address>" />
+             
+        <Environment name="externalHostname"
+            type="java.lang.String"
+            value="<external_hostname>:<external_port>" />
+
+    	<Environment name="regulatorOverrideAddress"
+            type="java.lang.String"
+            value="<mail_catch_address>" />
+	...
+	</GlobalNamingResources>
+ 
+A JNDI resource named "jdbc/NoiseRegistryDS" should be created to link to the Postgres database.  This should 
+be configured in the "GlobalNamingResources" section of the server.xml file.
+"<postgres_database>", "<postgres_username>" and "<postgres_password>" should match the configuration created in step 3 above.
+"<postgres_server>" should be the name or ip address of the server configured in step 2.
+"<postgres_port>" is the port that the postgres server responds on - the default is 5432 so this should be used unless a different
+port has been configured for Postgres.
+
+A mail resource is required:
+"<mail_server>" is the ip address or hostname of the email server to be used by the application.
+"<mail_port>" is the smtp port to connect on (the default is port 25).
+
+In addition to the settings for the Postgres server and the mail server there are three further configuration settings:
+
+A. The "sendMailFrom" setting is used to configure the email address that any mail generated by the system will be sent as.
+
+B. The "externalHostname" setting is used to allow the application to create full URLs for pages when the current context does not
+contain an Http request (for example when scheduled tasks are run directly on the server).  The DNS hostname and port number for the 
+application must be entered in this setting.
+
+C. The "regulatorOverrideAddress" setting is used to specify a single email address to be used as the "To" field for all regulator emails.
+This is particularly for use in development and QA environments, where the creation of regulator entries with valid external email
+addresses could result in inappropriate emails being sent to the regulatory bodies.  For the production environment this value should be
+set to empty string ("").
+
+5. Install Liquibase
+from http://www.liquibase.org/
+Adjust the command given in the docs\liquibase.txt file and run the following files from the schema_changes directory:
+changelog2.xml
+changelog3.xml
+
+Both should indicate that they have run successfully.
+
+6. Deploy the application war file
+
+This assumes that a war file ("ROOT.war") containing the application has been provided.  For instructions on creating a war file from the 
+application source, see the document "public/docs/war.txt".
+
+Open the Tomcat manager interface on: 
+	http://<tomcat_server>:<tomcat_port>/manager
+
+"<tomcat_server>" is the name or ip address of the server configured in step 1.
+"<tomcat_port>" is the port that tomcat responds on - the default is 8080 so this should be used unless a different port was
+configured for tomcat.
+	
+Login with the details configured in step 1 and scroll down to the "Deploy" section.
+Click on the "Choose File" button at the "Select WAR file to upload" prompt, locate the war file and click on "Open".
+Click on the "Deploy" button and wait for the server to complete the deployment process.  Any errors will be reported in the
+"Message" field at the top of the page - this will read "OK" when the application has been successfully deployed.
+
+
+7. Test the application
+
+The Tomcat server should now respond on:
+	http://<tomcat_server>:<tomcat_port>/
+	
+Where <tomcat_server> and <tomcat_port> are as described above.  

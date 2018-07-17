@@ -1,0 +1,70 @@
+@(appUser: AppUser, ou: OrgUser, orgid: Long, appForm: Form[OrgUser])
+
+@import layouts._
+@import scala._
+@import includes._
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+}  
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
+}
+	
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+	<main id="page-container" role="main">
+		@noiseregistry_phasebanner()
+  		@noiseregistry_breadcrumb("ORGUSER")
+  		<a id="content"></a>
+    	<div class="grid-row">
+    		<div class="column-two-thirds">
+  		<h1 class="heading-large">@play.twirl.api.Html(Messages("organisationuser.title"))</h1>
+			@helper.form(action = routes.OrganisationController.saveuser(), 'id -> "form") {
+			<input type="hidden" name="id" value="@ou.getId()">
+			<table title="User details">
+				<tbody>
+				<tbody>
+					@form_displaytext(ou.getAu().getFullname(), "userform.field_heading.fullname")
+					@form_displaytext(ou.getAu().getEmail_address(), "userform.field_heading.email_address")
+					@form_displaytext(ou.getAu().getPhone(), "userform.field_heading.phone")
+					@if(ou.getStatus=="verified"){
+						@form_displaydate(ou.getAu().getDate_last_login(), "userform.field_heading.date_last_login")
+						@form_displaydate(ou.getAu().getDate_registered(), "userform.field_heading.date_registered")
+					}
+	        	</tbody>
+	        </table>
+	        
+	        @if(ou.getStatus()=="unverified"){
+				@form_inputradio(appForm, "status", "organisationuser.field_heading.verify", "", 
+			    	Seq("verified"->Messages("organisationuser.accept"),
+				  		"reject"->Messages("organisationuser.reject")		    		
+		    	))
+	        	@form_inputtext(appForm, "reject_reason", "organisationuser.reject_reason.heading", "organisationuser.reject_reason.hint", "", "status-2-div")
+		    }
+		            
+			@form_inputradio(appForm, "administrator", "organisationuser.field_heading.administrator", "", 
+		    	Seq("true"->Messages("organisationuser.true"),
+			  		"false"->Messages("organisationuser.false")		    		
+		    ))
+	        
+	        <button class="button" type="submit" name="action" value="submit">@Messages("form.submit")</button>
+
+	        @if(ou.getStatus()=="verified"){
+	        	<button class="button" type="submit" name="action" value="delete">@Messages("organisationuser.remove.user")</button>
+	        }
+	               
+			}	        
+	 		</div>
+  		</div>
+  	</main>
+}

@@ -1,0 +1,11 @@
+@(field: Field, className: String = "polygon_point")
+<tr class="@className">
+	<td>
+		@helper.inputText(field("lat"), 
+				'_label->Messages("activityform.field_heading.lat"))(govuk.govukFieldConstructor, implicitly[Lang])
+	</td>
+	<td>
+		@helper.inputText(field("lng"), 
+				'_label->Messages("activityform.field_heading.lng"))(govuk.govukFieldConstructor, implicitly[Lang])
+	</td>
+</tr>

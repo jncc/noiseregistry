@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	<changeSet author="unknown" id="ogb_revisit">
+		<dropTable tableName="oilandgasblock"/>
+		<createTable tableName="oilandgasblock">
+            <column name="id" type="SERIAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="block_code" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+			<column name="lessthan_five" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+			<column name="split_block" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+			<column name="tw_code" type="VARCHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quadrant" type="VARCHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+			<column name="point_req" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+			<column name="assignment_block_code" type="VARCHAR(10)">
+                <constraints nullable="true"/>
+            </column>  
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

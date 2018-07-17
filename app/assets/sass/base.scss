@@ -1,0 +1,70 @@
+//
+// JNCC Marine Noise Registry
+//
+// Using GOV.UK front end toolkit as a submodule
+@import "../govuk_frontend_toolkit/stylesheets/conditionals";
+@import "../govuk_frontend_toolkit/stylesheets/colours";
+@import "../govuk_frontend_toolkit/stylesheets/css3";
+@import "../govuk_frontend_toolkit/stylesheets/grid_layout";
+@import "../govuk_frontend_toolkit/stylesheets/shims";
+@import "../govuk_frontend_toolkit/stylesheets/typography";
+@import "../govuk_frontend_toolkit/stylesheets/measurements";
+
+// Styles used to construct the page
+// Import the GOV.UK elements styles, basic styles for typography and layout
+// Helpers
+//@import "../govuk_elements/public/sass/elements/helpers";
+
+// Reset
+//@import "../govuk_elements/public/sass/elements/reset";
+
+// Typography
+//@import "../govuk_elements/public/sass/elements/elements-typography";
+
+// Layout
+//@import "../govuk_elements/public/sass/elements/layout";
+
+// Modules
+// ==========================================================================
+
+// Forms
+//@import "../govuk_elements/public/sass/elements/forms";
+
+// Tables
+//@import "../govuk_elements/public/sass/elements/tables";
+
+// Buttons
+//@import "../govuk_elements/public/sass/elements/buttons";
+
+// Details
+//@import "../govuk_elements/public/sass/elements/details";
+
+// Lists
+//@import "../govuk_elements/public/sass/elements/lists";
+
+// Panels
+//@import "../govuk_elements/public/sass/elements/panels";
+
+// Icons
+//@import "../govuk_elements/public/sass/elements/icons";
+
+// Elements styles
+//@import "../govuk_elements/public/sass/main";
+//@import "../govuk_elements/public/sass/elements-page";
+//@import "../govuk_elements/public/sass/prism";
+
+
+// Import patterns required for styling GOV.UK template content
+@import "../govuk_frontend_toolkit/stylesheets/design-patterns/_alpha-beta";
+@import "../govuk_frontend_toolkit/stylesheets/design-patterns/_buttons";
+//@import "design-patterns/phase-block";
+//@import "design-patterns/breadcrumb";
+
+// Import design patterns
+//@import "design-patterns/addresses";
+//@import "design-patterns/date-of-birth";
+//@import "design-patterns/progress-indicator";
+// Import design guide page styles
+
+// Specific JNCC styles
+@import "noiseregistry.scss";

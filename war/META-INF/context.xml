@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Context>
+	<ResourceLink
+    	name="jdbc/NoiseRegistryDS"
+    	global="jdbc/NoiseRegistryDS"
+    	type="javax.sql.DataSource"
+  	/>  
+  	<ResourceLink
+  		name="mail/Session"
+  		global="mail/Session"
+  		type="javax.mail.Session"
+  	/>
+  	<ResourceLink 
+  		name="sendMailFrom" 
+  		global="sendMailFrom" 
+  		type="java.lang.String" 
+  	/>
+  	<ResourceLink 
+  		name="externalHostname" 
+  		global="externalHostname" 
+  		type="java.lang.String" 
+  	/>
+  	<ResourceLink 
+  		name="regulatorOverrideAddress" 
+  		global="regulatorOverrideAddress" 
+  		type="java.lang.String" 
+  	/>
+</Context>

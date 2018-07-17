@@ -1,0 +1,156 @@
+@(appUser: AppUser, org: Organisation, activityapps: List[ActivityApplication])
+
+@import java.math.BigInteger; var users:List[OrgUser]=null; var verus=false;var unverus=false;
+@import layouts._
+@import scala._
+@import includes._
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+}  
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
+}
+	
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+<main id="page-container" role="main">
+	@noiseregistry_phasebanner()
+	@noiseregistry_breadcrumb("ORGREAD")
+	<a id="content"></a>
+   	<div class="grid-row">
+   		<div class="column-two-thirds">
+  		
+  		<h1 class="heading-large">@play.twirl.api.Html(Messages("organisationform.title"))</h1>
+		<table title="Organisation details">
+			<tbody>
+	        	@form_displaytext(org.getOrganisation_name(), "organisationform.organisation_name")		
+	        	@form_displaytext(org.getContact_name(), "organisationform.contact_name")		
+	        	@form_displaytext(org.getContact_email(), "organisationform.contact_email")	
+	        	@form_displaytext(org.getContact_phone(), "organisationform.contact_phone")
+	        </tbody>
+	    </table>
+
+        @{users=org.findUsers()}
+        @for(ou <- users) {
+        	@if(ou.getStatus()=="verified"){
+        		@{verus=true}
+			} else {
+				@if(ou.getStatus()=="unverified"){
+        			@{unverus=true}
+  				}
+			}
+		}
+
+		@if(org.getNoiseProducer()!=null) {
+		    <h2 class="heading-medium">@Messages("organisationform.unverified.users")</h2>
+			@if(!unverus){
+				<p class="font-small">@Messages("organisationform.no.unverified")</p>
+			} else {
+	        	<table title="Unverified users">
+		       		<thead>
+			       		<tr>
+			       			<th>@Messages("organisationform.user.name")</th>
+			       			<th>@Messages("organisationform.contact_email")</th>
+			       		</tr>
+			       	</thead>
+			       	<tbody>
+		       			@for(ou <- org.findUsers()) {
+		       				@if(ou.getStatus()=="unverified"){
+		    					<tr>
+		    						<td><a href="@routes.OrganisationController.getuser(ou.getId().toString())">@ou.getAu().getFullname()</a></td>	       			
+		    						<td>@ou.getAu().getEmail_address()</td>	       			
+		    					</tr>
+		    				}
+						}
+					</tbody>     
+		       	</table>
+		    }
+	    }    
+        <h2 class="heading-medium">@Messages("organisationform.verified.users")</h2>
+		@if(!verus){
+			<p class="font-small">@Messages("organisationform.no.verified")</p>
+		} else {
+	       	<table title="Verified users">
+	       		<thead>
+	       			<tr>
+	       				<th>@Messages("organisationform.user.name")</th>
+		       			<th>@Messages("organisationform.contact_email")</th>
+	       				<th>@Messages("organisationform.user.administrators")</th>
+	       			</tr>
+	       		</thead>
+	       		<tbody>
+	       			@for(ou <- users) {
+	       				@if(ou.getStatus()=="verified"){
+		   					<tr>
+		   						<td><a href="@routes.OrganisationController.getuser(ou.getId().toString())">@ou.getAu().getFullname()</a></td>	       			
+	    						<td>@ou.getAu().getEmail_address()</td>	       			
+	       						<td>@ou.isAdministrator()</td>
+	    					</tr>
+	    				}
+					}
+				</tbody>        
+			</table>
+		}
+      	</div>
+      	<div class="column-third">
+      		@if(true) {
+				<h2 class="heading-medium">@play.twirl.api.Html(Messages("actions.actions"))</h2>
+				<nav>
+					<ul  class="related-actions">
+						<li><a href="@routes.OrganisationController.edit(org.getId().toString())">@play.twirl.api.Html(Messages("actions.edit_organisation"))</a></li>
+						@if(appUser.getOrgRole()=="OVERALL_ADMIN") {
+							<li><a href="@routes.OrganisationController.mergeUI(org.getId().toString())">@play.twirl.api.Html(Messages("actions.merge_organisations"))</a></li>
+						}
+					</ul>
+				</nav>
+			}
+      	</div>
+		<div style="clear:both">&nbsp;</div>
+		<div class="column-third" style="width:100%">
+			<h2 class="heading-medium">@Messages("organisationform.activity_summary")</h2>
+			<table title="Activities for your organisation">
+			    <thead>
+      				<tr>
+        				<th scope="col" style="width:3em">@play.twirl.api.Html(Messages("activities.tableheading_aan"))</th>
+        				<th scope="col" style="width:3em">@play.twirl.api.Html(Messages("activities.tableheading_parent_aa"))</th>
+        				<th scope="col" style="width:6em">@play.twirl.api.Html(Messages("activities.tableheading_start_date"))</th>
+        				<th scope="col" style="width:6em">@play.twirl.api.Html(Messages("activities.tableheading_end_date"))</th>
+        				<th scope="col">@play.twirl.api.Html(Messages("activities.tableheading_activity_type"))</th>
+        				<th scope="col">@play.twirl.api.Html(Messages("activities.tableheading_activity_type"))</th>
+        				<th scope="col" style="width:6em">@play.twirl.api.Html(Messages("activities.tableheading_report_due_date"))</th>
+        				<th scope="col">@play.twirl.api.Html(Messages("activities.tableheading_noiseproducer"))</th>
+      					<th scope="col">@play.twirl.api.Html(Messages("activities.tableheading_regulator"))</th>
+      				</tr>
+    			</thead>
+    			<tbody>
+					@for(activityapp <- activityapps){
+						<tr>
+							<td><a href="@routes.ActivityApplicationController.read(activityapp.getId())">@activityapp.getId()</a></td>
+							<td>@if(activityapp.getParent()!=null){	
+								<a href="@routes.ActivityApplicationController.read(activityapp.getParent().getId())">@activityapp.getParent().getId()</a></td>
+							}</td>
+							<td>@view_displaydate(activityapp.getDate_start())</td>
+							<td>@view_displaydate(activityapp.getDate_end())</td>
+							<td>@ActivityTypes.get(activityapp.getActivitytype_id())</td>
+							<td>@activityapp.getStatus()</td>
+							<td style="@{if(activityapp.getDate_closed()==null && (activityapp.getDate_due() == null || activityapp.getDate_due().before(new java.util.Date()))) { "font-weight:bold; color:red;" }}">@view_displaydate(activityapp.getDate_due())</td>
+							<td>@activityapp.getNoiseproducer().getOrganisation().getOrganisation_name()</td>
+							<td>@activityapp.getRegulator().getOrganisation().getOrganisation_name()</td>
+						</tr>
+					}
+				<tbody>
+			</table>
+		</div>
+	</div>
+</main>
+}
