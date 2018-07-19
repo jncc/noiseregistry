@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <include file="changeset160429.xml" />
+    <include file="changeset170623.xml" />
+    <include file="changeset170623a.xml" />
+    <include file="changeset170707.xml" />
+    <include file="changeset170711.xml" />
+    <include file="changeset170725.xml" />
+    <include file="changeset170728.xml" />
+    <include file="changeset170801.xml" />
+    <include file="datapopduedates.xml" />
+    <!--<include file="changeset170810pre.xml" /> 171123 includes schema updates -->
+	<include file="changeset170810.xml" />
+	<include file="changeset171123.xml" />
+    <include file="changeset170810a.xml" />
+</databaseChangeLog>
