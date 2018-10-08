@@ -88,7 +88,11 @@ public class AppUser {
 	// (?=.*[A-Z]) => must contain an uppercase character
 	private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[A-Z])(.)*)";
 	private static final int AUTH_TOKEN_EXPIRY_MINS = 30;
-
+	
+	public static final String OVERALL_ADMIN = "OVERALL_ADMIN";
+	public static final String ADMIN = "ADMIN";
+	public static final String MEMBER = "MEMBER";
+			
 	/**
 	 * Gets a user from the email address
 	 * @param email address to search for
@@ -488,15 +492,15 @@ public class AppUser {
 		while (it.hasNext())
 		{
 			if (sReturn.equals(""))
-				sReturn = "MEMBER";
+				sReturn = MEMBER;
 			
 			OrgUser orguser = it.next();
 			if (orguser.isAdministrator())
 			{
-				sReturn = "ADMIN";
+				sReturn = ADMIN;
 			
 				if (orguser.getOrg().isAdministrator())
-					return "OVERALL_ADMIN";
+					return OVERALL_ADMIN;
 			}
 		}
 		
@@ -510,15 +514,15 @@ public class AppUser {
 	public String getOrgRoleForOrg(Organisation org) 
 	{
 		String sOrgRole = getOrgRole(); 
-		if (sOrgRole.equals("OVERALL_ADMIN"))
-			return "OVERALL_ADMIN";
+		if (sOrgRole.equals(OVERALL_ADMIN))
+			return OVERALL_ADMIN;
 		
 		List lOrgs = Organisation.getMyAdminOrganisations(this);
 		if (lOrgs.contains(org))
-			return "ADMIN";
+			return ADMIN;
 		
-		if (sOrgRole=="MEMBER")
-			return "MEMBER";
+		if (sOrgRole == MEMBER)
+			return MEMBER;
 		
 		return "";
 	}
@@ -823,7 +827,7 @@ public class AppUser {
 	public List<ActivityApplication> findApplicationsByStatus(String status, Comparator<ActivityApplication> comparator)
 	{
 		List<ActivityApplication> laa = new ArrayList<ActivityApplication>();
-		if (getOrgRole()=="OVERALL_ADMIN")
+		if (getOrgRole() == OVERALL_ADMIN)
 		{
 			laa = ActivityApplication.findAllByStatus(status);
 		}
@@ -917,7 +921,7 @@ public class AppUser {
 	 */
 	public void setUserFilters() 
 	{
-		if (getOrgRole()=="OVERALL_ADMIN") // no restrictions for overall admin
+		if (getOrgRole() == OVERALL_ADMIN) // no restrictions for overall admin
 			return;
 		//
 		org.hibernate.Session session = JPA.em().unwrap(org.hibernate.Session.class);
