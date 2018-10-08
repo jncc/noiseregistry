@@ -2,10 +2,12 @@ package models;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,12 +22,12 @@ import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import play.Logger;
 import play.db.jpa.JPA;
 
 @NamedQueries({
 	@NamedQuery(name = "NoiseProducer.getFromOrganisation", query = "from NoiseProducer where organisation=:org"),
 	@NamedQuery(name = "NoiseProducer.findAll", query="from NoiseProducer order by organisation.organisation_name"),
+	@NamedQuery(name = "NoiseProducer.findAllByIds", query="from NoiseProducer where organisation.id IN :ids")
 })
 @Entity
 @Table(name="noiseproducer")
@@ -166,5 +168,21 @@ public class NoiseProducer implements Comparable<NoiseProducer> {
 	@Override
 	public int compareTo(NoiseProducer o) {
 		return getOrganisation().getOrganisation_name().compareToIgnoreCase(o.getOrganisation().getOrganisation_name());
+	}
+	
+	/**
+	 * Try and get all noise producers by a list of ids (throw error if all of those results do not exist as a noise producer)
+	 */
+	public static List<NoiseProducer> getNoiseProducersByOrgIds(List<Long> ids) {
+		TypedQuery<NoiseProducer> query = JPA.em().createNamedQuery("NoiseProducer.findAllByIds", NoiseProducer.class);
+		query.setParameter("ids", ids);
+		
+		List<NoiseProducer> npl = query.getResultList();
+		
+		if (npl.size() != ids.size()) {
+			throw new EntityNotFoundException(String.format("Not all ids in list [%s] exist as noise producers", ids.stream().map(Object::toString).collect(Collectors.joining(", "))));
+		}
+		
+		return npl;
 	}
 }

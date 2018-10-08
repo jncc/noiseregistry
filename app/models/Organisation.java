@@ -2,13 +2,14 @@ package models;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,7 +36,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import play.i18n.Messages;
 import play.twirl.api.Html;
-import views.html.*;
 
 import javax.mail.*;
 import javax.mail.internet.*;
@@ -47,7 +47,11 @@ import javax.mail.internet.*;
 	@NamedQuery(name="Organisation.findAdmins", query="from OrgUser where org = :org and administrator = true"),
 	@NamedQuery(name="Organisation.findByName", query="from Organisation where lower(organisation_name) = lower(:org)"),
 	@NamedQuery(name="Organisation.findRegulator", query="from Regulator as reg where reg.organisation=:org"),
-	@NamedQuery(name="Organisation.findNoiseProducer", query="from NoiseProducer as np where np.organisation=:org")
+	@NamedQuery(name="Organisation.findNoiseProducer", query="from NoiseProducer as np where np.organisation=:org"),
+	@NamedQuery(name="Organisation.findById", query="from Organisation as o where o.id = :id order by o.id"),
+	@NamedQuery(name="Organisation.findAllByIds", query="from Organisation as o where o.id in :ids order by o.id"),
+
+	@NamedQuery(name="Organisation.findNoiseProducersByIds", query="from NoiseProducer as np where np.organisation.id IN :ids")	
 })
 
 @NamedNativeQueries({
@@ -264,7 +268,20 @@ public class Organisation implements Comparable<Organisation>
 		TypedQuery<Organisation> query = JPA.em().createNamedQuery("Organisation.findByName", Organisation.class).setParameter("org",name);
 		
 		return query.getResultList();
-	}    
+	}
+	
+	public static Boolean organisationNameExists(String name) {
+		TypedQuery<Organisation> query = JPA.em().createNamedQuery("Organisation.findByName", Organisation.class);
+		query.setParameter("org", name);
+		
+		List<Organisation> ol = query.getResultList();
+		
+		if (ol.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+	
 	/**
 	 * Gets those organisations that aren't listed as regulators
 	 * @return
@@ -433,6 +450,35 @@ public class Organisation implements Comparable<Organisation>
 		List<Organisation> results = query.getResultList();
 		return results;
 	}
+	
+	/**
+	 * Gets an organisation by id
+	 * @return
+	 */
+	public static Organisation find(long id) {
+		TypedQuery<Organisation> query = JPA.em().createNamedQuery("Organisation.findById", Organisation.class);
+		query.setParameter("id", id);
+		
+		return query.getSingleResult();
+	}
+	
+	/**
+	 * Gets a list of organisations by id
+	 * @return
+	 */
+	public static List<Organisation> findByIdList(List<Long> ids) {
+		TypedQuery<Organisation> query = JPA.em().createNamedQuery("Organisation.findALLByIds", Organisation.class);
+		query.setParameter("ids", ids);
+		
+		List<Organisation> organisations = query.getResultList();
+		
+		if (organisations.size() != ids.size()) {
+			throw new EntityNotFoundException(String.format("Not all ids in list [%s] exist as organisations", ids.stream().map(Object::toString).collect(Collectors.joining(", "))));
+		}
+		
+		return query.getResultList();
+	}
+	
 	@JsonIgnore
 	public boolean isRegulator() {
 		TypedQuery<Regulator> query = JPA.em().createNamedQuery("Organisation.findRegulator", Regulator.class);
@@ -460,7 +506,7 @@ public class Organisation implements Comparable<Organisation>
 			return results.get(0);
 		}
 	}
-	
+
 	/**
 	 * Gets whether this organisation is a NoiseProducer
 	 * @return

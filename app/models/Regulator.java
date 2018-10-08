@@ -2,10 +2,12 @@ package models;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,6 +30,7 @@ import play.db.jpa.JPA;
 @NamedQueries({
 	@NamedQuery(name="Regulator.findAll", query="from Regulator order by organisation.organisation_name"),
 	@NamedQuery(name = "Regulator.getFromOrganisation", query = "from Regulator where organisation=:org"),
+	@NamedQuery(name = "Regulator.findAllByIds", query="from Regulator where organisation.id in :ids")
 })
 
 @Entity
@@ -177,5 +180,22 @@ public class Regulator {
     	
 		Regulator reg = query.getResultList().get(0);
 		return reg;
-	}	
+	}
+	
+	
+	/**
+	 * Try and get all regulators by a list of ids (throw error if all of those results do not exist as a regulator)
+	 */
+	public static List<Regulator> getRegulatorsByOrgIds(List<Long> ids) {
+		TypedQuery<Regulator> query = JPA.em().createNamedQuery("Regulator.findAllByIds", Regulator.class);
+		query.setParameter("ids", ids);
+		
+		List<Regulator> regs = query.getResultList();
+		
+		if (regs.size() != ids.size()) {
+			throw new EntityNotFoundException(String.format("Not all ids in list [%s] exist as regulators", ids.stream().map(Object::toString).collect(Collectors.joining(", "))));
+		}
+		
+		return regs;
+	}
 }
