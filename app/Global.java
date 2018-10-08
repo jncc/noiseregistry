@@ -9,6 +9,7 @@ import akka.actor.Cancellable;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
+import play.api.PlayException;
 import play.db.jpa.JPA;
 import play.i18n.Messages;
 import play.libs.Akka;
@@ -34,6 +35,12 @@ import javax.persistence.spi.PersistenceProviderResolver;
 import javax.persistence.spi.PersistenceProviderResolverHolder;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;
+
+import play.mvc.Result;
+import play.mvc.Http.RequestHeader;
+import play.libs.F.*;
+
+import static play.mvc.Results.*;
 
 public class Global extends GlobalSettings {
 
@@ -77,6 +84,29 @@ public class Global extends GlobalSettings {
 	        scheduler.cancel();
 	    }
 	}
+	
+	@Override
+    public Promise<Result> onError(RequestHeader request, Throwable t) {
+        return Promise.<Result>pure(internalServerError(
+            views.html.errors.error.render(null, AppConfigSettings.getConfigString("jnccAddress", "email.jncc_address"), "HOME", ((PlayException) t).id)
+        ));
+    }
+	
+	@Override
+	public Promise<Result> onHandlerNotFound(RequestHeader request) {
+        return Promise.<Result>pure(notFound(
+            views.html.errors.notfound.render(null, "HOME")
+        ));
+	}
+	
+	@Override
+	public Promise<Result> onBadRequest(RequestHeader request, String error) {
+		PlayException pex = new PlayException(error, error);
+		Logger.error(error, pex);
+        return Promise.<Result>pure(badRequest(
+            views.html.errors.error.render(null, AppConfigSettings.getConfigString("jnccAddress", "email.jncc_address"), "HOME", pex.id)
+        ));		
+	}
 
 	private void scheduleWeekly() {
 	    try {
@@ -104,6 +134,7 @@ public class Global extends GlobalSettings {
 		        Logger.debug("Application hostname for external links: " + AppConfigSettings.getConfigString("externalHostname", "application.hostname"));
 			    Logger.debug("Email override for regulator emails: " + AppConfigSettings.getConfigString("regulatorOverrideAddress", "email.regulator_override_address"));
 			    Logger.debug("Email override for noiseproducer emails: " + AppConfigSettings.getConfigString("noiseproducerOverrideAddress", "email.noiseproducer_override_address"));
+			    Logger.debug("Email override for JNCC emails: " + AppConfigSettings.getConfigString("jnccOverrideAddress", "email.jncc_override_address"));
 			    
 		        scheduler = Akka.system().scheduler().scheduleOnce(d, new Runnable() {
 	
@@ -215,7 +246,7 @@ public class Global extends GlobalSettings {
 		if (!apps.isEmpty()) {
 			try {
 				Session session = MailSettings.getSession();
-				String jnccEmail = AppConfigSettings.getConfigString("jnccAddress", "email.jncc_address");;
+				String jnccEmail = AppConfigSettings.getConfigString("jnccAddress", "email.jncc_address");
 						
 				String overrideAddress = AppConfigSettings.getConfigString("jnccOverrideAddress", "email.jncc_override_address");
 						
