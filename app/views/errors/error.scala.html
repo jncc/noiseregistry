@@ -1,0 +1,32 @@
+@(appUser: AppUser, contact_email: String, activeTab: String, error_id: String)
+
+@import layouts._
+@import includes._
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+} 
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, activeTab)	
+}
+	
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+	<main id="page-container" role="main">
+		@noiseregistry_phasebanner()
+		<a id="content"></a>
+		<h1 class="heading-large">@play.twirl.api.Html(Messages("application.service_name")) - @play.twirl.api.Html(Messages("errors.error_title"))</h1>
+		<p>@play.twirl.api.Html(Messages("errors.server_error")) @error_id</p>
+		<p>@play.twirl.api.Html(Messages("errors.post_server_error_message")) @contact_email.</p>
+		<p>@play.twirl.api.Html(Messages("errors.return_to_home"))</p>
+ 	</main>
+}
