@@ -8,6 +8,7 @@ import models.AppUserDetails;
 import models.AppUser;
 import models.Organisation;
 import play.Logger;
+import play.api.PlayException;
 import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
@@ -94,36 +95,52 @@ public class RegistrationController extends Controller {
 	@Transactional(readOnly=true)
 	public static Result unverifiedUsers()
 	{
-		String sEmail = session("email");			
-
-		return ok(adminunverifiedusers.render(AppUser.findByEmail(session("email")),AppUser.getUnverifiedUsers()));
+		AppUser au = AppUser.findByEmail(session("email"));
+		
+		if (au != null && au.getOrgRole().equals(AppUser.OVERALL_ADMIN)) {
+			return ok(adminunverifiedusers.render(AppUser.findByEmail(session("email")),AppUser.getUnverifiedUsers()));
+		}
+		
+		return unauthorized(views.html.errors.unauthorised.render(au, "HOME"));
 	}
 	
 	@Transactional(readOnly=true)
 	public static Result resendverifmail(Long id)
 	{
-		AppUser au = JPA.em().find(AppUser.class,id);
+		AppUser au = AppUser.findByEmail(session("email"));
 		
-		if (au == null)
-		{
-			return ok(Messages.get("resendverif.notok"));
+		if (au != null && au.getOrgRole().equals(AppUser.OVERALL_ADMIN)) {		
+			AppUser user = JPA.em().find(AppUser.class,id);
+			
+			if (user == null)
+			{
+				throw new PlayException("User is null", String.format("User %d was not found", id));
+			}
+			RegistrationController.sendVerificationMail(user);
+			return RegistrationController.unverifiedUsers();
 		}
-		RegistrationController.sendVerificationMail(au);
-		return RegistrationController.unverifiedUsers();
+		
+		return unauthorized(views.html.errors.unauthorised.render(au, "HOME"));
 	}
 	
 	@Transactional(readOnly=false)
 	public static Result adminauthorise(Long id)
 	{
-		AppUser au = JPA.em().find(AppUser.class,id);
+		AppUser au = AppUser.findByEmail(session("email"));
 		
-		if (au == null)
-		{
-			return ok(Messages.get("resendverif.notok"));
+		if (au != null && au.getOrgRole().equals(AppUser.OVERALL_ADMIN)) {
+			AppUser user = JPA.em().find(AppUser.class,id);
+			
+			if (user == null)
+			{
+				throw new PlayException("User is null", String.format("User %d was not found", id));
+			}
+			user.setVerification_status(AppUser.VERIFIED);
+			JPA.em().merge(user);
+			return RegistrationController.unverifiedUsers();
 		}
-		au.setVerification_status(AppUser.VERIFIED);
-		JPA.em().merge(au);
-		return RegistrationController.unverifiedUsers();
+		
+		return unauthorized(views.html.errors.unauthorised.render(au, "HOME"));
 	}
 	
 	/**
@@ -228,18 +245,26 @@ public class RegistrationController extends Controller {
 	 * @return confirmation page
 	 */
 	@Transactional
+	@Security.Authenticated(SecuredController.class)
 	public static Result update(Long id)
 	{
+		AppUser au = AppUser.findByEmail(request().username());
+		
 		Form<AppUserDetails>  filledForm = detailsForm.bindFromRequest();
-		if(filledForm.hasErrors()) {
-			return badRequest(
-					mydetails.render(AppUser.findByEmail(session("email")), filledForm, Messages.get("userform.title_mydetails"), id)
-		    );
-		} else {
-			filledForm.get().update(id);
-			session("email", filledForm.get().getEmail_address());
-			return redirect(routes.RegistrationController.confirmupdate());
-		}	
+
+		if (au != null && au.getId().equals(id)) {
+			if(filledForm.hasErrors()) {
+				return badRequest(
+						mydetails.render(au, filledForm, Messages.get("userform.title_mydetails"), id)
+			    );
+			} else {
+				filledForm.get().update(id);
+				session("email", filledForm.get().getEmail_address());
+				return redirect(routes.RegistrationController.confirmupdate());
+			}
+		}
+		
+		return unauthorized(views.html.errors.unauthorised.render(au, "HOME"));
 	}
 	
 	@Transactional(readOnly=true)

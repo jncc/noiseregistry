@@ -219,15 +219,19 @@ public class ActivityApplicationController extends Controller {
 	{
 		AppUser au = AppUser.getSystemUser(request().username());
 		
-		if (request().accepts("text/html")) {
-			//Prevent caching the form (doesn't work for the current version of Chrome v40.0)
-			response().setHeader(CACHE_CONTROL, "no-cache, no-store, must-revalidate");
-			response().setHeader(PRAGMA, "no-cache, no-store");
-			response().setHeader(EXPIRES, "0");
-			
-			return ok(activityform.render(au, appForm, Messages.get("activityform.title_new"), null, null));
+		if (au.getOrgRole().equals("")) {
+			return unauthorized(views.html.errors.unauthorised.render(au, "HOME"));
 		} else {
-			return badRequest("Unsupported content type");
+			if (request().accepts("text/html")) {
+				//Prevent caching the form (doesn't work for the current version of Chrome v40.0)
+				response().setHeader(CACHE_CONTROL, "no-cache, no-store, must-revalidate");
+				response().setHeader(PRAGMA, "no-cache, no-store");
+				response().setHeader(EXPIRES, "0");
+				
+				return ok(activityform.render(au, appForm, Messages.get("activityform.title_new"), null, null));
+			} else {
+				return badRequest("Unsupported content type");
+			}
 		}
 	}
 
@@ -251,31 +255,37 @@ public class ActivityApplicationController extends Controller {
 	@Transactional(readOnly=false)
 	public static Result downloadAppsRequiringCloseOut()
 	{
-		StringBuffer sb = new StringBuffer();
-		try {
-	        CSVFormat csvFileFormat = CSVFormat.DEFAULT;
-	
-	        CSVPrinter csvFilePrinter = new CSVPrinter(sb, csvFileFormat);
-	
-	        csvFilePrinter.printRecord(ActivityApplication.getCSVHeader());        
-	        List<ActivityApplication> liaa = getAppsRequiringCloseOut(); 
-	        Iterator<ActivityApplication> it = liaa.iterator();
-	        while (it.hasNext())
-	            csvFilePrinter.printRecord(it.next().getCSVRecord());        
-	        
-	        csvFilePrinter.close();
-	
-			response().setContentType("application/csv; charset=iso-8859-1");
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			String sYYYYMMDD = simpleDateFormat.format(new Date());
-			
-			response().setHeader("content-disposition", "attachment; filename=\"MNR_closeout_"+sYYYYMMDD+".csv\"");
-			return ok(new ByteArrayInputStream(sb.toString().getBytes("UTF-8")));
-		} catch (Exception e) {
-			Logger.error("Error downloading apps requiring closeout: "+e.toString());
-		}
+		AppUser au = AppUser.getSystemUser(request().username());
 		
-		return badRequest("Something bad happened");
+		if (au.getOrgRole() == "OVERALL_ADMIN") {
+			StringBuffer sb = new StringBuffer();
+			try {
+		        CSVFormat csvFileFormat = CSVFormat.DEFAULT;
+		
+		        CSVPrinter csvFilePrinter = new CSVPrinter(sb, csvFileFormat);
+		
+		        csvFilePrinter.printRecord(ActivityApplication.getCSVHeader());        
+		        List<ActivityApplication> liaa = getAppsRequiringCloseOut(); 
+		        Iterator<ActivityApplication> it = liaa.iterator();
+		        while (it.hasNext())
+		            csvFilePrinter.printRecord(it.next().getCSVRecord());        
+		        
+		        csvFilePrinter.close();
+		
+				response().setContentType("application/csv; charset=iso-8859-1");
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				String sYYYYMMDD = simpleDateFormat.format(new Date());
+				
+				response().setHeader("content-disposition", "attachment; filename=\"MNR_closeout_"+sYYYYMMDD+".csv\"");
+				return ok(new ByteArrayInputStream(sb.toString().getBytes("UTF-8")));
+			} catch (Exception e) {
+				Logger.error("Error downloading apps requiring closeout: "+e.toString());
+			}
+		
+			return badRequest("Something bad happened");
+		} else {
+			return unauthorized(views.html.errors.unauthorised.render(au, "HOME"));
+		}
 	}
 
 	/**
@@ -1221,6 +1231,15 @@ public class ActivityApplicationController extends Controller {
 						return redirect(routes.ActivityApplicationController.confirmadd(Long.toString(id),1));
 					}
 					
+					// Clear out dates if no activity is recorded in a location
+					Iterator<ActivityLocation> it = aaFrm.getActivitylocations().iterator();
+					while (it.hasNext()) {
+						ActivityLocation loc = it.next();
+						if (loc.getNo_activity() != null && loc.getNo_activity()) {
+							loc.setActivitydates(null);
+						}
+					}
+					
 					String sNewStatus = aaFrm.closeOut(id, filledForm.data(), true);
 
 					JPA.em().flush();  //make sure any persistence errors are raised before emailing
@@ -1727,6 +1746,10 @@ public class ActivityApplicationController extends Controller {
 	public static Result requirecloseout()
 	{
 		AppUser au = AppUser.getSystemUser(request().username());
-		return ok(activitieslate.render(au, getAppsRequiringCloseOut()));		
+		if (au.getOrgRole().equals(AppUser.OVERALL_ADMIN)) {
+			return ok(activitieslate.render(au, getAppsRequiringCloseOut()));
+		} else {
+			return unauthorized(views.html.errors.unauthorised.render(au, "HOME"));
+		}
 	}
 }
