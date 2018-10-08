@@ -1756,5 +1756,22 @@ public class ActivityApplication
 		lis.add(getSupp_info());
 		
 		return lis;
-	}	
+	}
+	
+	/**
+	 * Updates the date due for all activity applications with a given regulator, used as a 
+	 * mass update function for modifying close-out days, used in merge organisation (regulators)
+	 * operations
+	 * 
+	 * @param regulator The regulator for which activities need to be updated
+	 * @param closeoutDays The number of closeout days to use to recalculate due dates
+	 */
+	public static void updateRegulatorCloseoutDays(Regulator regulator, Integer closeoutDays) {
+		//javax.persistence.Query query = JPA.em().createQuery("UPDATE ActivityApplication SET date_due = (date_end + :closeoutdays) WHERE regulator = :regulator");
+		// NOTE: Postgres date logic so using native query rather than doing the update on a per application basis
+		javax.persistence.Query query = JPA.em().createNativeQuery("UPDATE ActivityApplication SET date_due = (date_end + ?1) WHERE regulator_id = ?2 AND status NOT IN ('Closed','Cancelled','Deleted')");
+		query.setParameter(1, closeoutDays);
+		query.setParameter(2, regulator.getId());
+		query.executeUpdate();
+	}
 }
