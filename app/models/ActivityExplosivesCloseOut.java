@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
@@ -31,7 +32,7 @@ public class ActivityExplosivesCloseOut extends DefaultableActivity
     @JoinColumn(name="activityapplication_id",referencedColumnName="id")
     protected ActivityApplication aa;
     
-    @Min(value=1, message="validation.min")
+    @DecimalMin(value="0.1", message="validation.tnt_min")
     @Max(value=5000, message="validation.max")
 	protected Double tnt_equivalent_actual;
 	
