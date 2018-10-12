@@ -189,7 +189,7 @@ helppage.message=\
 	<h1 class="heading-large">Help</h1>\n\
 	<section>\n\
 	<p class="lede">\n\
-	Help is available for the Marine Noise Registry as a downloadable <a href="/assets/help/Marine_Noise_Registry_Help.pdf">PDF file</a>.\n\
+	Help is available for the Marine Noise Registry as a downloadable <a href="/assets/help/marine-noise-registry-help-and-guidance.pdf">PDF file</a>.\n\
 	</p>\n\
 	<p class="font-small">\n\
 	\n\
@@ -655,7 +655,7 @@ activityform.add_location=Save Location
 activityform.field_heading.revert_reason=Reason
 activityform.field_heading.delete_reason=Reason
 activityform.field_heading.supplementary_info=Supplementary Information
-activityform.field_hint.supplementary_info=Additional references or other information about this activity (e.g. licence numbers).
+activityform.field_hint.supplementary_info=Input additional information including licence numbers and whether the activity has been split across multiple proposed activity forms, including related activity application numbers.
 
 activityform.heading.audit_trail=Audit Trail
 activityform.field_hint.csvupload=Select whether you would like to upload a CSV file containing locations following submission of the activity.
@@ -791,6 +791,7 @@ units.duration=days
 ############## CUSTOM ERRORS #########################
 validation.required=Value must be entered
 validation.min=Value must be greater or equal to {0}
+validation.tnt_min=Value must be greater or equal to 0.1
 validation.max=Value must be less than or equal to {0}
 validation.invalidrange=Value must be between {1} and {0}
 validation.duration.too_long=Duration exceeds the number of days between the entered start and end date
@@ -809,6 +810,7 @@ validation.polygon_latlngs.invalid=The entered latitude/longitude values do not 
 validation.polygon_latlngs.bounds=The entered latitude/longitude values do not fall within the allowed range
 validation.appcloseout.noactivity=No activity has been recorded.  Please enter a location \
 	(latitude/longitude point or Oil and Gas Block) and the corresponding dates on which the activity occurred.
+validation.organisation.name_exists=Organisation name already exists
 validation.noiseproducer.invalid=Invalid organisation
 validation.regulator.invalid=Invalid regulator
 validation.noiseproducer.null=Please select an organisation
@@ -1093,23 +1095,32 @@ jncc.notify.mail.footer.plain=\nRegards,\n\nMarine Noise Registry
 
 noiseproducer.activity.latecloseout.mail.subject=Marine Noise Registry - Late Activity Close-out Report
 noiseproducer.activity.latecloseout.mail.salutation={0},
-noiseproducer.activity.latecloseout.mail.preamble=<p>The Marine Noise Registry (MNR) currently holds the following\
+noiseproducer.activity.latecloseout.mail.preamble=<p>The Marine Noise Registry (MNR) currently holds the following \
 	activity notices associated with your organisation that have not been closed and are now overdue. \
-	See close-out report due date.</p><p>Please log into the MNR to complete the associated close out reports.</p>
-noiseproducer.activity.latecloseout.mail.preamble.plain=The Marine Noise Registry (MNR) currently holds the following\
-	activity notices associated with your organisation that have not been closed and are now overdue. \
-	See close-out report due date.  Please log into the MNR to complete the associated close out reports.
+	See close-out report due date.</p><p>Please log into the MNR to complete the associated close out \
+	reports. If the activity has been postponed, extended or cancelled please log into the MNR and \
+	make the relevant changes to the entry.</p><p>Note: If the activity was planned to span consecutive \
+	years, there will be an activity application entry for each year. This will be noted in the \
+	supplementary information (if input to the activity application entry). Please login and either:</p>\
+	<ol><li>complete a close out report, if all or part of the activity has taken place before the 31st \
+	December, or</li><li>cancel the entry, if no activity was carried out between the start and end \
+	date (i.e. 31st Dec). This will not affect the subsequent years entry for the same activity.</li></ol>
+noiseproducer.activity.latecloseout.mail.preamble.plain=The Marine Noise Registry (MNR) currently holds \
+	the following activity notices associated with your organisation that have not been closed and are \
+	now overdue. \
+	See close-out report due date. Please log into the MNR to complete the associated close out \
+	reports. If the activity has been postponed, extended or cancelled please log into the MNR and \
+	make the relevant changes to the entry. \
+	Note: If the activity was planned to span consecutive years, there will be an activity application \
+	entry for each year. This will be noted in the supplementary information (if input to the activity \
+	application entry). Please login and either:\
+	1) complete a close out report, if all or part of the activity has taken place before the 31st \
+	December, or \
+	2)	cancel the entry, if no activity was carried out between the start and end \
+	date (i.e. 31st Dec). This will not affect the subsequent years entry for the same activity.
 noiseproducer.activity.latecloseout.mail.linktext=Activity
-noiseproducer.activity.latecloseout.mail.footer=<p>If the activity has been postponed, extended or cancelled please\
-	log into the MNR and make the relevant changes to the entry.</p><p>If the end date is 31st December it is possible \
-	that the activity spans consecutive years. In that case, you will be required to submit a close-out report \
-	for the year ending 31st December. If no activity occurred in that year, please cancel the entry above. \
-	This will not affect the subsequent year entries for the same activity.</p>   
-noiseproducer.activity.latecloseout.mail.footer.plain=If the activity has been postponed, extended or cancelled please\
-	log into the MNR and make the relevant changes to the entry.  If the end date is 31st December it is possible \
-	that the activity spans consecutive years. In that case, you will be required to submit a close-out report \
-	for the year ending 31st December. If no activity occurred in that year, please cancel the entry above. \
-	This will not affect the subsequent year entries for the same activity.  
+noiseproducer.activity.latecloseout.mail.footer=<p>Please direct any queries to <a href="mailto:mnr@jncc.gov.uk">mnr@jncc.gov.uk</a></p>   
+noiseproducer.activity.latecloseout.mail.footer.plain=Please direct any queries to mnr@jncc.gov.uk
 
 orgchanges.mail.subject=Organisational changes
 orgchanges.mail.preamble=An organisation to which you belong has changed.  The details are below:
@@ -1154,3 +1165,15 @@ orgadduser.title=Add User to Organisation
 orgadduser.confirm=Confirm
 orgadduser.field_heading.users=Choose user
 orgadduser.field_hint.users=Only users who are not part of another organisation can be added
+
+################################ HTTP STATUS ERROR MESSAGES ###############################################
+errors.error_title=An error has occurred
+errors.server_error=A server error has occurred with the ID:
+errors.post_server_error_message=If you have repeatedly seen this page and require help please contact our support email with a description of how this error occurred at
+errors.unauthorised_title=You are not authorised to do this action
+errors.unauthorised_error=You are not authorised to do this action, if you believe you should be able to, please contact the Marine Noise Registry Admin for your organisation.
+errors.notfound_title=Page Not Found
+errors.notfound_error=The page you have requested does not exist.
+errors.badrequest_title=Bad Request Submitted
+errors.badrequest_error=You have submitted a bad request, if you have repeatedly seen this page and require help please contact our support email with a description of how this error occurred at
+errors.return_to_home=You can return to your home page <a href="/home">here</a> 
