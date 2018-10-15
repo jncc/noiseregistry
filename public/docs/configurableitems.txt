@@ -21,5 +21,5 @@ All emails use messages in the messages file, so almost all changes can be made 
 The weekly notifications are scheduled using a "CRON" syntax in the application.conf file (key = email.weekly.cron).    
 
 PDF Help
-The PDF help file is at \public\help\Noise_Registry_Help.pdf.  
+The PDF help file is at \public\help\marine-noise-registry-help-and-guidance.pdf.  
 To update it, replace the file with one which has the same file name.  

@@ -128,7 +128,7 @@ public class RegulatorController extends Controller {
 			}
 		}
 		
-		// Probably should be unauthorised so it doesn't leak details unnecessarily
+		// Probably should be unauthorised so it doesn't leak details unnecessarily   
 		return unauthorized(views.html.errors.unauthorised.render(au, "HOME"));
 	}
 }
