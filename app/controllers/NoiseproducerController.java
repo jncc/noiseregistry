@@ -19,6 +19,7 @@ import play.mvc.Result;
 import play.mvc.Security;
 import play.mvc.Http.RequestBody;
 import views.html.*;
+import utils.AppConfigSettings;
 
 
 @Security.Authenticated(SecuredController.class)
@@ -68,7 +69,7 @@ public class NoiseproducerController extends Controller {
 						return badRequest(organisationnpedit.render(AppUser.findByEmail(session("email")), filledForm, np));
 					}		
 					
-					orgOnDisk.sendChanges(np.getOrganisation(), request().host(), au);
+					orgOnDisk.sendChanges(np.getOrganisation(), AppConfigSettings.getConfigString("hostname", "application.hostname"), au);
 					np.getOrganisation().setAdministrator(orgOnDisk.isAdministrator());
 					np.update();
 					return OrganisationController.adminorgs();

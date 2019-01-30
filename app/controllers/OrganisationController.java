@@ -29,6 +29,7 @@ import play.data.DynamicForm;
 import utils.AppConfigSettings;
 import utils.MailSettings;
 import views.html.*;
+import utils.AppConfigSettings;
 
 @Security.Authenticated(SecuredController.class)
 public class OrganisationController extends Controller {
@@ -317,8 +318,8 @@ public class OrganisationController extends Controller {
 		try {
 			InternetAddress[] addresses = {new InternetAddress(au.getEmail_address())};
 	
-			Html mailBody = views.html.email.userreject.render(ou, request().host(),((String)map.get("reject_reason")),true);
-			Html mailAlt = views.html.email.userreject.render(ou, request().host(),((String)map.get("reject_reason")),false);
+			Html mailBody = views.html.email.userreject.render(ou, AppConfigSettings.getConfigString("hostname", "application.hostname"),((String)map.get("reject_reason")),true);
+			Html mailAlt = views.html.email.userreject.render(ou, AppConfigSettings.getConfigString("hostname", "application.hostname"),((String)map.get("reject_reason")),false);
 			
 			String sSubject = Messages.get("userreject.mail.subject");
 			
@@ -341,8 +342,8 @@ public class OrganisationController extends Controller {
 		try {
 			InternetAddress[] addresses = {new InternetAddress(au.getEmail_address())};
 			String sSubject = Messages.get("useraccept.mail.subject");
-			Html mailBody = views.html.email.useraccept.render(ou, request().host(), true);
-			Html mailAlt = views.html.email.useraccept.render(ou, request().host(), false);
+			Html mailBody = views.html.email.useraccept.render(ou, AppConfigSettings.getConfigString("hostname", "application.hostname"), true);
+			Html mailAlt = views.html.email.useraccept.render(ou, AppConfigSettings.getConfigString("hostname", "application.hostname"), false);
 
 			MailSettings.send(mailBody, mailAlt, sSubject, addresses, false, false, true);
 		}
@@ -362,8 +363,8 @@ public class OrganisationController extends Controller {
 				
 			
 			try {       			
-				Html mailBody = views.html.email.userjoinrequest.render(org, au, request().host(), true);
-				Html mailAlt = views.html.email.userjoinrequest.render(org, au, request().host(), false);
+				Html mailBody = views.html.email.userjoinrequest.render(org, au, AppConfigSettings.getConfigString("hostname", "application.hostname"), true);
+				Html mailAlt = views.html.email.userjoinrequest.render(org, au, AppConfigSettings.getConfigString("hostname", "application.hostname"), false);
 				
 				String sSubject = Messages.get("userjoinrequest.mail.subject");
 				
@@ -389,11 +390,11 @@ public class OrganisationController extends Controller {
 	public static void sendUserRemovalMail(OrgUser ou) 
 	{
 		AppUser au = ou.getAu();
-		Html mailBody = views.html.email.userremovalmail.render(ou, request().host(), true);
-		Html mailAlt = views.html.email.userremovalmail.render(ou, request().host(), false);
+		Html mailBody = views.html.email.userremovalmail.render(ou, AppConfigSettings.getConfigString("hostname", "application.hostname"), true);
+		Html mailAlt = views.html.email.userremovalmail.render(ou, AppConfigSettings.getConfigString("hostname", "application.hostname"), false);
 		
-		Html mailBodyAdmin = views.html.email.userremovalmailadmin.render(ou, request().host(), true);
-		Html mailBodyAdminAlt = views.html.email.userremovalmailadmin.render(ou, request().host(), false);
+		Html mailBodyAdmin = views.html.email.userremovalmailadmin.render(ou, AppConfigSettings.getConfigString("hostname", "application.hostname"), true);
+		Html mailBodyAdminAlt = views.html.email.userremovalmailadmin.render(ou, AppConfigSettings.getConfigString("hostname", "application.hostname"), false);
 		
 		try {
 			InternetAddress[] addresses = {new InternetAddress(au.getEmail_address())};

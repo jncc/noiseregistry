@@ -18,6 +18,7 @@ import play.twirl.api.Html;
 import utils.AppConfigSettings;
 import utils.MailSettings;
 import views.html.*;
+import utils.AppConfigSettings;
 
 import javax.mail.*;
 import javax.mail.internet.*;
@@ -162,8 +163,8 @@ public class RegistrationController extends Controller {
 			JPA.em().getTransaction().commit();
 		}
 		
-		Html mailBody = views.html.email.verificationmail.render(au, request().host(), true);
-		Html mailAlt = views.html.email.verificationmail.render(au, request().host(), false);
+		Html mailBody = views.html.email.verificationmail.render(au, AppConfigSettings.getConfigString("hostname", "application.hostname"), true);
+		Html mailAlt = views.html.email.verificationmail.render(au, AppConfigSettings.getConfigString("hostname", "application.hostname"), false);
 		
 		String sSubject = Messages.get("registration.mail.subject");	
 		

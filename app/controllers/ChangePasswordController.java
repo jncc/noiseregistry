@@ -10,6 +10,7 @@ import javax.mail.internet.MimeMessage;
 import models.AppUser;
 import models.AppUserResetPassword;
 import models.AppUserChangePassword;
+
 import play.Logger;
 import play.data.Form;
 import play.db.jpa.JPA;
@@ -110,8 +111,8 @@ public class ChangePasswordController  extends Controller {
      */
   	public static void sendResetPasswordMail(AppUser au, String email, String pwd) 
   	{
-  		Html mailBody = views.html.email.passwordresetmail.render(au, pwd, request().host(),true);
-  		Html mailAlt = views.html.email.passwordresetmail.render(au, pwd, request().host(),false);
+  		Html mailBody = views.html.email.passwordresetmail.render(au, pwd, AppConfigSettings.getConfigString("hostname", "application.hostname"), true);
+  		Html mailAlt = views.html.email.passwordresetmail.render(au, pwd, AppConfigSettings.getConfigString("hostname", "application.hostname") ,false);
 
   		String sSubject = Messages.get("resetpassword.mail.subject");
   		try {

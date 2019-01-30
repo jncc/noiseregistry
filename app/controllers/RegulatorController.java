@@ -13,6 +13,7 @@ import play.db.jpa.Transactional;
 import play.i18n.Messages;
 import play.mvc.*;
 import views.html.*;
+import utils.AppConfigSettings;
 
 @Security.Authenticated(SecuredController.class)
 public class RegulatorController extends Controller {
@@ -115,7 +116,7 @@ public class RegulatorController extends Controller {
 							return badRequest(organisationregedit.render(AppUser.findByEmail(session("email")), filledForm, reg));
 						}
 						
-						orgOnDisk.sendChanges(reg.getOrganisation(), request().host(), au);
+						orgOnDisk.sendChanges(reg.getOrganisation(), AppConfigSettings.getConfigString("hostname", "application.hostname"), au);
 						reg.getOrganisation().setAdministrator(orgOnDisk.isAdministrator());
 						reg.update();
 						return OrganisationController.adminorgs();

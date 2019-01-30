@@ -1442,8 +1442,8 @@ public class ActivityApplicationController extends Controller {
 				InternetAddress[] addresses = new InternetAddress[1];
 				
 				addresses[0] = new InternetAddress(regulatorEmail);
-				Html mailBody = views.html.email.regulatoractivity.render(aa, request().host(), statusKey, overrideAddress, reg, np, true);
-				Html mailAlt = views.html.email.regulatoractivity.render(aa, request().host(), statusKey, overrideAddress, reg, np, false);
+				Html mailBody = views.html.email.regulatoractivity.render(aa, AppConfigSettings.getConfigString("hostname", "application.hostname"), statusKey, overrideAddress, reg, np, true);
+				Html mailAlt = views.html.email.regulatoractivity.render(aa, AppConfigSettings.getConfigString("hostname", "application.hostname"), statusKey, overrideAddress, reg, np, false);
 
 				String sSubject = Messages.get("regulator.activity." + statusKey + ".mail.subject");
 				MailSettings.send(mailBody, mailAlt, sSubject, addresses, true, false, false);						
