@@ -70,7 +70,7 @@ import com.typesafe.config.*;
 	@NamedQuery(name = "ActivityApplication.findAll", query = "from ActivityApplication" ),
 	@NamedQuery(name = "ActivityApplication.findAllByStatus", query = "from ActivityApplication where status in (:status) order by date_start desc"),
 	@NamedQuery(name = "ActivityApplication.findById", query = "from ActivityApplication where id=:id)"),
-	@NamedQuery(name = "ActivityApplication.findLateByRegulator", query = "from ActivityApplication where regulator=:reg and status!='Closed' and status!='Deleted' and date_due < now()"),
+	@NamedQuery(name = "ActivityApplication.findLateByRegulator", query = "from ActivityApplication where regulator=:reg and status!='Closed' and status!='Deleted' and status!='Cancelled' and date_due < now()"),
 	@NamedQuery(name = "ActivityApplication.findLate", query = "from ActivityApplication where status!='Closed' and status!='Deleted' and status!='Cancelled' and date_due < now() order by regulator.organisation.organisation_name, date_due"),
 	@NamedQuery(name = "ActivityApplication.findLinkedByParent", query = "from ActivityApplication where parent=:parent order by id"),
 	@NamedQuery(name = "ActivityApplication.findApplicationsByStatus", query = "from ActivityApplication where status in (:status) and (noiseproducer.organisation.id = :orgid or regulator.organisation.id = :orgid) order by date_start desc"),
