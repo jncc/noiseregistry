@@ -1568,35 +1568,70 @@ public class ActivityApplication
 		String sReturn = "";
 		if (status.equals("Closed"))
 		{
-			setDate_closed(null);
+			this.revertForClosed();
 			sReturn = "Interim Close-out";
 		}
 		else if (status.equals("Interim Close-out"))
 		{
-			List<ActivityLocation> lial = getActivitylocations();
-			Iterator<ActivityLocation> ital = lial.iterator();
-			while (ital.hasNext())
-			{
-				ActivityLocation al = ital.next();
-				List<ActivityLocationDate> liald = al.getActivitydates();
-				Iterator<ActivityLocationDate> itald = liald.iterator();
-				while (itald.hasNext())
-				{
-					JPA.em().remove(itald.next());
-				}
-				al.setActivitydates(new ArrayList<ActivityLocationDate>());
-			}
+			this.revertForInterimCloseout();
 			sReturn = "Proposed";
 		}
 		else if (status.equals("Proposed"))
 		{
 			sReturn = "Draft";
 		}
+		else if (status.equals("Cancelled")) 
+		{
+			// Need to clear date closed and  remove activity location dates as we can't 
+			// guarantee the status of the application previously
+			this.revertForClosed();
+			this.revertForInterimCloseout();
+			// Return to draft status as its the only logical state after cancelled
+			sReturn = "Draft";	
+		} 
+		else 
+		{
+			// TODO: This is to prevent further badness from this issue, catch all to prevent
+			// new or unknown statuses being fed in, needs to be redeveloped to something
+			// better
+			throw new RuntimeException("Application status [" + status + "] was not in allowed list");
+		}
 		setStatus(sReturn);
 		JPA.em().merge(this);
 		AuditTrail.WriteAudit(au,this.id,"Revert to "+sReturn,sReason,"ActivityApplication");
 		
 		return sReturn;
+	}
+	
+	/**
+	 * Removes activity location dates from an application as part of revert
+	 * process for an Interim Close-out application reverting to Proposed 
+	 * application 
+	 */
+	private void revertForInterimCloseout() 
+	{
+		List<ActivityLocation> lial = getActivitylocations();
+		Iterator<ActivityLocation> ital = lial.iterator();
+		while (ital.hasNext())
+		{
+			ActivityLocation al = ital.next();
+			List<ActivityLocationDate> liald = al.getActivitydates();
+			Iterator<ActivityLocationDate> itald = liald.iterator();
+			while (itald.hasNext())
+			{
+				JPA.em().remove(itald.next());
+			}
+			al.setActivitydates(new ArrayList<ActivityLocationDate>());
+		}
+	}
+
+	/**
+	 * Removes date closed from an application as part of revert process for 
+	 * an Closed application reverting to an Interim Close-out application 
+	 */
+	private void revertForClosed() 
+	{
+		setDate_closed(null);
 	}
 	
 	/**
