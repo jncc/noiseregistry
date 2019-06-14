@@ -211,7 +211,7 @@ public class RegulatorTest extends WithBrowser {
 		
     	//ensure that the user can see closed applications...
     	try {
-    		ActivityApplication.closeOut(new ActivityApplicationCloseOut(), idProp, false, m);
+    		ActivityApplication.closeOut(new ActivityApplicationCloseOut(), idProp, false, m, false);
     	} catch (Exception e) {
     		fail(e.getMessage());	
     	}
