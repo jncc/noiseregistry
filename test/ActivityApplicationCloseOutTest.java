@@ -171,7 +171,7 @@ public class ActivityApplicationCloseOutTest {
 			m.put("sound_pressure_level_actual","8");
 			m.put("sound_exposure_level_actual","9");
 			
-			ActivityApplication.closeOut(aaco, aa.getId(), false, m);
+			ActivityApplication.closeOut(aaco, aa.getId(), false, m, false);
 			
 			assertTrue(aa.getStatus().equals("Closed"));
 			assertNotNull(aa.getDate_closed());
@@ -270,7 +270,7 @@ public class ActivityApplicationCloseOutTest {
 			m.put("sound_pressure_level_actual","8");
 			m.put("sound_exposure_level_actual","9");
 			
-			ActivityApplication.closeOut(aaco, aa.getId(), false,m);
+			ActivityApplication.closeOut(aaco, aa.getId(), false, m, false);
 			
 			//Check that the constraint violations are all ok
 			constraintViolations =
@@ -345,7 +345,7 @@ public class ActivityApplicationCloseOutTest {
 			m.put("sound_pressure_level_actual","8");
 			m.put("sound_exposure_level_actual","9");
 			
-			ActivityApplication.closeOut(aaco, aa.getId(), false, m);
+			ActivityApplication.closeOut(aaco, aa.getId(), false, m, false);
 			
 			//Check that the constraint violations are all ok
 			constraintViolations =
@@ -422,7 +422,7 @@ public class ActivityApplicationCloseOutTest {
 			m.put("sound_pressure_level_actual","8");
 			m.put("sound_exposure_level_actual","9");
 			
-			ActivityApplication.closeOut(aaco, aa.getId(), false,m);
+			ActivityApplication.closeOut(aaco, aa.getId(), false, m, false);
 			
 			//Check that the constraint violations are all ok
 			constraintViolations =
@@ -503,7 +503,7 @@ public class ActivityApplicationCloseOutTest {
 			m.put("sound_pressure_level_actual","8");
 			m.put("sound_exposure_level_actual","9");
 			
-			ActivityApplication.closeOut(aaco, aa.getId(), true, m);
+			ActivityApplication.closeOut(aaco, aa.getId(), true, m, false);
 			
 			//Check that the constraint violations are all ok
 			constraintViolations =
@@ -522,7 +522,7 @@ public class ActivityApplicationCloseOutTest {
 			assertEquals(2, aa.getActivitylocations().size());
 			
 			//Save again as closed this time...
-			ActivityApplication.closeOut(aaco, aa.getId(), false, m);
+			ActivityApplication.closeOut(aaco, aa.getId(), false, m, false);
 			
 			assertNull(aa.validate());
 			
@@ -533,7 +533,7 @@ public class ActivityApplicationCloseOutTest {
 			
 			try {
 				//Try to save again as closed...
-				ActivityApplication.closeOut(aaco, aa.getId(), false, m);
+				ActivityApplication.closeOut(aaco, aa.getId(), false, m, false);
 				fail("Close of an already closed application - this should not be allowed");
 			} catch (Exception e) {
 				//
@@ -578,7 +578,7 @@ public class ActivityApplicationCloseOutTest {
 			m.put("sound_pressure_level_actual","8");
 			m.put("sound_exposure_level_actual","9");
 			
-			ActivityApplication.closeOut(aaco, aa.getId(), false, m);
+			ActivityApplication.closeOut(aaco, aa.getId(), false, m, false);
 			assertTrue(aa.getStatus().equals("Closed"));
 			assertNotNull(aa.getDate_closed());
 			assertNull(aa.getActivitylocations());
