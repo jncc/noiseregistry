@@ -491,16 +491,19 @@ public class AppUser {
 		Iterator <OrgUser> it = ou.iterator();
 		while (it.hasNext())
 		{
-			if (sReturn.equals(""))
-				sReturn = MEMBER;
-			
 			OrgUser orguser = it.next();
-			if (orguser.isAdministrator())
-			{
-				sReturn = ADMIN;
 			
-				if (orguser.getOrg().isAdministrator())
-					return OVERALL_ADMIN;
+			if (orguser.getStatus().equals(OrgUser.VERIFIED)) {			
+				if (sReturn.isEmpty()) {
+					sReturn = MEMBER;
+				}
+				
+				if (orguser.isAdministrator()) {
+					sReturn = ADMIN;
+					if (orguser.getOrg().isAdministrator()) {
+						return OVERALL_ADMIN;
+					}
+				}
 			}
 		}
 		
@@ -514,15 +517,22 @@ public class AppUser {
 	public String getOrgRoleForOrg(Organisation org) 
 	{
 		String sOrgRole = getOrgRole(); 
-		if (sOrgRole.equals(OVERALL_ADMIN))
+		if (sOrgRole.equals(OVERALL_ADMIN)) {
 			return OVERALL_ADMIN;
+		}
 		
-		List lOrgs = Organisation.getMyAdminOrganisations(this);
-		if (lOrgs.contains(org))
-			return ADMIN;
-		
-		if (sOrgRole == MEMBER)
-			return MEMBER;
+		Iterator <OrgUser> it = ou.iterator();
+		while(it.hasNext()) {
+			OrgUser orgUser = it.next();
+			if (orgUser.getOrg() == org) {
+				if (orgUser.getStatus().equals(OrgUser.VERIFIED)) {
+					if (orgUser.isAdministrator()) {
+						return ADMIN;
+					}
+					return MEMBER;
+				}
+			}
+		}
 		
 		return "";
 	}

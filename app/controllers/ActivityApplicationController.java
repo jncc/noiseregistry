@@ -219,7 +219,7 @@ public class ActivityApplicationController extends Controller {
 	{
 		AppUser au = AppUser.getSystemUser(request().username());
 		
-		if (au.getOrgRole().equals("")) {
+		if (au.getOrgRole().isEmpty()) {
 			return unauthorized(views.html.errors.unauthorised.render(au, "HOME"));
 		} else {
 			if (request().accepts("text/html")) {
@@ -245,6 +245,15 @@ public class ActivityApplicationController extends Controller {
 	{
 		AppUser au = AppUser.getSystemUser(request().username());
 		ActivityApplication aa = JPA.em().find(ActivityApplication.class, lid);
+		
+		// If the activity id does not exist in the database OR the user has no right to
+		// modify activity OR the activity is in an end state (Closed | Cancelled | 
+		// Deleted | IsEmpty) then return an unauthorised message 
+		if (aa == null || aa.getStatus().equals("Closed") || 
+				aa.getStatus().equals("Cancelled") || aa.getStatus().equals("Deleted") || 
+				aa.getStatus().isEmpty() || !userHasRightsForActivity(au, aa)) {
+			return generateUnauthorized(au);	
+		}
 
 		return ok(upload.render(au, "", null, null, null, null, null, lid, null, aa));
 	}
@@ -383,6 +392,18 @@ public class ActivityApplicationController extends Controller {
 	@BodyParser.Of(value=BodyParser.MultipartFormData.class, maxLength=2048000)
 	public static Result uploadfile(Long lid) 
 	{
+		AppUser au = AppUser.getSystemUser(request().username());
+		ActivityApplication aa = JPA.em().find(ActivityApplication.class, lid);
+		
+		// If the activity id does not exist in the database OR the user has no right to
+		// modify activity OR the activity is in an end state (Closed | Cancelled | 
+		// Deleted | IsEmpty) then return an unauthorised message 
+		if (aa == null || aa.getStatus().equals("Closed") || 
+				aa.getStatus().equals("Cancelled") || aa.getStatus().equals("Deleted") || 
+				aa.getStatus().isEmpty() || !userHasRightsForActivity(au, aa)) {
+			return generateUnauthorized(au);	
+		}
+
 		HashMap<String,String> hmHeadersChosen = new HashMap<String,String>();
 		HashMap<Integer,String> hmHeaders = new HashMap<Integer,String>();
         Map<String,String[]> multipartFormData = new HashMap<String,String[]>();
@@ -398,9 +419,6 @@ public class ActivityApplicationController extends Controller {
 		int iDates = -1;
 		
 		String sReplace = "";
-		
-		AppUser au = AppUser.getSystemUser(request().username());
-		ActivityApplication aa = JPA.em().find(ActivityApplication.class, lid);
 
 		if (play.mvc.Controller.request().body().asMultipartFormData() == null)
 		{
@@ -739,6 +757,8 @@ public class ActivityApplicationController extends Controller {
     			}
     	    	JPA.em().merge(aa);
     	    	JPA.em().flush();
+    	    	
+    	    	AuditTrail.WriteAudit(au, aa.getId(), "Updated via CSV", "CSV Upload", "ActivityApplication");
 
     			if (iDates>=0)
     				return redirect(routes.ActivityApplicationController.closeOut(lid));
@@ -1749,7 +1769,25 @@ public class ActivityApplicationController extends Controller {
 		if (au.getOrgRole().equals(AppUser.OVERALL_ADMIN)) {
 			return ok(activitieslate.render(au, getAppsRequiringCloseOut()));
 		} else {
-			return unauthorized(views.html.errors.unauthorised.render(au, "HOME"));
+			return generateUnauthorized(au);
 		}
+	}
+	
+	/**
+	 * Checks to see if a user has rights for a given activity application
+	 * @param au The AppUser to check
+	 * @param aa The ActivityApplication to check against
+	 * @return True if the user has some rights for the organisation in question
+	 */
+	private static boolean userHasRightsForActivity(AppUser au, ActivityApplication aa) 
+	{	
+		if (au.getOrgRoleForOrg(aa.getNoiseproducer().getOrganisation()).isEmpty()) {
+			return false;				
+		}
+		return true;
+	}
+	
+	private static Result generateUnauthorized(AppUser au) {
+		return unauthorized(views.html.errors.unauthorised.render(au, "HOME")); 
 	}
 }
