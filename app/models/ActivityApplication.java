@@ -1347,6 +1347,64 @@ public class ActivityApplication
 			}
 		}
 	}
+
+	/**
+	 * Returns if two dates are one the same day (to fix an issue with some code here adding something to the dates somewhere)
+	 *  
+	 * @param base The base date object to compare with
+	 * @param compare A second date object to compare with the base
+	 * @return If the two dates are one the same day (to fix an issue with some code here adding something to the dates somewhere)
+	 */
+	private boolean onSameDay(Date base, Date compare) {
+		Calendar baseCal = Calendar.getInstance();
+		Calendar compareCal = Calendar.getInstance();
+
+		baseCal.setTime(base);
+		compareCal.setTime(compare);
+		
+		return (baseCal.get(Calendar.DAY_OF_YEAR) == compareCal.get(Calendar.DAY_OF_YEAR)) &&
+			(baseCal.get(Calendar.YEAR) == compareCal.get(Calendar.YEAR));
+	}
+
+	/**
+	 * Update the start, end and due dates for any child activities if they exist and need to be
+	 * updated
+	 * 
+	 * @param au The current user
+	 */
+	private void updateDatesForChildActivities(AppUser au) {
+		List<ActivityApplication> children = ActivityApplication.findLinkedByParent(this);
+		Iterator<ActivityApplication> it = children.iterator();
+
+		while (it.hasNext()) {
+			ActivityApplication child = it.next();
+			boolean updated = false;
+
+			if (!onSameDay(this.getDate_start(), child.getDate_start())) {
+				child.setDate_start(this.getDate_start());
+				updated = true;
+			}
+			if (!onSameDay(this.getDate_end(), child.getDate_end())) {
+				child.setDate_end(this.getDate_end());
+				updated = true;
+			}
+			if (!onSameDay(this.getDate_due(), child.getDate_due())) {
+				child.setDate_due(this.getDate_due());
+				updated = true;
+			}
+
+			if (updated) {
+				JPA.em().merge(child);
+				AuditTrail.WriteAudit(
+					au, 
+					child.getId(), 
+					"Updated Dates From Linked Parent Activity", 
+					"Parent Activity Dates Updated", 
+					"ActivityApplication");
+			}
+		}
+	}
+
     /**
      * Update this activity application and related activity type and activity location details.
      * Throws an exception if updates are not allowed for the current item.
@@ -1374,14 +1432,17 @@ public class ActivityApplication
     	setNeeded();
     	
     	if (parent != null && parent.getId() == null) {
-    		parent = null;
-    	}
-    	
-    	JPA.em().merge(this);
-    	JPA.em().flush();
-    	if (this.getStatus().equals(sCurStatus))
+			parent = null;
+		}
+
+		// Update and linked activities for which this activity is a parent (if any)
+		updateDatesForChildActivities(au);
+		
+		JPA.em().merge(this);
+		JPA.em().flush();
+		if (this.getStatus().equals(sCurStatus))
     		AuditTrail.WriteAudit(au,id,"Update","Updated","ActivityApplication"); // doesn't like blank reason
-    	else
+		else
     		AuditTrail.WriteAudit(au,id,"Update to "+getStatus(),"Updated","ActivityApplication"); // doesn't like blank reason
     }
     /**
@@ -1508,7 +1569,6 @@ public class ActivityApplication
 	 * @return
 	 */
 	public static List<ActivityApplication> findLinkedByParent(ActivityApplication source) {
-		List<ActivityApplication> results = new ArrayList<ActivityApplication>();
 		TypedQuery<ActivityApplication> query = JPA.em().createNamedQuery("ActivityApplication.findLinkedByParent", ActivityApplication.class);
 		query.setParameter("parent", source);
 		return query.getResultList();
